@@ -1,13 +1,20 @@
 const express = require('express')
 
-const app = express()
-const port = 8000
+const employeeRoutes = require('./src/routes/employeeRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 
-app.get('/kamadi', (req, res) => {
-    res.send('Hello World!')
+const app = express()
+const port = 8000;
+
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+app.get('/', (req, res) => {
+    res.send('Hello!!! WELCOME JUPYTER')
 })
 
-require('./src/routes/employeeRoutes')(app)
+app.use('/employee',employeeRoutes);
+app.use('/auths',authRoutes);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

@@ -1,6 +1,6 @@
 exports.config= {
     HOST: 'localhost',
     USER: 'root',
-    PASSWORD: 'Rock@2000',
-    DATABASE: 'sakila'
+    PASSWORD: '#200328Ptmk',
+    DATABASE: 'project'
 }
