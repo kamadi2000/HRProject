@@ -1,0 +1,15 @@
+.backgro{
+    background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20210326/pngtree-light-blue-cute-striped-baby-blue-background-image_594858.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+ }
+  
+ .card{
+    margin-right: 30px;
+    margin-bottom: 10px;
+ }
+ .nav{
+    background-color:#DFF6FF;
+    height: 3rem;
+ }
+ 
