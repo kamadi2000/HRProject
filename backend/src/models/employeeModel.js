@@ -1,7 +1,7 @@
 const db = require("../database/database")
 
 exports.queryEmployees = (resultFunction) => {
-    db.query("SELECT * FROM staff;", [], (err, queryRes) => {
+    db.query("SELECT * FROM employee;", [], (err, queryRes) => {
         if(err){
             console.log(err)
         }
