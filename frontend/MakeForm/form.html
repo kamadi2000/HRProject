@@ -3,7 +3,7 @@
         <title>
             Add employee
         </title>
-        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <meta name="viewport" content="width=device-width",initial-scale=1.0>
     </head>
@@ -14,39 +14,55 @@
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">First name</span>
-                        <input type="text" placeholder="First name" required>
+                        <input type="text" placeholder="Enter First name" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Last name</span>
-                        <input type="text" placeholder="Last name" required>
+                        <input type="text" placeholder="Enter Last name" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Email</span>
-                        <input type="text" placeholder="Email" required>
+                        <input type="text" placeholder="Enter Email" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Birthday</span>
-                        <input type="text" placeholder="Birthday" required>
+                        <input type="text" placeholder="dd/mm/yyyy" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Address</span>
-                        <input type="text" placeholder="Address" required>
+                        <input type="text" placeholder="Enter Address" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Phone number</span>
+                        <input type="text" placeholder="Enter Phone number" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Marital status</span>
+                        <select name="Marital-status" id="Marital-status" >
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            
+                            
+                          </select>
                     </div>
                 </div>
                 <div class="gender-details">
+                    <input type="radio" name="gender" id="dot-1">
+                    <input type="radio" name="gender" id="dot-2">
+                    
                     <span class="gender-title">Gender</span>
                     <div class="category">
-                        <label for="">
+                        <label for="dot-1">  
                             <span class="dot one"></span>
                             <span class="gender">Male</span>
                         </label>
 
-                        <label for="">
-                            <span class="dot one"></span>
+                        <label for="dot-2">
+                            <span class="dot two"></span>
                             <span class="gender">Female</span>
                         </label>
                     </div>
