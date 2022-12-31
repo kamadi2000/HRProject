@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const {config} = require('../database/config')
-const {auth} = require('../middleware/auth')
+const {authenticate} = require('../middleware/auth')
 require('dotenv').config();
 
 const {ResponseHandler} = require("../controllers/ResponseController");
@@ -11,7 +11,7 @@ const router = express.Router();
 
 const controller = new UserController();
 
-router.get('/',auth, (req,res)=>{
+router.get('/',authenticate, (req,res)=>{
     const user = req.user;
     res.json(user);
 })

@@ -48,7 +48,7 @@ class User{
     async getToken(refreshtoken){
         try{
             const Credential = await  executeSQL(`SELECT * FROM session_detail WHERE token = "${refreshtoken}"`,[])
-            if(Credential[0]!=null){  
+            if(Credential){  
                 return (Credential[0].token)
             }
             return ("token not available")
@@ -86,20 +86,29 @@ class User{
             console.log(e)
         }
     }
-    async logout(){
-        console.log("Logged out");
+
+    async getLeaveCount(username){
+        try{
+            const Credential = await executeSQL(`SELECT * FROM leave_count WHERE emp_ID = "${username}"`,[])
+            return Credential
+        }catch(e){
+            console.log(e)
+            return null
+        }
     }
 
-    async applyLeave(){
-        console.log("Leave request is sent");
+    async applyLeave(emp_ID,reason,leave_type,date,leave_status){
+        try{
+            await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value("${emp_ID}","${reason}","${leave_type}","${date}","${leave_status}")`,[])
+            return ("request was successfully sent")
+        }catch(e){
+            console.log(e)
+            return null
+        }
     }
 
     async editEmergancy(){
         console.log("succsusfully edided");
-    }
-
-    async getLeaveCount(){
-        console.log("20 leaves remain");
     }
 
 }

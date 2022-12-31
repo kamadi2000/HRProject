@@ -27,6 +27,24 @@ class UserController{
         await user.deleteToken(refreshtoken);
     }
 
+    async getLeaveCount(username){
+        const status = await user.getLeaveCount(username)
+        return status
+    }
+
+    async applyLeave(req){
+        const emp_ID = req.user.username
+        const reason = req.body.reason
+        const leave_type  = req.body.leave_type
+        const date  = req.body.date
+        const leave_status  = "pending"
+        if(emp_ID && reason && leave_type && date && leave_status){
+            const status = await user.applyLeave(emp_ID,reason,leave_type,date,leave_status)
+            return status
+        }
+        return("incomplete request")
+    }
+
 }
 
 module.exports = {UserController}
