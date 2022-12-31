@@ -1,7 +1,9 @@
-module.exports = (app) => {
-    var router = require('express').Router()
-    const employeeController = require('../controllers/employeeController')
+const {Router} = require('express');
+const employeeController = require('../controllers/employeeController');
 
-    router.get("/", employeeController.getEmployees)
-    app.use("/employees", router)
-}
+const router = Router();
+//router.use("/employees", Router);
+
+router.get("/", employeeController.getEmployees);
+
+module.exports = router;
