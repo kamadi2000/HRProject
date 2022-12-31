@@ -27,18 +27,12 @@ class User{
             var Credential = await executeSQL("SELECT * FROM user WHERE employee_ID = ?",[username])
             const salt = await bcrypt.genSalt(10);
             const userpassword = await bcrypt.hash(password, salt)
-            if(Credential){
-                const status = await bcrypt.compare(Credential[0].password,userpassword)
-                if (status) {
-                    const userdata = await executeSQL("SELECT * FROM employment_detail WHERE emp_ID = ?",[username])
-                    return userdata
-                }else{
-                    console.log("password is invalid")
-                    return null
-                }
+            const status = await bcrypt.compare(Credential[0].password,userpassword)
+            if (status) {
+                const userdata = await executeSQL("SELECT * FROM employment_detail WHERE emp_ID = ?",[username])
+                return userdata
             }else{
-                console.log("username is invalid")
-                return null
+                console.log("username or password is invalid")
             }
         }catch(e){
             console.log(e)
