@@ -24,7 +24,8 @@ class UserController{
     }
 
     async deleteToken(refreshtoken){
-        await user.deleteToken(refreshtoken);
+        const status = await user.deleteToken(refreshtoken);
+        return(status)
     }
 
     async getLeaveCount(username){
