@@ -10,4 +10,10 @@ router.get('/loginPage', (req, res) => {
     res.sendFile(path.join(initialPath,"LoginPage/LoginScreen.html"));
 })
 
+router.get('/AdminPage', (req, res)=>{
+    res,sendFile(path.join(initialPath,"Admin/admin.html"));
+})
+
+
+
 module.exports = router;
