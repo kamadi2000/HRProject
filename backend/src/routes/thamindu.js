@@ -20,7 +20,20 @@ router.post('/applyleave',authenticate, async (req,res)=>{
 
 router.get('/viewrequest',authenticate, async (req,res)=>{
     const status = await controller.viewRequest(req.user.username)
-    res.send(status)
+    if(status) {
+        res.send(status)
+    }else{
+        res.send("No leave request")
+    }
+})
+
+router.post('/requestvalidation',authenticate, async (req,res)=>{
+    const emp_ID = req.body.emp_ID
+    const date = req.body.date
+    const decision = req.body.decision
+    const type = req.body.leaveType
+    const status = await controller.requestValidation(emp_ID,date,decision,type)
+    res.send({status})
 })
 
 
