@@ -14,6 +14,11 @@ class UserController{
         return(null)
     }
 
+    async getType(employee_ID){
+        const status = await user.getType(employee_ID)
+        return (status);
+    }
+
     async getToken(refreshtoken){
         const status = await user.getToken(refreshtoken)
         return (status);
@@ -44,6 +49,16 @@ class UserController{
             return status
         }
         return("incomplete request")
+    }
+
+    async viewRequest(username){
+        const status = await user.viewRequest(username)
+        return status
+    }
+
+    async requestValidation(emp_ID,date,decision,type){
+        const status = await user.requestValidation(emp_ID,date,decision,type)
+        return status
     }
 
 }
