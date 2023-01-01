@@ -30,7 +30,7 @@ class User{
             if(Credential){
                 const status = await bcrypt.compare(Credential[0].password,userpassword)
                 if (status) {
-                    const userdata = await executeSQL("SELECT * FROM employment_detail WHERE emp_ID = ?",[username])
+                    const userdata = await executeSQL("SELECT employee_ID,access_level FROM user WHERE employee_ID = ?",[username])
                     return userdata
                 }else{
                     console.log("password is invalid")
@@ -51,24 +51,20 @@ class User{
             if(Credential){  
                 return (Credential[0].token)
             }
-            return ("token not available")
+            return (null)
         }catch(e){
             console.log(e)
         }
     }
 
-    async storeToken(refreshtoken){
+    async storeToken(refreshtoken,username){
         const token = refreshtoken;
-        const time = new Date();
-        const lastTime = time.toISOString()
         try{
-            const status = await  this.getToken(refreshtoken)
-            if(status=="token not available"){
-                await executeSQL(`INSERT INTO session_detail value("${token}","${lastTime}")`,[])
-            }else{
-                await executeSQL(`DELETE FROM session_detail WHERE token = "${refreshtoken}"`,[]);
-                await executeSQL(`INSERT INTO session_detail value("${token}","${lastTime}")`,[])
+            const status = await  executeSQL(`SELECT * FROM session_detail WHERE emp_ID = "${username}"`,[])
+            if(status){
+                await executeSQL(`DELETE FROM session_detail WHERE emp_ID = "${username}"`,[]);
             }
+            await executeSQL(`INSERT INTO session_detail value("${username}","${token}", NOW())`,[])
         }catch(e){
 
         }
@@ -77,7 +73,7 @@ class User{
     async deleteToken(refreshtoken){
         try{
             const Credential = await  executeSQL(`SELECT * FROM session_detail WHERE token = "${refreshtoken}"`,[])
-            if(Credential[0]!=null){  
+            if(Credential){  
                 await executeSQL(`DELETE FROM session_detail WHERE token = "${refreshtoken}"`,[]);
                 return ("sucssesfully logged out")
             }
