@@ -36,5 +36,23 @@ router.post('/requestvalidation',authenticate, async (req,res)=>{
     res.send({status})
 })
 
+router.post('/checkrecords',authenticate, async (req,res)=>{
+    const status = await controller.checkRecord(req.body.emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid epmloyee ID"})
+    }
+})
+
+router.post('/emergancydetail',authenticate, async (req,res)=>{
+    const status = await controller.getEmergancyDetail(req.body.emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid epmloyee ID"})
+    }
+})
+
 
 module.exports = router;
