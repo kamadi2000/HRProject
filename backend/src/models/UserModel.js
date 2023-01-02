@@ -108,7 +108,8 @@ class User{
     async applyLeave(emp_ID,reason,leave_type,date,leave_status){
         try{
             const leaveCount = await executeSQL(`SELECT ${leave_type}_count FROM leave_count WHERE emp_ID = "${emp_ID}"`)
-            if (leaveCount > 0){
+            const leaveType = `${leave_type}_count`
+            if (leaveCount[0][leaveType] > 0){
                 await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value("${emp_ID}","${reason}","${leave_type}","${date}","${leave_status}")`,[])
                 return ("request was successfully sent")
             }else{
@@ -178,15 +179,19 @@ class User{
         try{
             const Credential = await executeSQL(`
                 SELECT * 
-                FROM employee 
-                JOIN (
-                    SELECT * 
-                    FROM employee_phone_number ep
-                    JOIN employment_detail ed using(emp_ID)) as a on a.emp_ID = employee.ID
+                FROM employee e
+                JOIN employment_detail ed ON ed.emp_ID = e.ID
                 WHERE ID = "${emp_ID}"`,[])
             
-            if(Credential){
-                return (Credential[0])
+            const phoneNumbers = await executeSQL(`SELECT phone_number FROM employee_phone_number WHERE emp_ID = "${emp_ID}"`,[])
+            const emergancyDetail = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`,[])
+            let phone_number = []
+            for(let k in phoneNumbers){
+                phone_number.push(phoneNumbers[k].phone_number)
+            }
+            const data = { data:Credential[0] ,phone_numbers:phone_number,emergancy:emergancyDetail[0]}
+            if(Credential && phoneNumbers){
+                return (data)
             }else{
                 return (null)
             }
@@ -198,7 +203,7 @@ class User{
 
     async getEmergancyDetail(emp_ID){
         try{
-            const Credential = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`)
+            const Credential = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`,[])
             if(Credential){
                 return(Credential[0])
             }else{
@@ -206,6 +211,52 @@ class User{
             }
         }catch(e){
             console.log(e)
+        }
+    }
+
+    async setAccessLevel(emp_ID,level){
+        try{
+            await executeSQL(`
+                UPDATE user
+                SET access_level = "${level}"
+                WHERE employee_ID = "${emp_ID}"`)
+
+            return("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async addEmployeePersonalDeatails(data){  // data is a JSON object
+        try {
+            const Credential = await executeSQL(
+                `
+                INSERT INTO employee (ID, 
+                                      first_name, 
+                                      middle_name, 
+                                      last_name, 
+                                      date_of_birth, 
+                                      gender, 
+                                      marital_status, 
+                                      road, 
+                                      city, 
+                                      country)
+                VALUE (${data.id},
+                        ${data.firstName},
+                        ${data.middleName},
+                        ${data.lastName},
+                        ${data.dateOfBirth},
+                        ${data.gender},
+                        ${data.maritalStatus},
+                        ${data.road},
+                        ${data.city},
+                        ${data.country})
+                `
+            );
+            return Credential;
+        } catch (error) {
+            console.log(error)
         }
     }
 

@@ -1,4 +1,5 @@
 const {User} = require("../models/UserModel");
+const { use } = require("../routes/thamindu");
 
 var users = new Map();
 var user = new User();
@@ -69,6 +70,16 @@ class UserController{
     async getEmergancyDetail(emp_ID){
         const status = await user.getEmergancyDetail(emp_ID)
         return status
+    }
+
+    async setAccessLevel(emp_ID){
+        const status = await user.setAccessLevel(emp_ID)
+        return status
+    }
+
+    async addEmployee(data){
+        const status = await user.addEmployeePersonalDeatails(data)
+        return status;
     }
 }
 

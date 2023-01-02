@@ -20,11 +20,11 @@ router.post('/login', async (req,res)=>{
 
     const status = await controller.login(req);
     if(status){
-        const user = {access_level:status[0].access_level, username: status[0].employee_ID}
+        const type = await controller.getType(status[0].employee_ID)
+        const user = {type:type,access_level:status[0].access_level, username: status[0].employee_ID}
         const accesstoken = jwt.sign(user,config.ACCESS_TOKEN_KEY,{expiresIn: '10s'});
         const refreshtoken = jwt.sign(user,config.REFRESH_TOKEN_KEY,{expiresIn: '15m'});
         await controller.storeToken(refreshtoken,status[0].employee_ID);
-        const type = await controller.getType(status[0].employee_ID)
         if(type){
             res.status(ResponseHandler(status)).send({accesstoken,refreshtoken,type});
         }else{

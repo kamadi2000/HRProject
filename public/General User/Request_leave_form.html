@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>
+            Request Leave Form
+        </title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="stylesForm.css">
+        <meta name="viewport" content="width=device-width",initial-scale=1.0>
+    </head>
+    <body>
+        <div class="container">
+            <div class="title">Leave Request Form</div>
+            <form action="#">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Employee ID</span>
+                        <input type="text" placeholder="Employee ID" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">purpose for leave</span>
+                        <input type="text" placeholder="purpose for leave" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Number Of Days Requested</span>
+                        <input type="text" placeholder="Enter Number of Days" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Requested Date</span>
+                        <input type="text" placeholder="dd/mm/yyyy" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Leave Type</span>
+                        <select name="Marital-status" id="Marital-status" >
+                            <option value="annual">Annual Leave</option>
+                            <option value="Casual">Casual Leave</option>
+                            <option value="Maternity">Maternity Leave</option>
+                            <option value="NoPay">No pay</option>  
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="button">
+                    <input type="submit" value="Request">
+                </div>
+
+            </form>
+        </div>
+        
+
+    </body>
+</html>
