@@ -27,13 +27,31 @@ class User{
             var Credential = await executeSQL("SELECT * FROM user WHERE employee_ID = ?",[username])
             const salt = await bcrypt.genSalt(10);
             const userpassword = await bcrypt.hash(password, salt)
-            const status = await bcrypt.compare(Credential[0].password,userpassword)
-            if (status) {
-                const userdata = await executeSQL("SELECT * FROM employment_detail WHERE emp_ID = ?",[username])
-                return userdata
+            if(Credential){
+                const status = await bcrypt.compare(Credential[0].password,userpassword)
+                if (status) {
+                    const userdata = await executeSQL("SELECT employee_ID,access_level FROM user WHERE employee_ID = ?",[username])
+                    return userdata
+                }else{
+                    console.log("password is invalid")
+                    return null
+                }
             }else{
-                console.log("username or password is invalid")
+                console.log("username is invalid")
+                return null
             }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    async getType(employee_ID){
+        try{
+            const Credential = await executeSQL(`SELECT type FROM employment_detail WHERE emp_ID = "${employee_ID}"`,[])
+            if(Credential){
+                return Credential[0].type
+            }
+            return null
         }catch(e){
             console.log(e)
         }
@@ -42,27 +60,23 @@ class User{
     async getToken(refreshtoken){
         try{
             const Credential = await  executeSQL(`SELECT * FROM session_detail WHERE token = "${refreshtoken}"`,[])
-            if(Credential[0]!=null){  
+            if(Credential){  
                 return (Credential[0].token)
             }
-            return ("token not available")
+            return (null)
         }catch(e){
             console.log(e)
         }
     }
 
-    async storeToken(refreshtoken){
+    async storeToken(refreshtoken,username){
         const token = refreshtoken;
-        const time = new Date();
-        const lastTime = time.toISOString()
         try{
-            const status = await  this.getToken(refreshtoken)
-            if(status=="token not available"){
-                await executeSQL(`INSERT INTO session_detail value("${token}","${lastTime}")`,[])
-            }else{
-                await executeSQL(`DELETE FROM session_detail WHERE token = "${refreshtoken}"`,[]);
-                await executeSQL(`INSERT INTO session_detail value("${token}","${lastTime}")`,[])
+            const status = await  executeSQL(`SELECT * FROM session_detail WHERE emp_ID = "${username}"`,[])
+            if(status){
+                await executeSQL(`DELETE FROM session_detail WHERE emp_ID = "${username}"`,[]);
             }
+            await executeSQL(`INSERT INTO session_detail value("${username}","${token}", NOW())`,[])
         }catch(e){
 
         }
@@ -71,7 +85,7 @@ class User{
     async deleteToken(refreshtoken){
         try{
             const Credential = await  executeSQL(`SELECT * FROM session_detail WHERE token = "${refreshtoken}"`,[])
-            if(Credential[0]!=null){  
+            if(Credential){  
                 await executeSQL(`DELETE FROM session_detail WHERE token = "${refreshtoken}"`,[]);
                 return ("sucssesfully logged out")
             }
@@ -80,20 +94,138 @@ class User{
             console.log(e)
         }
     }
-    async logout(){
-        console.log("Logged out");
+
+    async getLeaveCount(username){
+        try{
+            const Credential = await executeSQL(`SELECT * FROM leave_count WHERE emp_ID = "${username}"`,[])
+            return Credential
+        }catch(e){
+            console.log(e)
+            return null
+        }
     }
 
-    async applyLeave(){
-        console.log("Leave request is sent");
+    async applyLeave(emp_ID,reason,leave_type,date,leave_status){
+        try{
+            const leaveCount = await executeSQL(`SELECT ${leave_type}_count FROM leave_count WHERE emp_ID = "${emp_ID}"`)
+            const leaveType = `${leave_type}_count`
+            if (leaveCount[0][leaveType] > 0){
+                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value("${emp_ID}","${reason}","${leave_type}","${date}","${leave_status}")`,[])
+                return ("request was successfully sent")
+            }else{
+                return(`you have no ${leave_type} type leaves`)
+            }
+        }catch(e){
+            console.log(e)
+            return null
+        }
     }
 
-    async editEmergancy(){
-        console.log("succsusfully edided");
+    async viewRequest(username){
+        try{
+            const Credential = await executeSQL(
+                `SELECT 
+                    a.emp_ID, 
+                    a.reason, 
+                    a.date, 
+                    a.leave_type, 
+                    annual_count, 
+                    casual_count, 
+                    maternity_count, 
+                    noPay_count  
+                FROM leave_count 
+                RIGHT JOIN (
+                    SELECT 
+                        s.sup_ID,
+                        l.emp_ID,
+                        l.reason,
+                        l.leave_type,
+                        l.date
+                    FROM supervise s
+                    RIGHT JOIN leave_detail l ON l.emp_ID = s.emp_ID 
+                    WHERE sup_ID = "${username}" AND l.status = "pending") AS a ON a.emp_ID = leave_count.emp_ID`,[])
+            if(Credential){
+                return Credential
+            }
+            return null
+        }catch(e){
+            console.log(e)
+        }
     }
 
-    async getLeaveCount(){
-        console.log("20 leaves remain");
+    async requestValidation(emp_ID,date,decision,type){
+        try{
+            await executeSQL(`
+                UPDATE leave_detail
+                SET status = "${decision}"
+                WHERE date = "${date}" AND emp_ID = "${emp_ID}"`
+                )
+
+            if(decision == "approved"){
+                await executeSQL(`
+                    UPDATE leave_count
+                    SET ${type}_count = ${type}_count - 1
+                    WHERE emp_ID = "${emp_ID}"`
+                )
+            }
+
+            return ("successfully validated")
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    async checkRecord(emp_ID){
+        try{
+            const Credential = await executeSQL(`
+                SELECT * 
+                FROM employee e
+                JOIN employment_detail ed ON ed.emp_ID = e.ID
+                WHERE ID = "${emp_ID}"`,[])
+            
+            const phoneNumbers = await executeSQL(`SELECT phone_number FROM employee_phone_number WHERE emp_ID = "${emp_ID}"`,[])
+            const emergancyDetail = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`,[])
+            let phone_number = []
+            for(let k in phoneNumbers){
+                phone_number.push(phoneNumbers[k].phone_number)
+            }
+            const data = { data:Credential[0] ,phone_numbers:phone_number,emergancy:emergancyDetail[0]}
+            if(Credential && phoneNumbers){
+                return (data)
+            }else{
+                return (null)
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+
+    async getEmergancyDetail(emp_ID){
+        try{
+            const Credential = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`,[])
+            if(Credential){
+                return(Credential[0])
+            }else{
+                return(null)
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    async setAccessLevel(emp_ID,level){
+        try{
+            await executeSQL(`
+                UPDATE user
+                SET access_level = "${level}"
+                WHERE employee_ID = "${emp_ID}"`)
+
+            return("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
     }
 
 }

@@ -17,10 +17,13 @@ function executeSQL(sql,placeholder){
             rej(err)
         }
         const resulted = Object.values(JSON.parse(JSON.stringify(result)))
-
+        if(resulted.length==0){
+            res(null)
+        }
         res(resulted)
     })
 })
+
 }
 
 

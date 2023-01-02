@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const {config} = require('../database/config')
 require('dotenv').config();
 
-function auth(req,res,next){
+function authenticate(req,res,next){
     if(req.headers.authorization && req.headers.authorization.startsWith('bearer')){
         const token = req.headers.authorization.split(' ')[1];
         if(token == null){
@@ -23,4 +23,26 @@ function auth(req,res,next){
     }
 }
 
-module.exports = {auth}
+function accessAuthorization(permission){
+    return (req,res,next)=>{
+        const type = req.user.type
+        if(permission.includes(type)){
+            next()
+        }else{
+            return res.status(401).json("You have no permission!")
+        }
+    }
+}
+
+function levelAuthorization(permission){
+    return (req,res,next)=>{
+        const level = req.user.access_level
+        if(permission.includes(level)){
+            next()
+        }else{
+            return res.status(401).json("You have no permission!")
+        }
+    }
+}
+
+module.exports = {authenticate , accessAuthorization , levelAuthorization}

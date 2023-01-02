@@ -5,6 +5,7 @@ const mysql = require('mysql')
 
 const employeeRoutes = require('./src/routes/employeeRoutes');
 const authRoutes = require('./src/routes/authRoutes');
+const userRoutes = require('./src/routes/thamindu');
 const { post } = require('./src/routes/employeeRoutes');
 const pageRoutes = require('./src/routes/pageRoutes')
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.static(initialPath));
 
 app.use('/employee',employeeRoutes);
 app.use('/auths',authRoutes);
+app.use('/user',userRoutes);
 app.use('', pageRoutes)
 
 app.listen(port, () => {
