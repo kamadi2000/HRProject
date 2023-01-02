@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const {config} = require('../database/config')
 require('dotenv').config();
 
-function auth(req,res,next){
+function authenticate(req,res,next){
     if(req.headers.authorization && req.headers.authorization.startsWith('bearer')){
         const token = req.headers.authorization.split(' ')[1];
         if(token == null){
@@ -23,4 +23,4 @@ function auth(req,res,next){
     }
 }
 
-module.exports = {auth}
+module.exports = {authenticate}

@@ -23,6 +23,7 @@ function executeSQL(sql,placeholder){
         res(resulted)
     })
 })
+
 }
 
 
