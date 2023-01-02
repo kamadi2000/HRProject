@@ -108,6 +108,11 @@ class UserController{
         return status;
 
     }
+
+    async viewLeaveStatus(emp_ID){
+        const status = await user.viewLeaveStatus(emp_ID)
+        return status;
+    }
 }
 
 module.exports = {UserController}
