@@ -11,8 +11,32 @@ router.get('/loginPage', (req, res) => {
 })
 
 router.get('/AdminPage', (req, res)=>{
-    res,sendFile(path.join(initialPath,"Admin/admin.html"));
+    res.sendFile(path.join(initialPath,"Admin/admin.html"));
 })
+
+router.get('/generalUser', (req, res)=>{
+    res.sendFile(path.join(initialPath,"General user/generalUser.html"));
+})
+
+router.get('/HRmanager', (req, res)=>{
+    res.sendFile(path.join(initialPath,"HR Manager/HRmanager.html"));
+})
+
+router.get('/form', (req, res)=>{
+    res.sendFile(path.join(initialPath,"MakeForm/form.html"));
+})
+
+router.get('/manager', (req, res)=>{
+    res.sendFile(path.join(initialPath,"Manager/manager.html"));
+})
+
+router.get('/supervisor', (req, res)=>{
+    res.sendFile(path.join(initialPath,"Supervisor/supervisor.html"));
+})
+
+
+
+
 
 
 
