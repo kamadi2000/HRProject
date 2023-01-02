@@ -4,24 +4,20 @@ const connection = require("../database/database")
 const bcrypt = require("bcryptjs");
 
 class User{
-    constructor(ID, firstName, lastName, type,){
-        this.username = ID;
-        this.type = type;
+    async setLastActiveTime(emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE session_detail
+                SET last_update = NOW()
+                WHERE emp_ID = "${emp_ID}"
+            `,[])
 
-        if(firstName){
-            this.firstName = firstName;
-        }else{
-            this.firstName = null;
+            return("last time updated")
+        }catch(e){
+            console.log(e)
+            return(null)
         }
-
-        if(lastName){
-            this.lastName = lastName;
-        }else{
-            this.lastName = null;
-        }
-
     }
-
     async login(username,password){
         try{
             var Credential = await executeSQL("SELECT * FROM user WHERE employee_ID = ?",[username])
@@ -227,6 +223,16 @@ class User{
             return (null)
         }
     }
+
+    async editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country){
+        try{
+            await executeSQL(`DELETE FROM employee WHERE ID = "${ID}"`)
+            await executeSQL(`INSERT INTO employee value("${ID}","${first_name}","${middle_name}","${last_name}""${date_of_birth}","${gender}""${marital_status}","${road}""${city}","${country}")`)
+            return("successfully saved")
+        }catch(e){
+            console.log(e)
+        }
+    }    
 
 }
 
