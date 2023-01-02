@@ -70,6 +70,11 @@ class UserController{
         const status = await user.getEmergancyDetail(emp_ID)
         return status
     }
+
+    async setAccessLevel(emp_ID){
+        const status = await user.setAccessLevel(emp_ID)
+        return status
+    }
 }
 
 module.exports = {UserController}
