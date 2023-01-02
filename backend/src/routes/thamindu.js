@@ -1,5 +1,5 @@
 const express = require('express');
-const {authenticate} = require('../middleware/auth')
+const {authenticate , accessAuthorization , levelAuthorization} = require('../middleware/auth')
 require('dotenv').config();
 
 const {UserController} = require("../controllers/UserController");
@@ -18,7 +18,7 @@ router.post('/applyleave',authenticate, async (req,res)=>{
     res.send(status)
 })
 
-router.get('/viewrequest',authenticate, async (req,res)=>{
+router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor"]), async (req,res)=>{
     const status = await controller.viewRequest(req.user.username)
     if(status) {
         res.send(status)
@@ -54,5 +54,20 @@ router.post('/emergancydetail',authenticate, async (req,res)=>{
     }
 })
 
+router.post('/givepermission',authenticate,async (req,res)=>{
+    const emp_ID = req.body.emp_ID
+    const level = req.body.level
+    const status = await controller.setAccessLevel()
+    if(level>3){
+        res.send({massege:"Invalid access level"})
+    }else if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid employee ID"})
+    }   
+})
+
+
+router.post
 
 module.exports = router;

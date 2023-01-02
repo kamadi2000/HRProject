@@ -72,6 +72,11 @@ class UserController{
         return status
     }
 
+    async setAccessLevel(emp_ID){
+        const status = await user.setAccessLevel(emp_ID)
+        return status
+    }
+
     async addEmployee(data){
         const status = await user.addEmployeePersonalDeatails(data)
         return status;
