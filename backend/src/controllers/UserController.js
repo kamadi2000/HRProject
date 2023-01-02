@@ -101,7 +101,8 @@ class UserController{
         const emp_ID = thisUser.username
         const status = await this.setLastActiveTime(emp_ID)
         return(status)
-
+    }
+    
     async addEmployee(data){
         const status = await user.addEmployeePersonalDeatails(data)
         return status;
