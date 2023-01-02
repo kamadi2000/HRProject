@@ -61,6 +61,15 @@ class UserController{
         return status
     }
 
+    async checkRecord(emp_ID){
+        const status = await user.checkRecord(emp_ID)
+        return status
+    }
+
+    async getEmergancyDetail(emp_ID){
+        const status = await user.getEmergancyDetail(emp_ID)
+        return status
+    }
 }
 
 module.exports = {UserController}

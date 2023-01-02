@@ -107,8 +107,13 @@ class User{
 
     async applyLeave(emp_ID,reason,leave_type,date,leave_status){
         try{
-            await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value("${emp_ID}","${reason}","${leave_type}","${date}","${leave_status}")`,[])
-            return ("request was successfully sent")
+            const leaveCount = await executeSQL(`SELECT ${leave_type}_count FROM leave_count WHERE emp_ID = "${emp_ID}"`)
+            if (leaveCount > 0){
+                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value("${emp_ID}","${reason}","${leave_type}","${date}","${leave_status}")`,[])
+                return ("request was successfully sent")
+            }else{
+                return(`you have no ${leave_type} type leaves`)
+            }
         }catch(e){
             console.log(e)
             return null
@@ -155,11 +160,13 @@ class User{
                 WHERE date = "${date}" AND emp_ID = "${emp_ID}"`
                 )
 
-            await executeSQL(`
-                UPDATE leave_count
-                SET ${type}_count = ${type}_count - 1
-                WHERE emp_ID = "${emp_ID}"`
-            )
+            if(decision == "approved"){
+                await executeSQL(`
+                    UPDATE leave_count
+                    SET ${type}_count = ${type}_count - 1
+                    WHERE emp_ID = "${emp_ID}"`
+                )
+            }
 
             return ("successfully validated")
         }catch(e){
@@ -167,8 +174,39 @@ class User{
         }
     }
 
-    async editEmergancy(){
-        console.log("succsusfully edided");
+    async checkRecord(emp_ID){
+        try{
+            const Credential = await executeSQL(`
+                SELECT * 
+                FROM employee 
+                JOIN (
+                    SELECT * 
+                    FROM employee_phone_number ep
+                    JOIN employment_detail ed using(emp_ID)) as a on a.emp_ID = employee.ID
+                WHERE ID = "${emp_ID}"`,[])
+            
+            if(Credential){
+                return (Credential[0])
+            }else{
+                return (null)
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+
+    async getEmergancyDetail(emp_ID){
+        try{
+            const Credential = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = "${emp_ID}"`)
+            if(Credential){
+                return(Credential[0])
+            }else{
+                return(null)
+            }
+        }catch(e){
+            console.log(e)
+        }
     }
 
 }
