@@ -26,10 +26,7 @@ submitbtn.addEventListener('click',()=>{
     //     console.error(err); 
     // }))
     .then(res => res.json())
-    .catch ((err) => {
-        alert("Invalid user name or password")
-        console.error(err);
-    })
+    
     .then(data=> {
         console.log(data);
         localStorage.setItem('Accesstoken',data.accesstoken);
@@ -60,6 +57,11 @@ submitbtn.addEventListener('click',()=>{
         // }else{
         //     alert(data);
         // }
+    })
+
+    .catch ((err) => {
+        alert("Invalid user name or password")
+        console.error(err);
     })
     
     
