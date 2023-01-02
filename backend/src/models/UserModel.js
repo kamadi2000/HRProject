@@ -224,6 +224,7 @@ class User{
         }
     }
 
+
     async editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country){
         try{
             await executeSQL(`DELETE FROM employee WHERE ID = "${ID}"`)
@@ -233,6 +234,38 @@ class User{
             console.log(e)
         }
     }    
+
+    async addEmployeePersonalDeatails(data){  // data is a JSON object
+        try {
+            const Credential = await executeSQL(
+                `
+                INSERT INTO employee (ID, 
+                                      first_name, 
+                                      middle_name, 
+                                      last_name, 
+                                      date_of_birth, 
+                                      gender, 
+                                      marital_status, 
+                                      road, 
+                                      city, 
+                                      country)
+                VALUE (${data.id},
+                        ${data.firstName},
+                        ${data.middleName},
+                        ${data.lastName},
+                        ${data.dateOfBirth},
+                        ${data.gender},
+                        ${data.maritalStatus},
+                        ${data.road},
+                        ${data.city},
+                        ${data.country})
+                `
+            );
+            return Credential;
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 }
 

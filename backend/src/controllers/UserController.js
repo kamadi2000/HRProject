@@ -1,4 +1,5 @@
 const {User} = require("../models/UserModel");
+// const { use } = require("../routes/thamindu");
 
 var users = new Map();
 var user = new User();
@@ -76,6 +77,7 @@ class UserController{
         return status
     }
 
+
     async editPIM(req){
         const ID = req.body.ID
         const first_name = req.body.ID
@@ -99,6 +101,11 @@ class UserController{
         const emp_ID = thisUser.username
         const status = await this.setLastActiveTime(emp_ID)
         return(status)
+
+    async addEmployee(data){
+        const status = await user.addEmployeePersonalDeatails(data)
+        return status;
+
     }
 }
 
