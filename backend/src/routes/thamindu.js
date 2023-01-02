@@ -28,6 +28,15 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor"]), asy
     }
 })
 
+router.get('/leavestatus', authenticate, async (req,res)=>{
+    const status = await controller.viewLeaveStatus(req.user.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.semd("no leave applications")
+    }
+})
+
 router.post('/requestvalidation',authenticate, async (req,res)=>{
     const emp_ID = req.body.emp_ID
     const date = req.body.date

@@ -267,6 +267,24 @@ class User{
         }
     }
 
+    async viewLeaveStatus(emp_ID){
+        try{
+            const Credential = await executeSQL(`
+                SELECT
+                    reason,
+                    leave_type,
+                    date,
+                    status
+                FROM leave_detail
+                WHERE emp_ID = "${emp_ID}"
+            `)
+            return Credential
+
+        }catch(e){
+            console.log(e)
+        }
+    }
+
 }
 
 module.exports = {User}
