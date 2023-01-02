@@ -45,4 +45,17 @@ function levelAuthorization(permission){
     }
 }
 
-module.exports = {authenticate , accessAuthorization , levelAuthorization}
+function bothAuthorization(typePermission, levelPermission){
+    return (req,res,next)=>{
+        const level = req.user.access_level
+        const type = req.user.type
+        if(typePermission.includes(type) && levelPermission.includes(level)){
+            next()
+        }else{
+            return res.status(401).json("You have no permission!")
+        }
+    }
+}
+
+
+module.exports = {authenticate , accessAuthorization , levelAuthorization , bothAuthorization}

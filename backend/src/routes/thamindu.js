@@ -1,8 +1,9 @@
 const express = require('express');
-const {authenticate , accessAuthorization , levelAuthorization} = require('../middleware/auth')
+const {authenticate , accessAuthorization , levelAuthorization , bothAuthorization} = require('../middleware/auth')
 require('dotenv').config();
 
 const {UserController} = require("../controllers/UserController");
+const { executeSQL } = require('../database/database');
 
 const router = express.Router();
 
@@ -65,6 +66,15 @@ router.post('/givepermission',authenticate,async (req,res)=>{
     }else{
         res.send({massege:"Invalid employee ID"})
     }   
+})
+
+router.post('/editpim',authenticate, async (req,res)=>{
+    const status = await controller.editPIM(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
+    }
 })
 
 

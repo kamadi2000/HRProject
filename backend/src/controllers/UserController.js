@@ -77,9 +77,35 @@ class UserController{
         return status
     }
 
+
+    async editPIM(req){
+        const ID = req.body.ID
+        const first_name = req.body.ID
+        const middle_name = req.body.ID
+        const last_name = req.body.ID
+        const date_of_birth = req.body.ID
+        const gender = req.body.ID
+        const marital_status = req.body.ID
+        const road = req.body.ID
+        const city = req.body.ID
+        const country = req.body.ID
+        if(ID && first_name && last_name && date_of_birth && gender && marital_status){
+            const status = await user.editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country)
+            return (status)
+        }else{
+            console.log("values cannot be null")
+        }    
+    }
+
+    async setLastActiveTime(thisUser){
+        const emp_ID = thisUser.username
+        const status = await this.setLastActiveTime(emp_ID)
+        return(status)
+
     async addEmployee(data){
         const status = await user.addEmployeePersonalDeatails(data)
         return status;
+
     }
 }
 
