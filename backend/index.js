@@ -22,7 +22,7 @@ app.use('/employee',employeeRoutes);
 app.use('/auths',authRoutes);
 app.use('/user',userRoutes);
 app.use('', pageRoutes);
-app.use('/yasira');
+app.use('/yasira',yasiraRoutes);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

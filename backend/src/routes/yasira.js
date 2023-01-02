@@ -12,3 +12,5 @@ router.get('/addEmployee', authenticate, async (req, res) => {
     const status = await controller.addEmployee(req.body)
     res.send({status})
 })
+
+module.exports = router;
