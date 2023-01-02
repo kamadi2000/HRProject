@@ -1,5 +1,5 @@
 const {User} = require("../models/UserModel");
-const { use } = require("../routes/thamindu");
+// const { use } = require("../routes/thamindu");
 
 var users = new Map();
 var user = new User();
