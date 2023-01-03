@@ -14,27 +14,27 @@
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">Employee ID</span>
-                        <input type="text" placeholder="Employee ID" required>
+                        <input type="text" placeholder="Employee ID" id="emp_ID" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">purpose for leave</span>
-                        <input type="text" placeholder="purpose for leave" required>
+                        <input type="text" placeholder="purpose for leave" id="reason" required>
                     </div>
 
-                    <div class="input-box">
+                    <!-- <div class="input-box">
                         <span class="details">Number Of Days Requested</span>
-                        <input type="text" placeholder="Enter Number of Days" required>
-                    </div>
+                        <input type="text" placeholder="Enter Number of Days" id="Ndays" required>
+                    </div> -->
 
                     <div class="input-box">
                         <span class="details">Requested Date</span>
-                        <input type="text" placeholder="dd/mm/yyyy" required>
+                        <input type="text" placeholder="dd/mm/yyyy" id="date" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Leave Type</span>
-                        <select name="Marital-status" id="Marital-status" >
+                        <select name="Leave-type" id="leave-type" >
                             <option value="annual">Annual Leave</option>
                             <option value="Casual">Casual Leave</option>
                             <option value="Maternity">Maternity Leave</option>
@@ -43,8 +43,8 @@
                     </div>
                 </div>
                 
-                <div class="button">
-                    <input type="submit" value="Request">
+                <div class="buttonSection">
+                    <input type="button" value="Request" id="submit-btn">
                 </div>
 
             </form>

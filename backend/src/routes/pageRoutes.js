@@ -34,9 +34,15 @@ router.get('/supervisor', (req, res)=>{
     res.sendFile(path.join(initialPath,"Supervisor/supervisor.html"));
 })
 
-router.get('/viewInfo'),(req, res)=>{
+router.get('/viewInfo',(req, res)=>{
     res.sendFile(path.join(initialPath,"ViewInfo/viewInfo.html"));
-}
+})
+
+router.get('/leaveStatus',(req, res)=>{
+    res.sendFile(path.join(initialPath,"General User/LeaveInfo.html"));
+})
+
+
 
 
 
