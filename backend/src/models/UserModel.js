@@ -285,6 +285,16 @@ class User{
         }
     }
 
+    async getLastTime(emp_ID){
+        try{
+            const Credential = await executeSQL(`SELECT last_update FROM session_detail WHERE emp_ID = "${emp_ID}"`)
+            return Credential[0].last_update
+        }catch(e){
+            console.log(e)
+            return null
+        }
+    }
+
 }
 
 module.exports = {User}

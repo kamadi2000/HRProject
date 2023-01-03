@@ -22,8 +22,8 @@ router.post('/login', async (req,res)=>{
     if(status){
         const type = await controller.getType(status[0].employee_ID)
         const user = {type:type,access_level:status[0].access_level, username: status[0].employee_ID}
-        const accesstoken = jwt.sign(user,config.ACCESS_TOKEN_KEY,{expiresIn: '10s'});
-        const refreshtoken = jwt.sign(user,config.REFRESH_TOKEN_KEY,{expiresIn: '15m'});
+        const accesstoken = jwt.sign(user,config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
+        const refreshtoken = jwt.sign(user,config.REFRESH_TOKEN_KEY,{expiresIn: '24h'});
         await controller.storeToken(refreshtoken,status[0].employee_ID);
         if(type){
             res.status(ResponseHandler(status)).send({accesstoken,refreshtoken,type});
@@ -38,13 +38,21 @@ router.post('/login', async (req,res)=>{
 router.post('/token', async (req,res)=>{
     const refreshtoken = req.body.refreshtoken;
     if(refreshtoken==null) res.sendStatus(401);
+    
     const status = await controller.getToken(refreshtoken);
     try{
         if(status){
-            jwt.verify(refreshtoken,config.REFRESH_TOKEN_KEY, (err,user)=>{
+            jwt.verify(refreshtoken,config.REFRESH_TOKEN_KEY, async (err,user)=>{
                 if(err) res.sendStatus(403);
-                const accesstoken = jwt.sign({access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '10s'});
-                res.status(ResponseHandler(status)).send({accesstoken});
+                const last_time = await controller.getLastTime(user.username)
+                const oldTime = new Date(last_time).getTime()
+                const newTime = new Date().getTime()
+                if( newTime - oldTime < 25000){
+                    const accesstoken = jwt.sign({access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
+                    res.status(ResponseHandler(status)).send({accesstoken});
+                }else{
+                    res.sendStatus(401)
+                }
             })
         }else{
             res.sendStatus(403);
