@@ -2,6 +2,7 @@
 const username = document.getElementById('username')  || null;
 const password = document.getElementById('password');
 const submitbtn = document.getElementById('submit-btn');
+const move = document.getElementById('move-btn');
 
 submitbtn.addEventListener('click',()=>{
     console.log(username.value, password.value)
@@ -59,13 +60,23 @@ submitbtn.addEventListener('click',()=>{
         // }
     })
 
+
+
     .catch ((err) => {
         alert("Invalid user name or password")
         console.error(err);
     })
     
-    
-    
-
 })
 
+move.addEventListener('click',()=>{
+    const accessToken = localStorage.getItem('Accesstoken')
+    fetch('/user/viewrequest',{
+        method:'get',
+        headers:new Headers({'Content-Type':'application/json','authorization': `bearer ${accessToken}`}),
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data)
+    })
