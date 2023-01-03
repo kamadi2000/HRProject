@@ -33,7 +33,7 @@ router.get('/leavestatus', authenticate, async (req,res)=>{
     if(status){
         res.send(status)
     }else{
-        res.semd("no leave applications")
+        res.send("no leave applications")
     }
 })
 
