@@ -20,7 +20,7 @@ class User{
     }
     async login(username,password){
         try{
-            var Credential = await executeSQL("SELECT * FROM user WHERE employee_ID = ?",[username])
+            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = "${username}"`,[])
             const salt = await bcrypt.genSalt(10);
             const userpassword = await bcrypt.hash(password, salt)
             if(Credential){
@@ -237,31 +237,66 @@ class User{
 
     async addEmployeePersonalDeatails(data){  // data is a JSON object
         try {
-            const Credential = await executeSQL(
+            await executeSQL(
                 `
-                INSERT INTO employee (ID, 
-                                      first_name, 
-                                      middle_name, 
-                                      last_name, 
-                                      date_of_birth, 
-                                      gender, 
-                                      marital_status, 
-                                      road, 
-                                      city, 
-                                      country)
-                VALUE (${data.id},
-                        ${data.firstName},
-                        ${data.middleName},
-                        ${data.lastName},
-                        ${data.dateOfBirth},
-                        ${data.gender},
-                        ${data.maritalStatus},
-                        ${data.road},
-                        ${data.city},
-                        ${data.country})
-                `
+                INSERT INTO employee (
+                    ID, 
+                    first_name, 
+                    middle_name, 
+                    last_name, 
+                    date_of_birth, 
+                    gender, 
+                    marital_status, 
+                    road, 
+                    city, 
+                    country)
+                VALUE (
+                    "${data.id}",
+                    "${data.firstName}",
+                    "${data.middleName}",
+                    "${data.lastName}",
+                    "${data.dateOfBirth}",
+                    "${data.gender}",
+                    "${data.maritalStatus}",
+                    "${data.road}",
+                    "${data.city}',
+                    "${data.country}");
+
+                INSERT INTO employment_detail (
+                    emp_ID,
+                    job_title,
+                    pay_grade,
+                    employeement_status,
+                    working_time,
+                    department,
+                    branch_ID,
+                    supervisor,
+                    type
+                )
+
+                VALUE (
+                    "${data.empID}",
+                    "${data.jobTitle}",
+                    "${data.payGrade}",
+                    "${data.employeementStatus}",
+                    "${data.workingTime}",
+                    "${data.department}",
+                    "${data.branchID}",
+                    "${data.supervisor}",
+                    "${data.type}"
+                )`
             );
-            return Credential;
+        this.addPhoneNumber(data)
+        return ("successfully added")
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async addPhoneNumber(data){
+        try {
+            await executeSQL(`INSERT INTO employee_phone_number (emp_ID, phone_number) VALUE ("${data.empID}", "${data.phoneNumber}")`)
         } catch (error) {
             console.log(error)
         }

@@ -23,7 +23,7 @@ router.get('/HRmanager', (req, res)=>{
 })
 
 router.get('/form', (req, res)=>{
-    res.sendFile(path.join(initialPath,"MakeForm/form.html"));
+    res.sendFile(path.join(initialPath,"MakeForm/Add_Employee_form.html"));
 })
 
 router.get('/manager', (req, res)=>{
@@ -33,6 +33,10 @@ router.get('/manager', (req, res)=>{
 router.get('/supervisor', (req, res)=>{
     res.sendFile(path.join(initialPath,"Supervisor/supervisor.html"));
 })
+
+router.get('/viewInfo'),(req, res)=>{
+    res.sendFile(path.join(initialPath,"ViewInfo/viewInfo.html"));
+}
 
 
 

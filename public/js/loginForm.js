@@ -4,13 +4,11 @@ const password = document.getElementById('password');
 const submitbtn = document.getElementById('submit-btn');
 const move = document.getElementById('move-btn');
 
+const searchbtn = document.getElementById('Search-btn');
+const employee_ID =document.getElementById('employee_ID')
+
 submitbtn.addEventListener('click',()=>{
     console.log(username.value, password.value)
-
-    // fetch('users/getList', {
-    //     headers:new Headers({'Content-Type':'application/json', }),
-    // })
-
     fetch('/auths/login',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json'}),
@@ -19,15 +17,7 @@ submitbtn.addEventListener('click',()=>{
             password:password.value
         })
     })
-    // .then(data=> {
-    //     console.log(data)
-    //     return data
-    // })
-    // .catch((err) => {
-    //     console.error(err); 
-    // }))
     .then(res => res.json())
-    
     .then(data=> {
         console.log(data);
         localStorage.setItem('Accesstoken',data.accesstoken);
@@ -47,36 +37,11 @@ submitbtn.addEventListener('click',()=>{
             location.href = 'generalUser'
         }else if (job_title == "Manager"){
             location.href = '/manager' 
-        }
-
-        // fetch('/auths',{
-        //     headers : {'authorization':`bearer ${info['accesstoken']}`}
-        // })
-        // .then()
-        // if (data.username){
-        //     alert('login successful');
-        // }else{
-        //     alert(data);
-        // }
+        }    
     })
-
-
 
     .catch ((err) => {
         alert("Invalid user name or password")
         console.error(err);
     })
-    
 })
-
-move.addEventListener('click',()=>{
-    const accessToken = localStorage.getItem('Accesstoken')
-    fetch('/user/viewrequest',{
-        method:'get',
-        headers:new Headers({'Content-Type':'application/json','authorization': `bearer ${accessToken}`}),
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-    })
