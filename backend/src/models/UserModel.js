@@ -235,7 +235,7 @@ class User{
         }
     }    
 
-    async addEmployeePersonalDeatails(data){  // data is a JSON object
+    async addEmployee(data){  // data is a JSON object
         try {
             await executeSQL(
                 `
@@ -259,12 +259,13 @@ class User{
                     "${data.gender}",
                     "${data.maritalStatus}",
                     "${data.road}",
-                    "${data.city}',
-                    "${data.country}");
-
+                    "${data.city}",
+                    "${data.country}")`,[])
+            
+            await executeSQL(`
                 INSERT INTO employment_detail (
                     emp_ID,
-                    job_title,
+                    job_tittle,
                     pay_grade,
                     employeement_status,
                     working_time,
@@ -275,9 +276,9 @@ class User{
                 )
 
                 VALUE (
-                    "${data.empID}",
+                    "${data.id}",
                     "${data.jobTitle}",
-                    "${data.payGrade}",
+                    "${data.paygrade}",
                     "${data.employeementStatus}",
                     "${data.workingTime}",
                     "${data.department}",
@@ -285,8 +286,8 @@ class User{
                     "${data.supervisor}",
                     "${data.type}"
                 )`
-            );
-        this.addPhoneNumber(data)
+            ,[]);
+        await this.addPhoneNumber(data)
         return ("successfully added")
 
         } catch (error) {
@@ -296,7 +297,7 @@ class User{
 
     async addPhoneNumber(data){
         try {
-            await executeSQL(`INSERT INTO employee_phone_number (emp_ID, phone_number) VALUE ("${data.empID}", "${data.phoneNumber}")`)
+            await executeSQL(`INSERT INTO employee_phone_number (emp_ID, phone_number) VALUE ("${data.id}", "${data.phoneNumber}")`)
         } catch (error) {
             console.log(error)
         }
