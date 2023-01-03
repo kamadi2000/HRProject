@@ -3,8 +3,7 @@ const username = document.getElementById('username')  || null;
 const password = document.getElementById('password');
 const submitbtn = document.getElementById('submit-btn');
 
-const searchbtn = document.getElementById('Search-btn');
-const employee_ID =document.getElementById('employee_ID')
+
 
 submitbtn.addEventListener('click',()=>{
     console.log(username.value, password.value)
@@ -28,12 +27,16 @@ submitbtn.addEventListener('click',()=>{
         const job_title = data.type;
         if (job_title == "HRManager"){
             location.href = '/HRmanager';
+
         }else if (job_title == "Supervisor"){
             location.href = '/supervisor';
+
         }else if (job_title == "Admin"){
             location.href = '/AdminPage';
+
         }else if (job_title == "General"){
-            location.href = 'generalUser'
+            location.href = '/generalUser';
+            
         }else if (job_title == "Manager"){
             location.href = '/manager' 
         }    
