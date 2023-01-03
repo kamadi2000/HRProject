@@ -104,14 +104,17 @@ class UserController{
     }
     
     async addEmployee(data){
-        const status = await user.addEmployeePersonalDeatails(data)
-        return status;
-
+        await user.addEmployee(data)  // data is a Json object
     }
 
     async viewLeaveStatus(emp_ID){
         const status = await user.viewLeaveStatus(emp_ID)
         return status;
+    }
+
+    async getLastTime(emp_ID){
+        const status = await user.getLastTime(emp_ID)
+        return status
     }
 }
 

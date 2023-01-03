@@ -8,7 +8,7 @@ const router = express.Router();
 
 const controller = new UserController();
 
-router.get('/addEmployee', authenticate, async (req, res) => {
+router.post('/addEmployee', authenticate, async (req, res) => {
     const status = await controller.addEmployee(req.body)
     res.send({status})
 })

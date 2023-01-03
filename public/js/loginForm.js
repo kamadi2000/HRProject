@@ -2,6 +2,7 @@
 const username = document.getElementById('username')  || null;
 const password = document.getElementById('password');
 const submitbtn = document.getElementById('submit-btn');
+const move = document.getElementById('move-btn');
 
 
 
@@ -41,16 +42,9 @@ submitbtn.addEventListener('click',()=>{
             location.href = '/manager' 
         }    
     })
+
     .catch ((err) => {
         alert("Invalid user name or password")
         console.error(err);
     })
 })
-
-
-
-
- // fetch('/auths',{
-        //     headers : {'authorization':`bearer ${info['accesstoken']}`}
-        // })
-
