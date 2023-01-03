@@ -113,6 +113,11 @@ class UserController{
         const status = await user.viewLeaveStatus(emp_ID)
         return status;
     }
+
+    async getLastTime(emp_ID){
+        const status = await user.getLastTime(emp_ID)
+        return status
+    }
 }
 
 module.exports = {UserController}
