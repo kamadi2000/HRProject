@@ -1,9 +1,9 @@
-function getLeaveCount(){
+function getPIMinfo(){
     const div = document.getElementById('container');
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('/user/viewleavecount',{
+    fetch('/user/viewpim',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
@@ -11,7 +11,6 @@ function getLeaveCount(){
     })
     .then(res=>  res.json())
     .then(data => {
-        div.textContent = data;
         console.log({data})
     })
 
@@ -27,7 +26,7 @@ function getLeaveCount(){
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/viewleavecount',{
+            fetch('/user/viewpim ',{
                 method:'get',
                 headers:{'Content-Type':'application/json',
                         'authorization':`bearer ${accesstoken}`},
@@ -41,9 +40,4 @@ function getLeaveCount(){
         })
     })
 }
-getLeaveCount();
-
-
-
-    
-
+getPIMinfo();
