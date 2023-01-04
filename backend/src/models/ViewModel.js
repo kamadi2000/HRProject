@@ -18,6 +18,7 @@ class View{
                             leave_d.leave_type,
                             leave_d.leave_date,
                             leave_d.reason,
+                            leave_d.status,
                             leave_c.annual_count,leave_type.annual,
                             leave_c.casual_count,leave_type.casual,
                             leave_c.maternity_count,leave_type.maternity,
