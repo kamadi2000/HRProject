@@ -4,27 +4,23 @@ const connection = require("../database/database")
 const bcrypt = require("bcryptjs");
 
 class User{
-    constructor(ID, firstName, lastName, type,){
-        this.username = ID;
-        this.type = type;
+    async setLastActiveTime(emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE session_detail
+                SET last_update = NOW()
+                WHERE emp_ID = "${emp_ID}"
+            `,[])
 
-        if(firstName){
-            this.firstName = firstName;
-        }else{
-            this.firstName = null;
+            return("last time updated")
+        }catch(e){
+            console.log(e)
+            return(null)
         }
-
-        if(lastName){
-            this.lastName = lastName;
-        }else{
-            this.lastName = null;
-        }
-
     }
-
     async login(username,password){
         try{
-            var Credential = await executeSQL("SELECT * FROM user WHERE employee_ID = ?",[username])
+            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = "${username}"`,[])
             const salt = await bcrypt.genSalt(10);
             const userpassword = await bcrypt.hash(password, salt)
             if(Credential){
@@ -225,6 +221,112 @@ class User{
         }catch(e){
             console.log(e)
             return (null)
+        }
+    }
+
+
+    async editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country){
+        try{
+            await executeSQL(`DELETE FROM employee WHERE ID = "${ID}"`)
+            await executeSQL(`INSERT INTO employee value("${ID}","${first_name}","${middle_name}","${last_name}""${date_of_birth}","${gender}""${marital_status}","${road}""${city}","${country}")`)
+            return("successfully saved")
+        }catch(e){
+            console.log(e)
+        }
+    }    
+
+    async addEmployeePersonalDeatails(data){  // data is a JSON object
+        try {
+            await executeSQL(
+                `
+                INSERT INTO employee (
+                    ID, 
+                    first_name, 
+                    middle_name, 
+                    last_name, 
+                    date_of_birth, 
+                    gender, 
+                    marital_status, 
+                    road, 
+                    city, 
+                    country)
+                VALUE (
+                    "${data.id}",
+                    "${data.firstName}",
+                    "${data.middleName}",
+                    "${data.lastName}",
+                    "${data.dateOfBirth}",
+                    "${data.gender}",
+                    "${data.maritalStatus}",
+                    "${data.road}",
+                    "${data.city}',
+                    "${data.country}");
+
+                INSERT INTO employment_detail (
+                    emp_ID,
+                    job_title,
+                    pay_grade,
+                    employeement_status,
+                    working_time,
+                    department,
+                    branch_ID,
+                    supervisor,
+                    type
+                )
+
+                VALUE (
+                    "${data.empID}",
+                    "${data.jobTitle}",
+                    "${data.payGrade}",
+                    "${data.employeementStatus}",
+                    "${data.workingTime}",
+                    "${data.department}",
+                    "${data.branchID}",
+                    "${data.supervisor}",
+                    "${data.type}"
+                )`
+            );
+        this.addPhoneNumber(data)
+        return ("successfully added")
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async addPhoneNumber(data){
+        try {
+            await executeSQL(`INSERT INTO employee_phone_number (emp_ID, phone_number) VALUE ("${data.empID}", "${data.phoneNumber}")`)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async viewLeaveStatus(emp_ID){
+        try{
+            const Credential = await executeSQL(`
+                SELECT
+                    reason,
+                    leave_type,
+                    date,
+                    status
+                FROM leave_detail
+                WHERE emp_ID = "${emp_ID}"
+            `)
+            return Credential
+
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    async getLastTime(emp_ID){
+        try{
+            const Credential = await executeSQL(`SELECT last_update FROM session_detail WHERE emp_ID = "${emp_ID}"`)
+            return Credential[0].last_update
+        }catch(e){
+            console.log(e)
+            return null
         }
     }
 

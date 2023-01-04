@@ -1,8 +1,9 @@
 const express = require('express');
-const {authenticate , accessAuthorization , levelAuthorization} = require('../middleware/auth')
+const {authenticate , accessAuthorization , levelAuthorization , bothAuthorization} = require('../middleware/auth')
 require('dotenv').config();
 
 const {UserController} = require("../controllers/UserController");
+const { executeSQL } = require('../database/database');
 
 const router = express.Router();
 
@@ -24,6 +25,15 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor"]), asy
         res.send(status)
     }else{
         res.send("No leave request")
+    }
+})
+
+router.get('/leavestatus', authenticate, async (req,res)=>{
+    const status = await controller.viewLeaveStatus(req.user.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("no leave applications")
     }
 })
 
@@ -65,6 +75,15 @@ router.post('/givepermission',authenticate,async (req,res)=>{
     }else{
         res.send({massege:"Invalid employee ID"})
     }   
+})
+
+router.post('/editpim',authenticate, async (req,res)=>{
+    const status = await controller.editPIM(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
+    }
 })
 
 
