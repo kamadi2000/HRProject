@@ -1,9 +1,9 @@
-function getLeaveinfo(){
+function getLeaveCount(){
     const div = document.getElementById('container');
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('user/leavestatus',{
+    fetch('user/viewleavecount',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
@@ -11,7 +11,6 @@ function getLeaveinfo(){
     })
     .then(res=>  res.json())
     .then(data => {
-        div.textContent=data;
         console.log({data})
     })
 
@@ -27,7 +26,7 @@ function getLeaveinfo(){
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/leavestatus',{
+            fetch('/user/viewleavecount',{
                 method:'get',
                 headers:{'Content-Type':'application/json',
                         'authorization':`bearer ${accesstoken}`},
@@ -41,7 +40,7 @@ function getLeaveinfo(){
         })
     })
 }
-getLeaveinfo();
+getLeaveCount();
 
 
 
