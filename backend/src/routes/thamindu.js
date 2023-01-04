@@ -86,7 +86,14 @@ router.post('/editpim',authenticate, async (req,res)=>{
     }
 })
 
+router.get('/viewpim', authenticate, async (req,res)=>{
+    const status = await controller.checkRecord(req.user.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("no leave applications")
+    }
+})
 
-router.post
 
 module.exports = router;
