@@ -2,6 +2,7 @@
 const {executeSQL} = require("../database/database");
 const connection = require("../database/database")
 const bcrypt = require("bcryptjs");
+const { use } = require("../routes/employeeRoutes");
 
 class User{
     async setLastActiveTime(emp_ID){
@@ -309,6 +310,43 @@ class User{
         }catch(e){
             console.log(e)
             return null
+        }
+    }
+
+    async createAccount(username,password,accessLevel){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            if(Credential){
+                return ("this username already exists")
+            }else{
+                const salt = await bcrypt.genSalt(10);
+                const userpassword = await bcrypt.hash(password, salt)
+                const canInsert = executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
+                if(canInsert){
+                    await executeSQL(`INSERT INTO user values (?,?,?)`,[username,userpassword,accessLevel])
+                    return ("successfully created")
+                }else{
+                    return ("invalid username")
+                }
+            }
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async deleteAccount(username){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            if(Credential){
+                await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                return ("successfully deleted")
+            }else{
+                return("there is no account on that username")
+            }
+        }catch(e){
+            console.log(e)
+            return(null)
         }
     }
 

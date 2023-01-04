@@ -95,5 +95,22 @@ router.get('/viewpim', authenticate, async (req,res)=>{
     }
 })
 
+router.post('/createuseraccount',authenticate, async (req,res)=>{
+    const status = await controller.createAccount(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("Cannot create check again")
+    }
+})
+
+router.post('/deleteaccount',authenticate, async (req,res)=>{
+    const status = await controller.deleteAccount(req.body.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("account is not deleted")
+    }
+})
 
 module.exports = router;
