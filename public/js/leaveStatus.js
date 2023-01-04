@@ -32,15 +32,25 @@ function getLeaveinfo(){
                         'authorization':`bearer ${accesstoken}`},
                 
             })
-            .then(res=> res.json())
+            .then(res=> {
+                return res.json()
+            })
             .then(data => {
-                div.textContent = data;
-                console.log(data)
+                data.forEach(element => {
+                    const markup = `<div class="tableRow">
+                    <div class="cell">${element.date}</div>
+                    <div class="cell">${element.leave_type}</div>
+                    <div class="cell">${element.reason}</div>
+                    <div class="cell">${element.status}</div>
+                </div>`;
+
+                document.querySelector('.tableContent').insertAdjacentHTML('beforeend', markup);
+                });
             })
         })
     })
 }
-getLeaveinfo();
+
 
 
 
