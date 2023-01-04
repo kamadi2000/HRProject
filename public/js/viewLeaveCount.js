@@ -11,6 +11,7 @@ function getLeaveCount(){
     })
     .then(res=>  res.json())
     .then(data => {
+        div.textContent = data;
         console.log({data})
     })
 
