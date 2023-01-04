@@ -3,7 +3,7 @@ function getLeaveCount(){
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('user/viewleavecount',{
+    fetch('/user/viewleavecount',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
