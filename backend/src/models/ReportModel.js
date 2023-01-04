@@ -14,21 +14,6 @@ class Report{
             console.log(e);
         }
     }
-    async createView(){   
-        try{
-            await executeSQL(`CREATE OR REPLACE VIEW leave_view AS 
-                        SELECT leave_d.req_No,leave_d.leave_date,emp_d.department FROM leave_detail leave_d 
-                        LEFT JOIN employment_detail emp_d 
-                        ON leave_d.emp_ID=emp_d.emp_ID`,[])
-            await executeSQL(`CREATE OR REPLACE VIEW employee_view AS 
-                        SELECT * FROM employee emp
-                        INNER JOIN employment_detail emp_d 
-                        ON emp.ID=emp_d.emp_ID`,[]);
-        }
-        catch(e){
-            console.log(e);
-        }
-    }
     async getLeaveReport(periodBegin,periodEnd){
         try{
             const result = await  executeSQL(`SELECT leave_view.department,COUNT(req_No) FROM leave_view WHERE leave_view.leave_date BETWEEN "${periodBegin}" AND "${periodEnd}"`,[]);
