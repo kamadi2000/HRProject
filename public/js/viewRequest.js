@@ -8,7 +8,7 @@ function viewRequestInfo(){
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('user/viewrequest',{
+    fetch('/user/viewrequest',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
