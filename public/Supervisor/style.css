@@ -1,5 +1,5 @@
 .backgro{
-   background-color: #CFFFDC;
+   background-color: #303030;
    
  }
   
@@ -13,3 +13,96 @@
     background-color: #EDFFEC;
     height: 3rem;
  }
+
+ .nav{
+   background-color: #8458b3;
+   height: 3rem;
+}
+
+.nav-text{
+   color: #eaeaea;
+}
+
+#navUl{
+   padding: 5px;
+   justify-content: center;
+}
+
+#profileAvatar{
+   align-content: center;
+}
+
+.tableContent{
+   width: 90%;
+   margin-top: 30px;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 3px;
+   border-radius: 20px;
+   align-self: center;
+}
+
+.tableRow{
+   align-self: center;
+   margin: 3px;
+   background-color: white;
+   display: flex;
+   flex-direction: row;
+   height: auto;
+   border-radius: 20px;
+   align-content: center;
+   justify-content: center;
+}
+
+#tableHeader{
+   background-color: #C51383;
+   color: white;
+   height: 40px;
+}
+
+ul{
+   margin: 0px;
+   list-style-type: none;
+   padding: 0px;
+}
+
+.cell{
+   display: flex;
+   width: 22%;
+   justify-content: center;
+   align-items: center;
+   padding: 5px
+}
+
+.leave-approve-btn{
+   width: 80px;
+   height: 35px;
+   margin: 5px;
+   padding: 5px;
+   color: white;
+   border-radius: 10px;
+   background-color: #2FB201;
+   border-style: none;
+}
+
+.leave-reject-btn{
+   width: 80px;
+   height: 35px;
+   margin: 5px;
+   padding: 5px;
+   color: white;
+   border-radius: 10px;
+   background-color: #D5212D;
+   border-style: none;
+}
+
+.leave-approved{
+   color: #2FB201;
+   display: none;
+}
+
+.leave-rejected{
+   color: #D5212D;
+   display: none;
+}
+
