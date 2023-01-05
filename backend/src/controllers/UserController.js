@@ -59,8 +59,8 @@ class UserController{
         return status
     }
 
-    async requestValidation(emp_ID,date,decision,type){
-        const status = await user.requestValidation(emp_ID,date,decision,type)
+    async requestValidation(emp_ID,date,decision,type,req_No){
+        const status = await user.requestValidation(emp_ID,date,decision,type,req_No)
         return status
     }
 
