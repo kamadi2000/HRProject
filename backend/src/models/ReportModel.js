@@ -27,7 +27,7 @@ class Report{
     }
     async getEmpReportJobtitle(job_title){
         try{
-            const result = await  executeSQL(`SELECT * FROM employee_view WHERE job_tittle = "${job_title}"`,[]);
+            const result = await  executeSQL(`SELECT * FROM employee_view WHERE job_title = "${job_title}"`,[]);
             if(result){  
                 return result;
             }
