@@ -25,27 +25,28 @@ function viewRequestInfo(){
             let clickedrejectedID = "clicked" + approveID;
 
             const markup = `<div class="tableRow">
-            <div class="cell" style="width:12%">${element.emp_ID}</div>
+            <div class="cell" style="width:12%">${element.req_No}</div>
             <div class="cell">
                 <ul>
-                    <li>Name: ${element.name}</li>
+                    <li>Employee ID: ${element.emp_ID}</li>
+                    <li>Name: ${element.full_name}</li>
                     <li>Department: ${element.department}</li>
                     <li>Job Title: ${element.job_title}</li>
                 </ul>
             </div>
             <div class="cell">
                 <ul>
-                    <li>Type: ${element.type}</li>
-                    <li>Date: ${element.date}</li>
+                    <li>Type: ${element.leave_type}</li>
+                    <li>Date: ${element.leave_date}</li>
                     <li>Reason: ${element.reason}</li>
                 </ul>
             </div>
             <div class="cell">
                 <ul>
-                    <li>Annual: ${element.remaining_annual}</li>
-                    <li>Casual: ${element.remaining_casual}</li>
-                    <li>Maternity: ${element.remaining_maternity}</li>
-                    <li>No Pay: ${element.remaining_nopay}</li>
+                    <li>Annual: ${element.annual_count} / ${element.annual}</li>
+                    <li>Casual: ${element.casual_count} / ${element.casual}</li>
+                    <li>Maternity: ${element.maternity_count} / ${element.maternity}</li>
+                    <li>No Pay: ${element.noPay_count} / ${element.noPay}</li>
                 </ul>
             </div>
             <div class="cell">
@@ -56,6 +57,8 @@ function viewRequestInfo(){
             </div>
         </div>`
         });
+
+        document.querySelector('.tableContent').insertAdjacentHTML('beforeend', markup);
 
         
     })
@@ -88,22 +91,27 @@ function viewRequestInfo(){
     })
 }
 
-
-function getID(e){
-    console.log(e.id.slice(1));
-    console.log(array);
-    // fetch('/user/requestvalidation',{
-    //     method:'post',
-    //     headers:{'Content-Type':'application/json',
-    //     'authorization':`bearer ${accesstoken}`,
-    //     body:JSON.stringify({
-    //         emp_ID : emp_ID.value,
-    //         date : date.value,
-    //         decision : decision.value
-    //         type = req.body.leaveType
-    //     })}
-    // })
+function show_hide(obj){
+    obj.style.display="none";
+    document.getElementById("clicked"+obj.id).style.display="inline";
+    if(obj.id[0]=='a'){
+        array.forEach(element => {
+            if (element.req_No === obj.id.slice(1)){
+                element["status"] = "approved"; 
+            }
+        })
+        document.getElementById("r"+obj.id.slice(1)).style.display="none";      
+    }
+    else{
+        array.forEach(element => {
+            if (element.req_No === obj.id.slice(1)){
+                element["status"] = "rejected"; 
+            }
+        })
+        document.getElementById("a"+obj.id.slice(1)).style.display="none";
+    }
 }
+
 viewRequestInfo();
 
 
