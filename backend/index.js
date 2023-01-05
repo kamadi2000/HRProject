@@ -3,7 +3,7 @@ const path = require('path')
 const mysql = require('mysql')
 
 const { viewController } = require('../backend/src/controllers/ViewController');
-
+const { leaveTriggerController } = require('../backend/src/controllers/leaveTriggerController');
 
 //const bodyParser = require('body-parser')
 
@@ -14,11 +14,13 @@ const { post } = require('./src/routes/employeeRoutes');
 const pageRoutes = require('./src/routes/pageRoutes');
 const yasiraRoutes = require('./src/routes/yasira');
 const ReportRoutes = require('./src/routes/ReportRoutes');
+const controllerLeave = new leaveTriggerController();
 const app = express()
 const port = 8000;
 
 app.use(async(req,res,next)=>{
     try{
+        await controllerLeave.leaveTrigger();
         const controllerView = new viewController();
         await controllerView.createView();
         next() 
