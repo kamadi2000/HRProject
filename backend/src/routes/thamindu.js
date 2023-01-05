@@ -42,7 +42,8 @@ router.post('/requestvalidation',authenticate, async (req,res)=>{
     const date = req.body.date
     const decision = req.body.decision
     const type = req.body.leaveType
-    const status = await controller.requestValidation(emp_ID,date,decision,type)
+    const req_No  = req.body.req_No
+    const status = await controller.requestValidation(emp_ID,date,decision,type, req_No)
     res.send({status})
 })
 
