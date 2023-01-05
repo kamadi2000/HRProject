@@ -6,5 +6,9 @@ class leaveTriggerController{
     async leaveTrigger(){
         await triggerLeave.leaveTrigger();
     }
+    async leaveCountColomnTrigger(){
+        await triggerLeave.leaveCountColomnTrigger();
+    }
 }
+
 module.exports = {leaveTriggerController};

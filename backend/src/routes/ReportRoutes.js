@@ -4,13 +4,11 @@ require('dotenv').config();
 
 const { reportController } = require('../controllers/reportController');
 const { viewController } = require('../controllers/ViewController');
-const { leaveTriggerController } = require('../controllers/leaveTriggerController');
 
 const router = express.Router();
 
 const controller = new reportController();
 const controllerView = new viewController();
-const controllerLeave = new leaveTriggerController();
 
 router.post('/reportemployee',authenticate, async (req,res)=>{
     const result = await controller.getEmployeeReport(req.body.department_name)
@@ -34,7 +32,6 @@ router.post('/reportemployee/department',authenticate, async (req,res)=>{
 })
 router.post('/reportemployee/paygrade',authenticate, async (req,res)=>{
     await controllerView.createView();
-    await controllerLeave.leaveTrigger();
     const result = await controller.getEmpReportPaygrade(req.body.paygrade)
     res.send(result)
 })

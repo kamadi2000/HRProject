@@ -21,6 +21,7 @@ const port = 8000;
 app.use(async(req,res,next)=>{
     try{
         await controllerLeave.leaveTrigger();
+        await controllerLeave.leaveCountColomnTrigger();
         const controllerView = new viewController();
         await controllerView.createView();
         next() 
