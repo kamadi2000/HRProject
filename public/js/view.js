@@ -20,6 +20,7 @@ searchbtn.addEventListener('click',()=>{
     .then(res=> res.json())
     .then(data => {
         console.log(data)
+        location.href = '/infoRender';
     })
     .catch ((err) => {
         fetch('/auths/token',{
