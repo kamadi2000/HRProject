@@ -6,4 +6,5 @@ class viewController{
         await view.createView();
     }
 }
+
 module.exports = {viewController};

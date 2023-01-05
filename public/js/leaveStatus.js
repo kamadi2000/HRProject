@@ -3,7 +3,7 @@ function getLeaveinfo(){
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('user/leavestatus',{
+    fetch('/user/leavestatus',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
