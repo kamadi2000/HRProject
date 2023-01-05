@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>
+            PIM Information 
+        </title>
+        <!--boostrap 4.6 version-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="stylesForm.css">
+        <meta name="viewport" content="width=device-width",initial-scale=1.0>
+    </head>
+    <body >
+        <div class="container"class="scroll" >
+            <div class="title">PIM Table</div>
+            <form action="#">
+            <table class="table table-striped">
+                <tr>
+                    <th> fiels Name</th>
+                    <th>Value</th>
+                    <th>Edit bar</th>
+                    <th>Edit button</th>
+                </tr>
+            
+                <tbody id="myTable">
+                    
+                </tbody>
+            </table>
+            <div class="button">
+                <input type="submit" value="submit">
+            </div>
+            </form>
+        </div>
+        
+
+        <script>
+            var myArray = [
+                {'name':'MichaelMilaMilaMila', 'age':'30'},
+                {'name':'Mila', 'age':'32'},
+                {'name':'Paul', 'age':'29'},
+                {'name':'Dennis', 'age':'25'},
+                {'name':'Tim', 'age':'27'},
+                {'name':'Erik', 'age':'24'},
+                {'name':'Michael', 'age':'30'},
+                {'name':'Mila', 'age':'32'},
+                {'name':'Paul', 'age':'29'},
+                {'name':'Dennis', 'age':'25'},
+                {'name':'Tim', 'age':'27'},
+                {'name':'Erik', 'age':'24'},
+            ]
+            
+            buildTable(myArray)
+        
+        
+        
+            function buildTable(data){
+                var table = document.getElementById('myTable')
+        
+                for (var i = 0; i < data.length; i++){
+                    var row = `<tr>
+                                    <td>${data[i].name}</td>
+                                    <td>${data[i].age}</td>
+                                    <td><input type="text" placeholder=""></td>
+                                    <td><button type="button" class="btn btn-danger btn-sm" >Edit</button></td>
+                              </tr>`
+                    table.innerHTML += row
+        
+        
+                }
+            }
+        
+        </script>
+
+
+    </body>
+</html>
