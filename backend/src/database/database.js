@@ -22,7 +22,6 @@ function trigger(triggerDefinition){
 }
 
 function executeSQL(sql,placeholder){
-    console.log(sql)
     return new Promise((res,rej)=>{
     connection.query(sql,placeholder, (err,result)=>{
         if(err){
