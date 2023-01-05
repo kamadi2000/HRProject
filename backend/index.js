@@ -1,6 +1,10 @@
 const express = require('express')
 const path = require('path')
 const mysql = require('mysql')
+
+const { viewController } = require('../backend/src/controllers/ViewController');
+
+
 //const bodyParser = require('body-parser')
 
 const employeeRoutes = require('./src/routes/employeeRoutes');
@@ -9,8 +13,19 @@ const userRoutes = require('./src/routes/thamindu');
 const { post } = require('./src/routes/employeeRoutes');
 const pageRoutes = require('./src/routes/pageRoutes');
 const yasiraRoutes = require('./src/routes/yasira');
+const ReportRoutes = require('./src/routes/ReportRoutes');
 const app = express()
 const port = 8000;
+
+app.use(async(req,res,next)=>{
+    try{
+        const controllerView = new viewController();
+        await controllerView.createView();
+        next() 
+    }catch(e){
+        console.log(e)
+    }
+})
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -23,6 +38,7 @@ app.use('/auths',authRoutes);
 app.use('/user',userRoutes);
 app.use('', pageRoutes);
 app.use('/yasira',yasiraRoutes);
+app.use('/reports',ReportRoutes);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

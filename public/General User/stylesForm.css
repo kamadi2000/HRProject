@@ -106,12 +106,12 @@ form .gender-details .category{
 form input[type="radio"]{
     display: none;
 }
-form .button{
+form .buttonSection{
     height: 45px; 
     margin: 45px 0;
 }
 
-form .button input{
+form .buttonSection input{
     height: 100%;
     width: 100%;
     outline: none;
@@ -124,7 +124,7 @@ form .button input{
     background: linear-gradient(135deg,#71b7e6,#9b59b6);
 
 }
-form .button input:hover{
+form .buttonSection input:hover{
     background: linear-gradient(-135deg,#71b7e6,#9b59b6);
 }
 @media (max-width: 584px){

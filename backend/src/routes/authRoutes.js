@@ -16,6 +16,8 @@ router.get('/',authenticate, (req,res)=>{
     res.json(user);
 })
 
+
+
 router.post('/login', async (req,res)=>{
 
     const status = await controller.login(req);
@@ -48,7 +50,7 @@ router.post('/token', async (req,res)=>{
                 const oldTime = new Date(last_time).getTime()
                 const newTime = new Date().getTime()
                 if( newTime - oldTime < 25000){
-                    const accesstoken = jwt.sign({access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
+                    const accesstoken = jwt.sign({type:user.type,access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
                     res.status(ResponseHandler(status)).send({accesstoken});
                 }else{
                     res.sendStatus(401)

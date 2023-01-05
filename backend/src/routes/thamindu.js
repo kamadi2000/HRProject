@@ -51,7 +51,7 @@ router.post('/checkrecords',authenticate, async (req,res)=>{
     if(status){
         res.send(status)
     }else{
-        res.send({massege:"Invalid epmloyee ID"})
+        res.send({massege:"Invalid employee ID"})
     }
 })
 
@@ -86,7 +86,31 @@ router.post('/editpim',authenticate, async (req,res)=>{
     }
 })
 
+router.get('/viewpim', authenticate, async (req,res)=>{
+    const status = await controller.checkRecord(req.user.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("no leave applications")
+    }
+})
 
-router.post
+router.post('/createuseraccount',authenticate, async (req,res)=>{
+    const status = await controller.createAccount(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("Cannot create check again")
+    }
+})
+
+router.post('/deleteaccount',authenticate, async (req,res)=>{
+    const status = await controller.deleteAccount(req.body.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("account is not deleted")
+    }
+})
 
 module.exports = router;

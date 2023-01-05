@@ -8,7 +8,18 @@ var connection = mysql.createPool({
     password: config.PASSWORD,
     database: config.DATABASE
 });
-
+function trigger(triggerDefinition){
+    return new Promise((res,rej)=>{
+        connection.query(triggerDefinition, function (error, results, fields) {
+            if (error) {
+              console.error(error);
+              rej(err)
+            } else {
+              console.log('Trigger created successfully.');
+            }
+          })
+    })
+}
 
 function executeSQL(sql,placeholder){
     return new Promise((res,rej)=>{
@@ -23,9 +34,6 @@ function executeSQL(sql,placeholder){
         res(resulted)
     })
 })
-    
 }
-
-
 module.exports = connection
-module.exports = {executeSQL}
+module.exports = {executeSQL,trigger}

@@ -1,4 +1,6 @@
+const e = require("express");
 const {User} = require("../models/UserModel");
+const { use } = require("../routes/employeeRoutes");
 // const { use } = require("../routes/thamindu");
 
 var users = new Map();
@@ -115,6 +117,32 @@ class UserController{
     async getLastTime(emp_ID){
         const status = await user.getLastTime(emp_ID)
         return status
+    }
+
+    async createAccount(req){
+        const username = req.body.username
+        const password = req.body.password
+        const confirmPassword = req.body.confirmPassword
+        const accessLevel = req.body.accessLevel
+        if(username && password && confirmPassword && accessLevel){
+            if(password == confirmPassword){
+                const status = await user.createAccount(username,password,accessLevel)
+                return (status)
+            }else{
+                return ("confirm password is not matched")
+            }
+        }else{
+            return ("fields connot be blank")
+        }
+    }
+
+    async deleteAccount(username){
+        if(username){
+            const status = await user.deleteAccount(username)
+            return (status)
+        }else{
+            return ("please enter a username")
+        }
     }
 }
 
