@@ -90,24 +90,61 @@ function viewRequestInfo(){
 }
 
 function show_hide(obj){
+    let emp_ID;
+    let date;
+    let decision;
+    let leaveType;
+    let req_No;
+
+    const accesstoken = localStorage.getItem('Accesstoken');
+    const refreshtoken = localStorage.getItem('Refreshtoken');
+
     obj.style.display="none";
     document.getElementById("clicked"+obj.id).style.display="inline";
     if(obj.id[0]=='a'){
         array.forEach(element => {
-            if (element.req_No === obj.id.slice(1)){
-                element["status"] = "approved"; 
+            if (element.req_No == obj.id.slice(1)){
+                decision = "approved"; 
+                emp_ID = element.emp_ID;
+                date = element.leave_date;
+                leaveType = element.leave_type;
+                req_No = element.req_No;
             }
         })
         document.getElementById("r"+obj.id.slice(1)).style.display="none";      
     }
     else{
         array.forEach(element => {
-            if (element.req_No === obj.id.slice(1)){
-                element["status"] = "rejected"; 
+            if (element.req_No == obj.id.slice(1)){
+                decision = "rejected"; 
+                emp_ID = element.emp_ID;
+                date = element.leave_date;
+                leaveType = element.leave_type; 
+                req_No = element.req_No;
             }
         })
         document.getElementById("a"+obj.id.slice(1)).style.display="none";
     }
+    console.log(emp_ID,date,decision,leaveType);
+    fetch('/user/requestvalidation',{
+        method:'post',
+        headers:{'Content-Type':'application/json',
+                        'authorization':`bearer ${accesstoken}`},
+        body:JSON.stringify({
+            emp_ID : emp_ID,
+            date : date,
+            decision : decision,
+            leaveType : leaveType,
+            req_No: req_No,
+        })
+
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+    })
+
+
 }
 
 viewRequestInfo();

@@ -131,22 +131,23 @@ class User{
         }
     }
 
-    async requestValidation(emp_ID,date,decision,type){
+    async requestValidation(emp_ID,date,decision,type, req_No){
+        
         try{
             await executeSQL(`
                 UPDATE leave_detail
                 SET status = ?
-                WHERE date = ? AND emp_ID = ?`
-                [decision,date,emp_ID])
+                WHERE req_No = ? `,
+                [decision,req_No])
 
             if(decision == "approved"){
                 await executeSQL(`
                     UPDATE leave_count
                     SET ${type}_count = ${type}_count - 1
-                    WHERE emp_ID = ?`
+                    WHERE emp_ID = ?`,
                 [emp_ID])
             }
-
+            
             return ("successfully validated")
         }catch(e){
             console.log(e)
