@@ -2,6 +2,7 @@
 const {executeSQL} = require("../database/database");
 const connection = require("../database/database")
 const bcrypt = require("bcryptjs");
+const { use } = require("../routes/employeeRoutes");
 
 class User{
     async setLastActiveTime(emp_ID){
@@ -120,26 +121,7 @@ class User{
     async viewRequest(username){
         try{
             const Credential = await executeSQL(
-                `SELECT 
-                    a.emp_ID, 
-                    a.reason, 
-                    a.date, 
-                    a.leave_type, 
-                    annual_count, 
-                    casual_count, 
-                    maternity_count, 
-                    noPay_count  
-                FROM leave_count 
-                RIGHT JOIN (
-                    SELECT 
-                        s.sup_ID,
-                        l.emp_ID,
-                        l.reason,
-                        l.leave_type,
-                        l.date
-                    FROM supervise s
-                    RIGHT JOIN leave_detail l ON l.emp_ID = s.emp_ID 
-                    WHERE sup_ID = ? AND l.status = "pending") AS a ON a.emp_ID = leave_count.emp_ID`,[username])
+                `SELECT * FROM leave_view JOIN supervise USING (emp_ID) WHERE sup_ID = ? AND status = 'pending'`,[username])
             if(Credential){
                 return Credential
             }
@@ -328,6 +310,43 @@ class User{
         }catch(e){
             console.log(e)
             return null
+        }
+    }
+
+    async createAccount(username,password,accessLevel){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            if(Credential){
+                return ("this username already exists")
+            }else{
+                const salt = await bcrypt.genSalt(10);
+                const userpassword = await bcrypt.hash(password, salt)
+                const canInsert = executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
+                if(canInsert){
+                    await executeSQL(`INSERT INTO user values (?,?,?)`,[username,userpassword,accessLevel])
+                    return ("successfully created")
+                }else{
+                    return ("invalid username")
+                }
+            }
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async deleteAccount(username){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            if(Credential){
+                await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                return ("successfully deleted")
+            }else{
+                return("there is no account on that username")
+            }
+        }catch(e){
+            console.log(e)
+            return(null)
         }
     }
 
