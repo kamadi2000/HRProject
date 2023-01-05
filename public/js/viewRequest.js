@@ -14,13 +14,14 @@ function viewRequestInfo(){
             'Content-type':'application/json',
             'authorization':`bearer ${accesstoken}`},
     })
-    .then(res=>  res.json())
+    .then(res=> res.json())
     .then(data => {
         array = data;
 
         array.forEach(element => {
-            let approveID = "a" + element.emp_ID;
-            let rejectID = "r" + element.emp_ID;
+            console.log(element.req_No)
+            let approveID = "a" + element.req_No;
+            let rejectID = "r" + element.req_No;
             let clickedApprovedID = "clicked" + approveID;
             let clickedrejectedID = "clicked" + approveID;
 
@@ -56,11 +57,8 @@ function viewRequestInfo(){
                 <div id= ${clickedrejectedID} class="leave-rejected">Rejected</div>
             </div>
         </div>`
-        });
-
         document.querySelector('.tableContent').insertAdjacentHTML('beforeend', markup);
-
-        
+        });        
     })
 
     .catch ((err) => {
