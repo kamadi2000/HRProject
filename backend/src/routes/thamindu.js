@@ -51,7 +51,7 @@ router.post('/checkrecords',authenticate, async (req,res)=>{
     if(status){
         res.send(status)
     }else{
-        res.send({massege:"Invalid epmloyee ID"})
+        res.send({massege:"Invalid employee ID"})
     }
 })
 

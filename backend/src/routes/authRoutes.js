@@ -16,6 +16,8 @@ router.get('/',authenticate, (req,res)=>{
     res.json(user);
 })
 
+
+
 router.post('/login', async (req,res)=>{
 
     const status = await controller.login(req);

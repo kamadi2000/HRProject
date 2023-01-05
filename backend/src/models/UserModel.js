@@ -4,6 +4,8 @@ const connection = require("../database/database")
 const bcrypt = require("bcryptjs");
 const { use } = require("../routes/employeeRoutes");
 
+
+
 class User{
     async setLastActiveTime(emp_ID){
         try{
@@ -22,10 +24,8 @@ class User{
     async login(username,password){
         try{
             var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = ?`,[username])
-            const salt = await bcrypt.genSalt(10);
-            const userpassword = await bcrypt.hash(password, salt)
             if(Credential){
-                const status = await bcrypt.compare(Credential[0].password,userpassword)
+                const status = await bcrypt.compare(password,Credential[0].password)
                 if (status) {
                     const userdata = await executeSQL(`SELECT employee_ID,access_level FROM user WHERE employee_ID = ?`,[username])
                     return userdata
@@ -159,7 +159,7 @@ class User{
                 SELECT * 
                 FROM employee e
                 JOIN employment_detail ed ON ed.emp_ID = e.ID
-                WHERE ID = "?"`,[emp_ID])
+                WHERE ID = ?`,[emp_ID])
             
             const phoneNumbers = await executeSQL(`SELECT phone_number FROM employee_phone_number WHERE emp_ID = ?`,[emp_ID])
             const emergancyDetail = await executeSQL(`SELECT * FROM emergency_detail WHERE emp_ID = ?`,[emp_ID])
@@ -247,7 +247,7 @@ class User{
             await executeSQL(`
                 INSERT INTO employment_detail (
                     emp_ID,
-                    job_tittle,
+                    job_title,
                     pay_grade,
                     employeement_status,
                     working_time,
@@ -291,7 +291,7 @@ class User{
                 SELECT
                     reason,
                     leave_type,
-                    date,
+                    leave_date,
                     status
                 FROM leave_detail
                 WHERE emp_ID = ?
@@ -351,5 +351,8 @@ class User{
     }
 
 }
+
+var ss = new User()
+ss.login("000001","123")
 
 module.exports = {User}

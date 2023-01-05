@@ -12,9 +12,9 @@ class View{
             await executeSQL(`CREATE OR REPLACE VIEW leave_view AS 
                         SELECT leave_d.req_No,
                             leave_d.emp_ID,
-                            emp.first_name,
+                            CONCAT(emp.first_name,' ',emp.middle_name,' ',emp.last_name) as full_name,
                             emp_d.department,
-                            emp_d.job_tittle,
+                            emp_d.job_title,
                             leave_d.leave_type,
                             leave_d.leave_date,
                             leave_d.reason,
