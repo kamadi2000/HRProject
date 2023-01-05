@@ -8,7 +8,7 @@ function viewRequestInfo(){
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
 
-    fetch('user/viewrequest',{
+    fetch('/user/viewrequest',{
         method: 'get',
         headers:{
             'Content-type':'application/json',
@@ -17,7 +17,46 @@ function viewRequestInfo(){
     .then(res=>  res.json())
     .then(data => {
         array = data;
-        console.log({data})
+
+        array.forEach(element => {
+            let approveID = "a" + element.emp_ID;
+            let rejectID = "r" + element.emp_ID;
+            let clickedApprovedID = "clicked" + approveID;
+            let clickedrejectedID = "clicked" + approveID;
+
+            const markup = `<div class="tableRow">
+            <div class="cell" style="width:12%">${element.emp_ID}</div>
+            <div class="cell">
+                <ul>
+                    <li>Name: ${element.name}</li>
+                    <li>Department: ${element.department}</li>
+                    <li>Job Title: ${element.job_title}</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <ul>
+                    <li>Type: ${element.type}</li>
+                    <li>Date: ${element.date}</li>
+                    <li>Reason: ${element.reason}</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <ul>
+                    <li>Annual: ${element.remaining_annual}</li>
+                    <li>Casual: ${element.remaining_casual}</li>
+                    <li>Maternity: ${element.remaining_maternity}</li>
+                    <li>No Pay: ${element.remaining_nopay}</li>
+                </ul>
+            </div>
+            <div class="cell">
+                <button id= ${approveID} class="leave-approve-btn" onclick="show_hide(this)">Approve</button>
+                <button id= ${rejectID} class="leave-reject-btn" onclick="show_hide(this)">reject</button>
+                <div id= ${clickedApprovedID} class="leave-approved">Approved</div>
+                <div id= ${clickedrejectedID} class="leave-rejected">Rejected</div>
+            </div>
+        </div>`
+        });
+
         
     })
 
