@@ -35,7 +35,6 @@ function executeSQL(sql,placeholder){
         res(resulted)
     })
 })
-    
 }
 module.exports = connection
 module.exports = {executeSQL,trigger}
