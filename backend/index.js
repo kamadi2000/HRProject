@@ -14,15 +14,15 @@ const { post } = require('./src/routes/employeeRoutes');
 const pageRoutes = require('./src/routes/pageRoutes');
 const yasiraRoutes = require('./src/routes/yasira');
 const ReportRoutes = require('./src/routes/ReportRoutes');
-const controllerLeave = new leaveTriggerController();
 const app = express()
 const port = 8000;
 
 app.use(async(req,res,next)=>{
     try{
+        const controllerLeave = new leaveTriggerController();
+        const controllerView = new viewController();
         await controllerLeave.leaveTrigger();
         await controllerLeave.leaveCountColomnTrigger();
-        const controllerView = new viewController();
         await controllerView.createView();
         next() 
     }catch(e){

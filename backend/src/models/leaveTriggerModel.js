@@ -1,5 +1,5 @@
 //const {executeSQL} = require("../database/database");
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 const { config } = require('../database/config')
 require('dotenv').config();
 
@@ -38,7 +38,7 @@ class TriggerLeave {
                 END IF;
                 END;
             `);
-            console.log(results);
+            //console.log(results);
         } catch (e) {
             console.log(e);
         }
@@ -55,7 +55,7 @@ class TriggerLeave {
                 END;
 
             `);
-            console.log(results);
+            //console.log(results);
         } catch (e) {
             console.log(e);
         }
