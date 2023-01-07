@@ -107,7 +107,8 @@ class User{
             const leaveCount = await executeSQL(`SELECT ${leave_type}_count FROM leave_count WHERE emp_ID = ?`,[emp_ID])
             const leaveType = `${leave_type}_count`
             if (leaveCount[0][leaveType] > 0){
-                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value(?,?,?,?,?)`,[emp_ID,reason,leave_type,date,leave_status])
+                console.log(date)
+                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,leave_date,status) VALUES (?,?,?,?,?)`,[emp_ID,reason,leave_type,date,leave_status])
                 return ("request was successfully sent")
             }else{
                 return(`you have no ${leave_type} type leaves`)
@@ -139,14 +140,6 @@ class User{
                 SET status = ?
                 WHERE req_No = ? `,
                 [decision,req_No])
-
-            if(decision == "approved"){
-                await executeSQL(`
-                    UPDATE leave_count
-                    SET ${type}_count = ${type}_count - 1
-                    WHERE emp_ID = ?`,
-                [emp_ID])
-            }
             
             return ("successfully validated")
         }catch(e){
@@ -206,18 +199,7 @@ class User{
             return (null)
         }
     }
-
-
-    async editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country){
-        try{
-            await executeSQL(`DELETE FROM employee WHERE ID = ?`,[ID])
-            await executeSQL(`INSERT INTO employee value(?,?,?,?,?,?,?,?,?,?)`,[ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country])
-            return("successfully saved")
-        }catch(e){
-            console.log(e)
-        }
-    }    
-
+    
     async addEmployee(data){  // data is a JSON object
         try {
             await executeSQL(
@@ -271,6 +253,8 @@ class User{
                 )`
             ,[data.id,data.jobTitle,data.paygrade,data.employeementStatus,data.workingTime,data.department,data.branchID,data.supervisor,data.type]);
         await this.addPhoneNumber(data)
+
+        await executeSQL(`INSERT INTO emergancy_detail VALUES (?,?,?,?,?)`,[data.id,data.data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
         return ("successfully added")
 
         } catch (error) {
@@ -339,11 +323,16 @@ class User{
     async deleteAccount(username){
         try{
             const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
-            if(Credential){
-                await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
-                return ("successfully deleted")
+            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
+            if(["Supervisor","General"].includes(type[0].type)){
+                if(Credential ){
+                    await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                    return ("successfully deleted")
+                }else{
+                    return("there is no account on that username")
+                }
             }else{
-                return("there is no account on that username")
+                return("you have no permission to delete this account")
             }
         }catch(e){
             console.log(e)
@@ -351,9 +340,75 @@ class User{
         }
     }
 
+    async deletehrAccount(username){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
+            if("HRManager" == type[0].type){
+                if(Credential ){
+                    await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                    return ("successfully deleted")
+                }else{
+                    return("there is no account on that username")
+                }
+            }else{
+                return("you have no permission to delete this account")
+            }
+        }catch(e){
+            console.log(e)
+            return(null)
+        }
+    }
+
+    async edidEmployee(field,value,emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE employee
+                SET ${field} = ?
+                WHERE ID = ?`,[value,emp_ID])
+            return ("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async edidEmergancy (field,value,emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE emergency_detail
+                SET ${field} = ?
+                WHERE emp_ID = ?`,[value,emp_ID])
+            return ("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async changePassword(username,oldPassword,newPassword){
+        try{
+            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = ?`,[username])
+            if(Credential){
+                const status = await bcrypt.compare(oldPassword,Credential[0].password)
+                if(status){
+                    const salt = await bcrypt.genSalt(10);
+                    const userpassword = await bcrypt.hash(newPassword, salt)
+                    await executeSQL(`
+                        UPDATE user
+                        SET password = ?
+                        WHERE employee_ID = ?`,[userpassword,username])
+                    return ("password is successfully changed")
+                }
+            }else{
+                return ("this user name is invalid")
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
 }
 
-var ss = new User()
-ss.login("000001","123")
 
 module.exports = {User}
