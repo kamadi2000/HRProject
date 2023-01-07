@@ -171,4 +171,13 @@ router.post('/editemergancybyhr',authenticate,accessAuthorization(["HRManager"])
     }
 })
 
+router.post('/changepassword',authenticate, async (req,res)=>{
+    const status = await controller.changePassword(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("password is not changed")
+    }
+})
+
 module.exports = router;

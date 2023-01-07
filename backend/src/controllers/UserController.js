@@ -150,6 +150,23 @@ class UserController{
             return ("please enter a username")
         }
     }
+
+    async changePassword(req){
+        const username = req.user.username
+        const oldPassword = req.body.oldPassword
+        const newPassword = req.body.newPassword
+        const confirmPassword = req.body.confirmPassword
+        if(username && oldPassword && confirmPassword && newPassword){
+            if(newPassword == confirmPassword){
+                const status = await user.changePassword(username,oldPassword,newPassword)
+                return (status)
+            }else{
+                return ("confirm password is not matched")
+            }
+        }else{
+            return ("fields connot be blank")
+        }
+    }
 }
 
 module.exports = {UserController}

@@ -386,6 +386,28 @@ class User{
         }
     }
 
+    async changePassword(username,oldPassword,newPassword){
+        try{
+            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = ?`,[username])
+            if(Credential){
+                const status = await bcrypt.compare(oldPassword,Credential[0].password)
+                if(status){
+                    const salt = await bcrypt.genSalt(10);
+                    const userpassword = await bcrypt.hash(newPassword, salt)
+                    await executeSQL(`
+                        UPDATE user
+                        SET password = ?
+                        WHERE employee_ID = ?`,[userpassword,username])
+                    return ("password is successfully changed")
+                }
+            }else{
+                return ("this user name is invalid")
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }
+
 }
 
 
