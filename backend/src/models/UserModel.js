@@ -107,7 +107,8 @@ class User{
             const leaveCount = await executeSQL(`SELECT ${leave_type}_count FROM leave_count WHERE emp_ID = ?`,[emp_ID])
             const leaveType = `${leave_type}_count`
             if (leaveCount[0][leaveType] > 0){
-                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,date,status) value(?,?,?,?,?)`,[emp_ID,reason,leave_type,date,leave_status])
+                console.log(date)
+                await executeSQL(`INSERT INTO leave_detail (emp_ID,reason,leave_type,leave_date,status) VALUES (?,?,?,?,?)`,[emp_ID,reason,leave_type,date,leave_status])
                 return ("request was successfully sent")
             }else{
                 return(`you have no ${leave_type} type leaves`)
