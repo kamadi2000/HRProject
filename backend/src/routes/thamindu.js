@@ -1,5 +1,5 @@
 const express = require('express');
-const {authenticate , accessAuthorization , levelAuthorization , bothAuthorization} = require('../middleware/auth')
+const {authenticate , accessAuthorization , levelAuthorization} = require('../middleware/auth')
 require('dotenv').config();
 
 const {UserController} = require("../controllers/UserController");
@@ -9,17 +9,17 @@ const router = express.Router();
 
 const controller = new UserController();
 
-router.get('/viewleavecount',authenticate, async (req,res)=>{
+router.get('/viewleavecount',authenticate,  accessAuthorization(["General","Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.getLeaveCount(req.user.username)
     res.send(status)
 })
 
-router.post('/applyleave',authenticate, async (req,res)=>{
+router.post('/applyleave',authenticate, accessAuthorization(["General","Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.applyLeave(req)
     res.send(status)
 })
 
-router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor"]), async (req,res)=>{
+router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor","Admin","HRManager"]), async (req,res)=>{
     const status = await controller.viewRequest(req.user.username)
     if(status) {
         res.send(status)
@@ -28,7 +28,7 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor"]), asy
     }
 })
 
-router.get('/leavestatus', authenticate, async (req,res)=>{
+router.get('/leavestatus', authenticate,accessAuthorization(["General","Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.viewLeaveStatus(req.user.username)
     if(status){
         res.send(status)
@@ -37,7 +37,7 @@ router.get('/leavestatus', authenticate, async (req,res)=>{
     }
 })
 
-router.post('/requestvalidation',authenticate, async (req,res)=>{
+router.post('/requestvalidation',authenticate,accessAuthorization(["Supervisor","Admin","HRManager"]), async (req,res)=>{
     const emp_ID = req.body.emp_ID
     const date = req.body.date
     const decision = req.body.decision
@@ -47,7 +47,7 @@ router.post('/requestvalidation',authenticate, async (req,res)=>{
     res.send({status})
 })
 
-router.post('/checkrecords',authenticate, async (req,res)=>{
+router.post('/checkrecords',authenticate,accessAuthorization(["Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.checkRecord(req.body.emp_ID)
     if(status){
         res.send(status)
@@ -56,7 +56,7 @@ router.post('/checkrecords',authenticate, async (req,res)=>{
     }
 })
 
-router.post('/emergancydetail',authenticate, async (req,res)=>{
+router.post('/emergancydetail',authenticate,accessAuthorization(["Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.getEmergancyDetail(req.body.emp_ID)
     if(status){
         res.send(status)
@@ -65,7 +65,7 @@ router.post('/emergancydetail',authenticate, async (req,res)=>{
     }
 })
 
-router.post('/givepermission',authenticate,async (req,res)=>{
+router.post('/givepermission',authenticate,accessAuthorization(["Admin","HRManager"]),async (req,res)=>{
     const emp_ID = req.body.emp_ID
     const level = req.body.level
     const status = await controller.setAccessLevel()
@@ -78,17 +78,8 @@ router.post('/givepermission',authenticate,async (req,res)=>{
     }   
 })
 
-router.post('/editpim',authenticate, async (req,res)=>{
-    const status = await controller.editPIM(req)
-    if(status){
-        res.send(status)
-    }else{
-        res.send({massege:"Invalid data"})
-    }
-})
-
 router.get('/viewpim', authenticate, async (req,res)=>{
-    const status = await controller.checkRecord(req.user.username)
+    const status = await controller.getPIM(req.user.username)
     if(status){
         res.send(status)
     }else{
@@ -96,7 +87,7 @@ router.get('/viewpim', authenticate, async (req,res)=>{
     }
 })
 
-router.post('/createuseraccount',authenticate, async (req,res)=>{
+router.post('/createuseraccount',authenticate,accessAuthorization(["HRManager"]), async (req,res)=>{
     const status = await controller.createAccount(req)
     if(status){
         res.send(status)
@@ -105,12 +96,78 @@ router.post('/createuseraccount',authenticate, async (req,res)=>{
     }
 })
 
-router.post('/deleteaccount',authenticate, async (req,res)=>{
+router.post('/createhraccount',authenticate,accessAuthorization(["Admin"]), async (req,res)=>{
+    const status = await controller.createAccount(req)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("Cannot create check again")
+    }
+})
+
+router.post('/deleteaccount',authenticate, accessAuthorization(["HRManager"]), async (req,res)=>{
     const status = await controller.deleteAccount(req.body.username)
     if(status){
         res.send(status)
     }else{
         res.send("account is not deleted")
+    }
+})
+
+router.post('/deletehraccount',authenticate, accessAuthorization(["Admin"]), async (req,res)=>{
+    const status = await controller.deleteAccount(req.body.username)
+    if(status){
+        res.send(status)
+    }else{
+        res.send("account is not deleted")
+    }
+})
+
+router.post('/editemployeebyuser',authenticate,levelAuthorization([2,3]), async (req,res)=>{
+    const emp_ID = req.user.username
+    const field = req.body.field
+    const value = req.body.value
+    const status = await controller.editEmployee(field,value,emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
+    }
+})
+
+router.post('/editemergancybyuser',authenticate,levelAuthorization([2,3]), async (req,res)=>{
+    const emp_ID = req.user.username
+    const field = req.body.field
+    const value = req.body.value
+    const status = await controller.editEmergancy(field,value,emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
+    }
+})
+
+router.post('/editemployeebyhr',authenticate,accessAuthorization(["HRManager"]), async (req,res)=>{
+    const emp_ID = req.body.emp_ID
+    const field = req.body.field
+    const value = req.body.value
+    const status = await controller.editEmployee(field,value,emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
+    }
+})
+
+router.post('/editemergancybyhr',authenticate,accessAuthorization(["HRManager"]), async (req,res)=>{
+    const emp_ID = req.body.emp_ID
+    const field = req.body.field
+    const value = req.body.value
+    const status = await controller.editEmergancy(field,value,emp_ID)
+    if(status){
+        res.send(status)
+    }else{
+        res.send({massege:"Invalid data"})
     }
 })
 

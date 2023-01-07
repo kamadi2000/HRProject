@@ -139,14 +139,6 @@ class User{
                 SET status = ?
                 WHERE req_No = ? `,
                 [decision,req_No])
-
-            if(decision == "approved"){
-                await executeSQL(`
-                    UPDATE leave_count
-                    SET ${type}_count = ${type}_count - 1
-                    WHERE emp_ID = ?`,
-                [emp_ID])
-            }
             
             return ("successfully validated")
         }catch(e){
@@ -206,18 +198,7 @@ class User{
             return (null)
         }
     }
-
-
-    async editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country){
-        try{
-            await executeSQL(`DELETE FROM employee WHERE ID = ?`,[ID])
-            await executeSQL(`INSERT INTO employee value(?,?,?,?,?,?,?,?,?,?)`,[ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country])
-            return("successfully saved")
-        }catch(e){
-            console.log(e)
-        }
-    }    
-
+    
     async addEmployee(data){  // data is a JSON object
         try {
             await executeSQL(
@@ -271,6 +252,8 @@ class User{
                 )`
             ,[data.id,data.jobTitle,data.paygrade,data.employeementStatus,data.workingTime,data.department,data.branchID,data.supervisor,data.type]);
         await this.addPhoneNumber(data)
+
+        await executeSQL(`INSERT INTO emergancy_detail VALUES (?,?,?,?,?)`,[data.id,data.data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
         return ("successfully added")
 
         } catch (error) {
@@ -351,9 +334,33 @@ class User{
         }
     }
 
+    async edidEmployee(field,value,emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE employee
+                SET ${field} = ?
+                WHERE ID = ?`,[value,emp_ID])
+            return ("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
+    async edidEmergancy (field,value,emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE emergency_detail
+                SET ${field} = ?
+                WHERE emp_ID = ?`,[value,emp_ID])
+            return ("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
 }
 
-var ss = new User()
-ss.login("000001","123")
 
 module.exports = {User}
