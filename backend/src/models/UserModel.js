@@ -323,11 +323,36 @@ class User{
     async deleteAccount(username){
         try{
             const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
-            if(Credential){
-                await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
-                return ("successfully deleted")
+            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
+            if(["Supervisor","General"].includes(type[0].type)){
+                if(Credential ){
+                    await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                    return ("successfully deleted")
+                }else{
+                    return("there is no account on that username")
+                }
             }else{
-                return("there is no account on that username")
+                return("you have no permission to delete this account")
+            }
+        }catch(e){
+            console.log(e)
+            return(null)
+        }
+    }
+
+    async deletehrAccount(username){
+        try{
+            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
+            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
+            if("HRManager" == type[0].type){
+                if(Credential ){
+                    await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
+                    return ("successfully deleted")
+                }else{
+                    return("there is no account on that username")
+                }
+            }else{
+                return("you have no permission to delete this account")
             }
         }catch(e){
             console.log(e)

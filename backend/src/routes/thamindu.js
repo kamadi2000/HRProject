@@ -115,7 +115,7 @@ router.post('/deleteaccount',authenticate, accessAuthorization(["HRManager"]), a
 })
 
 router.post('/deletehraccount',authenticate, accessAuthorization(["Admin"]), async (req,res)=>{
-    const status = await controller.deleteAccount(req.body.username)
+    const status = await controller.deletehrAccount(req.body.username)
     if(status){
         res.send(status)
     }else{

@@ -141,6 +141,15 @@ class UserController{
             return ("please enter a username")
         }
     }
+
+    async deletehrAccount(username){
+        if(username){
+            const status = await user.deletehrAccount(username)
+            return (status)
+        }else{
+            return ("please enter a username")
+        }
+    }
 }
 
 module.exports = {UserController}
