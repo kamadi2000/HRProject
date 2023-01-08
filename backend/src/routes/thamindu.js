@@ -30,10 +30,11 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor","Admin
 
 router.get('/leavestatus', authenticate,accessAuthorization(["General","Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.viewLeaveStatus(req.user.username)
+
     if(status){
         res.send(status)
     }else{
-        res.send("no leave applications")
+        res.send({message:"No leave applications"})
     }
 })
 
@@ -79,6 +80,7 @@ router.post('/givepermission',authenticate,accessAuthorization(["Admin","HRManag
 })
 
 router.get('/viewpim', authenticate, async (req,res)=>{
+   
     const status = await controller.getPIM(req.user.username)
     if(status){
         res.send(status)
@@ -89,15 +91,17 @@ router.get('/viewpim', authenticate, async (req,res)=>{
 
 router.post('/createuseraccount',authenticate,accessAuthorization(["HRManager"]), async (req,res)=>{
     const status = await controller.createAccount(req)
+   
     if(status){
         res.send(status)
     }else{
-        res.send("Cannot create check again")
+        res.send({message:"Cannot create check again"})
     }
 })
 
 router.post('/createhraccount',authenticate,accessAuthorization(["Admin"]), async (req,res)=>{
     const status = await controller.createAccount(req)
+
     if(status){
         res.send(status)
     }else{
@@ -107,10 +111,11 @@ router.post('/createhraccount',authenticate,accessAuthorization(["Admin"]), asyn
 
 router.post('/deleteaccount',authenticate, accessAuthorization(["HRManager"]), async (req,res)=>{
     const status = await controller.deleteAccount(req.body.username)
+  
     if(status){
         res.send(status)
     }else{
-        res.send("account is not deleted")
+        res.send({message:"account is not deleted"})
     }
 })
 
