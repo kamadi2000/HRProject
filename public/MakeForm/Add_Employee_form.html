@@ -13,49 +13,57 @@
             <form action="#">
                 <div class="user-details">
                     <div class="input-box">
+                        <span class="details">Employee ID</span>
+                        <input type="text" placeholder="Enter employee id" id="emp_ID" required>
+                    </div>
+                    <div class="input-box">
                         <span class="details">First name</span>
-                        <input type="text" placeholder="Enter First name" required>
+                        <input type="text" placeholder="Enter First name" id="fname" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Last name</span>
-                        <input type="text" placeholder="Enter Last name" required>
+                        <input type="text" placeholder="Enter Last name" id="lname" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Email</span>
-                        <input type="text" placeholder="Enter Email" required>
+                        <input type="text" placeholder="Enter Email" id="email" required>
                     </div>
 
                     <div class="input-box">
                         <span class="details">Birthday</span>
-                        <input type="text" placeholder="dd/mm/yyyy" required>
+                        <input type="text" placeholder="yyyy/mm/dd" id="birthday" required>
                     </div>
 
                     
                     
                     <div class="input-box">
                         <span class="details">Job title</span>
-                        <input type="text" placeholder="Enter Job title" required>
+                        <input type="text" placeholder="Enter Job title" id="job" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Department</span>
-                        <input type="text" placeholder="Enter Department" required>
+                        <input type="text" placeholder="Enter Department" id="department" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Phone number</span>
-                        <input type="text" placeholder="Enter Phone number 1" required>
+                        <input type="text" placeholder="Enter Phone number 1" id="phoneNumber" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Supervisors</span>
+                        <input type="text" placeholder="Enter whether supervisor" id="supervisor" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Branch ID</span>
-                        <input type="text" placeholder="Enter Branch ID" required>
+                        <input type="text" placeholder="Enter Branch ID" id="branchID" required>
                     </div>
                     <div class="input-box">
                         <span class="details">Address</span>
-                        <input type="text" placeholder="Enter Address" required>
-                        <input type="text" placeholder="Enter Road" required>
-                        <input type="text" placeholder="Enter City" required>
-                        <input type="text" placeholder="Enter Country" required>
+                        <input type="text" placeholder="Enter Address" id="address" required>
+                        <input type="text" placeholder="Enter Road" id="road" required>
+                        <input type="text" placeholder="Enter City" id="city" required>
+                        <input type="text" placeholder="Enter Country" id="country" required>
                     </div>
 
                     <div class="input-box">
@@ -101,7 +109,12 @@
                     </div>
                 </div>
                 <div class="gender-details">
-                    <input type="radio" name="gender" id="dot-1">
+                    <span class="details">Gender</span>
+                    <select name="gender" id="gender" >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>  
+                    </select>
+                    <!-- <input type="radio" name="gender" id="dot-1">
                     <input type="radio" name="gender" id="dot-2">
                     
                     <span class="gender-title">Gender</span>
@@ -115,26 +128,26 @@
                             <span class="dot two"></span>
                             <span class="gender">Female</span>
                         </label>
-                    </div>
+                    </div> -->
 
                     <h4>Emergency Detail</h4>
                     <div class="user-details">
                         <div class="input-box">
                             <span class="details">Contact Person First Name</span>
-                            <input type="text" placeholder="Enter First name" required>
+                            <input type="text" placeholder="Enter First name" id="emg_first_name" required>
                         </div>
     
                         <div class="input-box">
                             <span class="details">Contact Person Last name</span>
-                            <input type="text" placeholder="Enter Last name" required>
+                            <input type="text" placeholder="Enter Last name" id="emg_last_name" required>
                         </div>
                         <div class="input-box">
                             <span class="details">Relationship</span>
-                            <input type="text" placeholder="Relationship to the emplayee" required>
+                            <input type="text" placeholder="Relationship to the employee" id="relationship" required>
                         </div>
                         <div class="input-box">
                             <span class="details">Phone number</span>
-                            <input type="text" placeholder="Enter Phone number" required>
+                            <input type="text" placeholder="Enter Phone number" id="emg_phoneNumber" required>
                         </div>
     
                     </div>
@@ -144,12 +157,12 @@
                 
 
                 <div class="button">
-                    <input type="submit" value="Register">
+                    <input type="button" value="Register" id="submit-btn">
                 </div>
 
             </form>
         </div>
         
-
+    <script src="../js/addEmployee.js"></script>
     </body>
 </html>

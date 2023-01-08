@@ -22,6 +22,7 @@ submitbtn.addEventListener('click',()=>{
     .then(res => res.json())
     .then(data=> {
         console.log(data);
+        alert(data.message);
     })
     .catch ((err) => {
         fetch('/auths/token',{
@@ -50,6 +51,7 @@ submitbtn.addEventListener('click',()=>{
             .then(res=> res.json())
             .then(data => {
                 console.log(data);
+                alert(data.message);
             })
         
     })

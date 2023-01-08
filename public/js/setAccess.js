@@ -1,10 +1,9 @@
 //login form validation
-const username = document.getElementById('username')  || null;
+const username = document.getElementById('emp_ID')  || null;
 const accessLevel = document.getElementById('accessLevel');
 const submitbtn = document.getElementById('submit-btn');
 
 submitbtn.addEventListener('click',()=>{
-    console.log(username.value, password.value)
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
     fetch('/user/givepermission',{
@@ -12,13 +11,14 @@ submitbtn.addEventListener('click',()=>{
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
             username : username.value,
-            accessLevel : accessLevel.value,
+            level : accessLevel.value,
 
         })
     })
     .then(res => res.json())
     .then(data=> {
-        console.log(data);
+        console.log(data); 
+        alert(data.message)
     })
     .catch ((err) => {
         fetch('/auths/token',{
