@@ -181,7 +181,7 @@ router.post('/changepassword',authenticate, async (req,res)=>{
     if(status){
         res.send(status)
     }else{
-        res.send("password is not changed")
+        res.send({message:"Password is not changed"})
     }
 })
 

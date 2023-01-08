@@ -302,16 +302,18 @@ class User{
         try{
             const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
             if(Credential){
-                return ("this username already exists")
+                return ({message:"This username already exists"})
             }else{
                 const salt = await bcrypt.genSalt(10);
                 const userpassword = await bcrypt.hash(password, salt)
                 const canInsert = executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
+                console.log(canInsert)
                 if(canInsert){
                     await executeSQL(`INSERT INTO user values (?,?,?)`,[username,userpassword,accessLevel])
-                    return ("successfully created")
+                    return ({message:"Successfully created"})
                 }else{
-                    return ("invalid username")
+                    console.log('hiii')
+                    return ({message:"invalid username"})
                 }
             }
         }catch(e){
@@ -327,12 +329,12 @@ class User{
             if(["Supervisor","General"].includes(type[0].type)){
                 if(Credential ){
                     await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
-                    return ("successfully deleted")
+                    return ({message : "successfully deleted"})
                 }else{
-                    return("there is no account on that username")
+                    return({message:"there is no account on that username"})
                 }
             }else{
-                return("you have no permission to delete this account")
+                return({message:"you have no permission to delete this account"})
             }
         }catch(e){
             console.log(e)
@@ -398,10 +400,10 @@ class User{
                         UPDATE user
                         SET password = ?
                         WHERE employee_ID = ?`,[userpassword,username])
-                    return ("password is successfully changed")
+                    return ({message:"Password is successfully changed"})
                 }
             }else{
-                return ("this user name is invalid")
+                return ({message:"This user name is invalid"})
             }
         }catch(e){
             console.log(e)

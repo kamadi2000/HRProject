@@ -126,10 +126,10 @@ class UserController{
                 const status = await user.createAccount(username,password,accessLevel)
                 return (status)
             }else{
-                return ("confirm password is not matched")
+                return ({message:"confirm password is not matched"})
             }
         }else{
-            return ("fields connot be blank")
+            return ({message:"fields connot be blank"})
         }
     }
 
@@ -138,7 +138,7 @@ class UserController{
             const status = await user.deleteAccount(username)
             return (status)
         }else{
-            return ("please enter a username")
+            return ({message:"please enter a username"})
         }
     }
 
@@ -161,10 +161,10 @@ class UserController{
                 const status = await user.changePassword(username,oldPassword,newPassword)
                 return (status)
             }else{
-                return ("confirm password is not matched")
+                return ({message:"Confirm password is not matched"})
             }
         }else{
-            return ("fields connot be blank")
+            return ({message:"Fields connot be blank"})
         }
     }
 }
