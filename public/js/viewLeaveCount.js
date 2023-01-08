@@ -45,7 +45,7 @@ getLeaveCount();
 function buildTable(data, tableName){
     var table = document.getElementById(tableName);
 
-    for (const [key, value] of Object.entries(data)) { 
+    for (const [key, value] of Object.entries(data[0])) { 
         var row1='<tr>';
         row1+= '<td>' + 
             key + '</td>';
