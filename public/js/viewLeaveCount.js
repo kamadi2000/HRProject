@@ -11,8 +11,7 @@ function getLeaveCount(){
     })
     .then(res=>  res.json())
     .then(data => {
-        div.textContent = data;
-        console.log({data})
+        buildTable(data, "view-leave-count-table");
     })
 
     .catch ((err) => {
@@ -43,7 +42,20 @@ function getLeaveCount(){
 }
 getLeaveCount();
 
+function buildTable(data, tableName){
+    var table = document.getElementById(tableName);
 
+    for (const [key, value] of Object.entries(data)) { 
+        var row1='<tr>';
+        row1+= '<td>' + 
+            key + '</td>';
+
+        row1 += '<td>' + 
+            value + '</td>';
+        row1 += '</tr>';
+        table.innerHTML += row1
+    }
+}
 
     
 

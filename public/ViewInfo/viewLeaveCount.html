@@ -15,40 +15,11 @@
                 <th> Leave Type</th>
                 <th>number of Leaves remaining</th>
             </tr>
-                <tbody id="myTable">
+                <tbody id="view-leave-count-table">
                     
                 </tbody>
             </table>
         </div>
         <script src="../js/viewLeaveCount.js"></script>
-        <script>
-            var myArray1 = 
-                {annul:23,casual:45,maternity:5,nopay: 67}
-            
-            
-            buildTable(myArray1)
-        
-        
-        
-            function buildTable(data){
-                var table = document.getElementById('myTable')
-        
-                for (const [key, value] of Object.entries(data)) { 
-                    var row1='<tr>';
-                    row1+= '<td>' + 
-                        key + '</td>';
-
-                    row1 += '<td>' + 
-                        value + '</td>';
-                    row1 += '</tr>';
-                    table.innerHTML += row1
-        
-        
-                }
-            }
-        
-        </script>
-
-
     </body>
 </html>
