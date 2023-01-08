@@ -1,22 +1,18 @@
-//login form validation
-const username = document.getElementById('username')  || null;
-const password = document.getElementById('password');
-const Cpassword = document.getElementById('Cpassword');
-const accessLevel = document.getElementById('accessLevel');
+const oldPassword = document.getElementById('oldPassword');
+const newPassword = document.getElementById('newPassword');
+const confirmPassword = document.getElementById('confirmPassword');
 const submitbtn = document.getElementById('submit-btn');
 
 submitbtn.addEventListener('click',()=>{
-    console.log(username.value, password.value)
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/user/createuseraccount',{
+    fetch('/user/changepassword',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
-            username : username.value,
-            password : password.value,
-            confirmPassword : Cpassword.value,
-            accessLevel : accessLevel.value,
+            oldPassword : oldPassword.value,
+            newPassword:newPassword.value,
+            confirmPassword : confirmPassword.value,
 
         })
     })
@@ -24,7 +20,7 @@ submitbtn.addEventListener('click',()=>{
     .then(data=> {
         console.log(data);
         alert(data.message);
-        location.href = '/addUser';
+        location.href = '/changePassword';
 
     })
     .catch ((err) => {
@@ -39,15 +35,14 @@ submitbtn.addEventListener('click',()=>{
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/createuseraccount ',{
+            fetch('/user/changepassword ',{
                 method:'post',
                 headers:new Headers({'Content-Type':'application/json',
                         'authorization':`bearer ${accesstoken}`}),
                 body:JSON.stringify({
-                    username : username.value,
-                    password : password.value,
-                    confirmPassword : Cpassword.value,
-                    accessLevel : accessLevel.value,
+                    oldPassword : oldPassword.value,
+                    newPassword:newPassword.value,
+                    confirmPassword : confirmPassword.value,
                         })
                 
                 
@@ -55,6 +50,8 @@ submitbtn.addEventListener('click',()=>{
             .then(res=> res.json())
             .then(data => {
                 console.log(data)
+                alert(data.message);
+                location.href = '/changePassword';
             })
         })
     })
