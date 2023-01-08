@@ -80,23 +80,20 @@ class UserController{
     }
 
 
-    async editPIM(req){
-        const ID = req.body.ID
-        const first_name = req.body.ID
-        const middle_name = req.body.ID
-        const last_name = req.body.ID
-        const date_of_birth = req.body.ID
-        const gender = req.body.ID
-        const marital_status = req.body.ID
-        const road = req.body.ID
-        const city = req.body.ID
-        const country = req.body.ID
-        if(ID && first_name && last_name && date_of_birth && gender && marital_status){
-            const status = await user.editPIM(ID,first_name,middle_name,last_name,date_of_birth,gender,marital_status,road,city,country)
+    async editEmployee(field,value,emp_ID){
+        if(field && value){
+            const status = await user.edidEmployee(field,value,emp_ID)
             return (status)
-        }else{
-            console.log("values cannot be null")
-        }    
+        }
+        return (null)
+    }
+
+    async editEmergancy(field,value,emp_ID){
+        if(field && value){
+            const status = await user.edidEmergancy(field,value,emp_ID)
+            return (status)
+        }
+        return (null)
     }
 
     async setLastActiveTime(thisUser){
@@ -142,6 +139,32 @@ class UserController{
             return (status)
         }else{
             return ("please enter a username")
+        }
+    }
+
+    async deletehrAccount(username){
+        if(username){
+            const status = await user.deletehrAccount(username)
+            return (status)
+        }else{
+            return ("please enter a username")
+        }
+    }
+
+    async changePassword(req){
+        const username = req.user.username
+        const oldPassword = req.body.oldPassword
+        const newPassword = req.body.newPassword
+        const confirmPassword = req.body.confirmPassword
+        if(username && oldPassword && confirmPassword && newPassword){
+            if(newPassword == confirmPassword){
+                const status = await user.changePassword(username,oldPassword,newPassword)
+                return (status)
+            }else{
+                return ("confirm password is not matched")
+            }
+        }else{
+            return ("fields connot be blank")
         }
     }
 }

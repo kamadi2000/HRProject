@@ -3,7 +3,7 @@ const path = require('path')
 const mysql = require('mysql')
 
 const { viewController } = require('../backend/src/controllers/ViewController');
-
+const { leaveTriggerController } = require('../backend/src/controllers/leaveTriggerController');
 
 //const bodyParser = require('body-parser')
 
@@ -19,7 +19,10 @@ const port = 8000;
 
 app.use(async(req,res,next)=>{
     try{
+        const controllerLeave = new leaveTriggerController();
         const controllerView = new viewController();
+        await controllerLeave.leaveTrigger();
+        await controllerLeave.leaveCountColomnTrigger();
         await controllerView.createView();
         next() 
     }catch(e){

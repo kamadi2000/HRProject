@@ -1,22 +1,23 @@
-const emp_ID = document.getElementById('emp_ID');
-const reason = document.getElementById('reason');
-const date = document.getElementById('date');
-const leave_type = document.getElementById('leave-type');
+//login form validation
+const username = document.getElementById('username')  || null;
+const password = document.getElementById('password');
+const Cpassword = document.getElementById('Cpassword');
+const accessLevel = document.getElementById('accessLevel');
 const submitbtn = document.getElementById('submit-btn');
 
-
-
 submitbtn.addEventListener('click',()=>{
-    console.log(reason.value,date.value,leave_type.value)
+    console.log(username.value, password.value)
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/user/applyleave',{
+    fetch('/user/createuseraccount',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
-            reason:reason.value,
-            date:date.value,
-            leave_type:leave_type.value,
+            username : username.value,
+            password : password.value,
+            confirmPassword : Cpassword.value,
+            accessLevel : accessLevel.value,
+
         })
     })
     .then(res => res.json())
@@ -32,27 +33,26 @@ submitbtn.addEventListener('click',()=>{
             })
         })
         .then(res => res.json())
-        .then(data => { 
+        .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/applyleave',{
+            fetch('/user/createuseraccount ',{
                 method:'post',
-                headers:{'Content-Type':'application/json',
-                        'authorization':`bearer ${accesstoken}`},
+                headers:new Headers({'Content-Type':'application/json',
+                        'authorization':`bearer ${accesstoken}`}),
                 body:JSON.stringify({
-                    // username:emp_ID.value,
-                    reason:reason.value,
-                    date:date.value,
-                    leave_type:leave_type.value,
+                    username : username.value,
+                    password : password.value,
+                    confirmPassword : Cpassword.value,
+                    accessLevel : accessLevel.value,
+                        })
+                
                 
             })
-         })
             .then(res=> res.json())
             .then(data => {
-                console.log(data);
+                console.log(data)
             })
-        
+        })
     })
 })
-})
-

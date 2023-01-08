@@ -42,6 +42,11 @@ router.get('/leaveStatus',(req, res)=>{
     res.sendFile(path.join(initialPath,"General User/LeaveInfo.html"));
 })
 
+router.get('/infoRender',(req,res)=>{
+    res.sendFile(path.join(initialPath,"HR Manager/infoRender.html"));
+    
+})
+
 
 
 

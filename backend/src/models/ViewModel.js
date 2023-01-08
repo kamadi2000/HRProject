@@ -9,6 +9,11 @@ class View{
                         SELECT * FROM employee emp
                         INNER JOIN employment_detail emp_d 
                         ON emp.ID=emp_d.emp_ID`,[]);
+            await executeSQL(`CREATE OR REPLACE VIEW leave_initialize AS 
+                        SELECT emp_ID,employment_detail.pay_grade,leave_type.annual,leave_type.casual,leave_type.maternity,leave_type.noPay
+                        FROM employment_detail
+                        Left Join leave_type
+                        ON employment_detail.pay_grade=leave_type.pay_grade;`);
             await executeSQL(`CREATE OR REPLACE VIEW leave_view AS 
                         SELECT leave_d.req_No,
                             leave_d.emp_ID,
