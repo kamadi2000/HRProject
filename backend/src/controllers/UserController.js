@@ -7,6 +7,10 @@ var users = new Map();
 var user = new User();
 
 class UserController{
+    async setLastActiveTime(emp_ID){
+        const status = await user.setLastActiveTime(emp_ID)
+    }
+
     async login(req){ 
         const username = req.body.username
         const password = req.body.password 
@@ -74,8 +78,8 @@ class UserController{
         return status
     }
 
-    async setAccessLevel(emp_ID){
-        const status = await user.setAccessLevel(emp_ID)
+    async setAccessLevel(emp_ID,level){
+        const status = await user.setAccessLevel(emp_ID,level)
         return status
     }
 
@@ -97,8 +101,8 @@ class UserController{
     }
 
     async setLastActiveTime(thisUser){
-        const emp_ID = thisUser.username
-        const status = await this.setLastActiveTime(emp_ID)
+        const emp_ID = thisUser
+        const status = await user.setLastActiveTime(emp_ID)
         return(status)
     }
     

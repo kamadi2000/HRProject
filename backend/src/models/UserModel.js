@@ -306,7 +306,7 @@ class User{
             }else{
                 const salt = await bcrypt.genSalt(10);
                 const userpassword = await bcrypt.hash(password, salt)
-                const canInsert = executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
+                const canInsert = await executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
                 if(canInsert){
                     await executeSQL(`INSERT INTO user values (?,?,?)`,[username,userpassword,accessLevel])
                     return ("successfully created")
