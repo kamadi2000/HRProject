@@ -59,6 +59,14 @@ router.get('/changePassword',(req,res)=>{
     res.sendFile(path.join(initialPath,"ViewInfo/ChangePW.html"));
 })
 
+router.get('/getPIM',(req,res)=>{
+    res.sendFile(path.join(initialPath,"PIM/PIM.html"))
+})
+
+router.get('/getPIMHr',(req,res)=>{
+    res.sendFile(path.join(initialPath,"PIM/PIMHr.html"))
+})
+
 
 
 
