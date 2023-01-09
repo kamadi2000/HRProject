@@ -18,7 +18,7 @@ router.get('/viewleavecount',authenticate,  accessAuthorization(["General","Supe
 router.post('/applyleave',authenticate, accessAuthorization(["General","Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.applyLeave(req)
     await controller.setLastActiveTime(req.user.username)
-    res.send(status)
+    res.send({massege:status})
 })
 
 router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor","Admin","HRManager"]), async (req,res)=>{
