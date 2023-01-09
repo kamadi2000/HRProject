@@ -204,4 +204,14 @@ router.post('/changepassword',authenticate, async (req,res)=>{
     }
 })
 
+router.post('/addEmployee', authenticate, accessAuthorization(["HRManager"]), async (req, res) => {
+    const status = await controller.addEmployee(req.body)
+    res.send({massege : status})
+})
+
+router.post('/addHr', authenticate, accessAuthorization(["Admin"]), async (req, res) => {
+    const status = await controller.addEmployee(req.body)
+    res.send({status})
+})
+
 module.exports = router;
