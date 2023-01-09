@@ -26,5 +26,9 @@ class reportController{
         const status = await report.getEmpReportPaygrade(paygrade);
         return (status);
     }
+    async getEmpReportCustom(field,value){
+        const status = await report.getEmpReportCustom(field,value);
+        return (status);
+    }
 }
 module.exports = {reportController};
