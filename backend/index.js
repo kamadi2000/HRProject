@@ -7,12 +7,9 @@ const { leaveTriggerController } = require('../backend/src/controllers/leaveTrig
 
 //const bodyParser = require('body-parser')
 
-const employeeRoutes = require('./src/routes/employeeRoutes');
 const authRoutes = require('./src/routes/authRoutes');
-const userRoutes = require('./src/routes/thamindu');
-const { post } = require('./src/routes/employeeRoutes');
+const userRoutes = require('./src/routes/userRoutes');
 const pageRoutes = require('./src/routes/pageRoutes');
-const yasiraRoutes = require('./src/routes/yasira');
 const ReportRoutes = require('./src/routes/ReportRoutes');
 const app = express()
 const port = 8000;
@@ -36,11 +33,9 @@ app.use(express.urlencoded({extended: false}));
 let initialPath = path.join(__dirname,"../public");
 app.use(express.static(initialPath));
 
-app.use('/employee',employeeRoutes);
 app.use('/auths',authRoutes);
 app.use('/user',userRoutes);
 app.use('', pageRoutes);
-app.use('/yasira',yasiraRoutes);
 app.use('/reports',ReportRoutes);
 
 app.listen(port, () => {
