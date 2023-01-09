@@ -15,13 +15,13 @@
             <form action="#">
             <table class="table table-striped">
                 <tr>
-                    <th> fiels Name</th>
+                    <th> field</th>
                     <th>Value</th>
                     <th>Edit bar</th>
-                    <th>Edit button</th>
+                    <th>Edit</th>
                 </tr>
             
-                <tbody id="myTable">
+                <tbody id="PIM-table">
                     
                 </tbody>
             </table>
@@ -41,25 +41,7 @@
         
         
         
-            function buildTable(data){
-                var table = document.getElementById('myTable')
-        
-                for (const [key, value] of Object.entries(data)) { 
-                    var row1='<tr>';
-                    row1+= '<td>' + 
-                        key + '</td>';
-
-                    row1 += '<td>' + 
-                        value + '</td>';
-                    row1 +='<td><input type="text" placeholder=""></td>';
-                    row1 +='<td><button type="button" class="btn btn-danger btn-sm" >Edit</button></td>';
-
-                    row1 += '</tr>';
-                    table.innerHTML += row1
-        
-        
-                }
-            }
+            
         
         </script>
 
