@@ -52,7 +52,7 @@ function viewRequestInfo(){
             </div>
             <div class="cell">
                 <button id= ${approveID} class="leave-approve-btn" onclick="show_hide(this)">Approve</button>
-                <button id= ${rejectID} class="leave-reject-btn" onclick="show_hide(this)">reject</button>
+                <button id= ${rejectID} class="leave-reject-btn" onclick="show_hide(this)">Reject</button>
                 <div id= ${clickedApprovedID} class="leave-approved">Approved</div>
                 <div id= ${clickedrejectedID} class="leave-rejected">Rejected</div>
             </div>
