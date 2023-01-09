@@ -254,7 +254,7 @@ class User{
             ,[data.id,data.jobTitle,data.paygrade,data.employeementStatus,data.workingTime,data.department,data.branchID,data.supervisor,data.type]);
         await this.addPhoneNumber(data)
 
-        await executeSQL(`INSERT INTO emergancy_detail VALUES (?,?,?,?,?)`,[data.id,data.data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
+        await executeSQL(`INSERT INTO emergency_detail VALUE (?,?,?,?,?)`,[data.id,data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
         return ("successfully added")
 
         } catch (error) {
