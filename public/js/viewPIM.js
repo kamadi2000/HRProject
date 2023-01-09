@@ -11,7 +11,10 @@ function getPIMinfo(){
     })
     .then(res=>  res.json())
     .then(data => {
-        buildTable(data);      
+        data.forEach(element => {
+            buildTable(element);
+        });
+              
     })
 
     // .catch ((err) => {
@@ -44,21 +47,21 @@ function getPIMinfo(){
 function buildTable(data){
     var table = document.getElementById('PIM-table')
 
-    data.forEach(element => {
-        for (const [key, value] of Object.entries(element)) { 
-            var row1='<tr>';
-            row1+= '<td>' + 
-                key + '</td>';
-    
-            row1 += '<td>' + 
-                value + '</td>';
-            row1 +='<td><input type="text" placeholder=""></td>';
-            row1 +='<td><button type="button" class="btn btn-danger btn-sm" >Edit</button></td>';
-    
-            row1 += '</tr>';
-            table.innerHTML += row1
-        }
-    });
+    for (const [key, value] of Object.entries(data)) { 
+        var row1='<tr>';
+        row1+= '<td>' + 
+            key + '</td>';
+
+        row1 += '<td>' + 
+            value + '</td>';
+        row1 +='<td><input type="text" placeholder=""></td>';
+        row1 +='<td><button type="button" class="btn btn-danger btn-sm" >Edit</button></td>';
+
+        row1 += '</tr>';
+        table.innerHTML += row1
+
+
+    }
 }
 
 getPIMinfo();
