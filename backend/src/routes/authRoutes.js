@@ -11,13 +11,6 @@ const router = express.Router();
 
 const controller = new UserController();
 
-router.get('/',authenticate, (req,res)=>{
-    const user = req.user;
-    res.json(user);
-})
-
-
-
 router.post('/login', async (req,res)=>{
 
     const status = await controller.login(req);

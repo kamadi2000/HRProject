@@ -27,7 +27,7 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor","Admin
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send("No leave request")
+        res.send({message:"No leave request"})
     }
 })
 
@@ -106,7 +106,7 @@ router.post('/createuseraccount',authenticate,accessAuthorization(["HRManager"])
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send({message:"Cannot create check again"})
+        res.send({message:"Cannot create accpunt check again"})
     }
 })
 
@@ -202,6 +202,16 @@ router.post('/changepassword',authenticate, async (req,res)=>{
     }else{
         res.send({message:"Password is not changed"})
     }
+})
+
+router.post('/addEmployee', authenticate, accessAuthorization(["HRManager"]), async (req, res) => {
+    const status = await controller.addEmployee(req.body)
+    res.send({massege : status})
+})
+
+router.post('/addHr', authenticate, accessAuthorization(["Admin"]), async (req, res) => {
+    const status = await controller.addEmployee(req.body)
+    res.send({massege:status})
 })
 
 module.exports = router;
