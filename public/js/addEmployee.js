@@ -2,13 +2,13 @@
 const emp_ID = document.getElementById('emp_ID')  || null;
 const fname = document.getElementById('fname');
 const lname = document.getElementById('lname');
-const email = document.getElementById('email');
+const Mname = document.getElementById('Mname');
 const birthday = document.getElementById('birthday');
 const job = document.getElementById('job');
 const department = document.getElementById('department');
 const phoneNumber = document.getElementById('phoneNumber');
 const branchID = document.getElementById('branchID');
-const address = document.getElementById('address');
+// const address = document.getElementById('address');
 const road = document.getElementById('road');
 const city = document.getElementById('city');
 const country = document.getElementById('country');
@@ -29,13 +29,11 @@ submitbtn.addEventListener('click',()=>{
     console.log(
                 fname.value,
                 lname.value,
-                email.value,
                 birthday.value,
                 job.value,
                 department.value,
                 phoneNumber.value,
                 branchID.value,
-                address.value,
                 road.value,
                 city.value,
                 country.value,
@@ -58,8 +56,8 @@ submitbtn.addEventListener('click',()=>{
         body:JSON.stringify({
             id:emp_ID.value,
             firstName:fname.value,
-            middleName:lname.value,
-            lastName:email.value,
+            middleName:Mname.value,
+            lastName:lname.value,
             dateOfBirth:birthday.value,
             gender:gender.value,
             maritalStatus:Marital_status.value,
