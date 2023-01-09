@@ -11,9 +11,9 @@ function getPIMinfo(){
     })
     .then(res=>  res.json())
     .then(data => {
-        data.forEach(element => {
-            buildTable(element);
-        });
+        buildTable(data.data);
+        buildTable(data.emergency);
+        buildTable(data.phoneNumber);
               
     })
 
@@ -45,7 +45,7 @@ function getPIMinfo(){
 }
 
 function buildTable(data){
-    var table = document.getElementById('PIM-table')
+    var table = document.getElementById('PIM-table');
 
     for (const [key, value] of Object.entries(data)) { 
         var row1='<tr>';
