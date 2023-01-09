@@ -1,24 +1,25 @@
-//login form validation
-const username = document.getElementById('emp_ID')  || null;
-const accessLevel = document.getElementById('accessLevel');
-const submitbtn = document.getElementById('submit-btn');
+const field = document.getElementById('field');
+const value = document.getElementById('value');
+const editbtn = document.getElementById('edit-btn');
 
-submitbtn.addEventListener('click',()=>{
+editbtn.addEventListener('click',()=>{
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/user/givepermission',{
+    fetch('/user/editemergancybyhr',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
-            username : username.value,
-            level : accessLevel.value,
-
+            field:field.value,
+            value:value.value
         })
     })
     .then(res => res.json())
     .then(data=> {
-        console.log(data); 
-        alert(data.message)
+        if (data.message){
+            alert(data.message);
+        }
+        
+        
     })
     .catch ((err) => {
         fetch('/auths/token',{
@@ -32,13 +33,13 @@ submitbtn.addEventListener('click',()=>{
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/givepermission ',{
+            fetch('/user/editemergancybyhr',{
                 method:'post',
                 headers:new Headers({'Content-Type':'application/json',
                         'authorization':`bearer ${accesstoken}`}),
                 body:JSON.stringify({
-                    username : username.value,
-                    accessLevel : accessLevel.value,
+                    field:field.value,
+                    value:value.value
                         })
                 
                 

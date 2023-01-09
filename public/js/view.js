@@ -19,35 +19,36 @@ searchbtn.addEventListener('click',()=>{
     })
     .then(res=> res.json())
     .then(data => {
+        // location.href="/getPIMHr";
         console.log(data)
-        location.href = '/infoRender';
+        
     })
-    .catch ((err) => {
-        fetch('/auths/token',{
-            method:'post',
-            headers:new Headers({'Content-Type':'application/json'}),
-            body:JSON.stringify({
-                refreshtoken:refreshtoken
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            localStorage.setItem('Accesstoken',data.accesstoken);
-            const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/checkrecords',{
-                method:'post',
-                // headers:new Headers({'Content-Type':'application/json'}),
-                headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
-                body:JSON.stringify({
-                    emp_ID:employee_ID.value
-                })
+    // .catch ((err) => {
+    //     fetch('/auths/token',{
+    //         method:'post',
+    //         headers:new Headers({'Content-Type':'application/json'}),
+    //         body:JSON.stringify({
+    //             refreshtoken:refreshtoken
+    //         })
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         console.log(data)
+    //         localStorage.setItem('Accesstoken',data.accesstoken);
+    //         const accesstoken = localStorage.getItem('Accesstoken');
+    //         fetch('/user/checkrecords',{
+    //             method:'post',
+    //             // headers:new Headers({'Content-Type':'application/json'}),
+    //             headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
+    //             body:JSON.stringify({
+    //                 emp_ID:employee_ID.value
+    //             })
                 
-            })
-            .then(res=> res.json())
-            .then(data => {
-                console.log(data)
-            })
-        })
-    })
+    //         })
+    //         .then(res=> res.json())
+    //         .then(data => {
+    //             console.log(data)
+    //         })
+    //     })
+    // })
 })

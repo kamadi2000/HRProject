@@ -1,15 +1,32 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body><p>Employee ID</p>
-    <input type="text" id="emp_ID">
-    <p>Access Level</p>
-    <input type="text" id="accessLevel">
-    <input type="button" value="Submit" id="submit-btn"> 
-    <script src="../js/setAccess.js"></script>
-</body>
+<html>
+    <head>
+        <title>
+            Set accesss level
+        </title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="stylesForm.css">
+        <meta name="viewport" content="width=device-width",initial-scale=1.0>
+    </head>
+    <body>
+        <div class="container">
+            <div class="title">Set Accesss Level</div>
+            <form action="#">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Employee ID</span>
+                        <input type="text" id="emp_ID" placeholder="Employee ID" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Access Level</span>
+                        <input type="text" id="accessLevel" placeholder="Enter Access Level" required>
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit" id="Search-btn" value="submit">
+                </div>
+            </form>
+        </div>
+
+        <script src="../js/setAccess.js"></script>
+    </body>
 </html>

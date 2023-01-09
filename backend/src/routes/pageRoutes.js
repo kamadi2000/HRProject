@@ -47,6 +47,27 @@ router.get('/infoRender',(req,res)=>{
     
 })
 
+router.get('/removeUser',(req,res)=>{
+    res.sendFile(path.join(initialPath,"HR manager/RemoveUser.html"));
+})
+
+router.get('/addUser',(req,res)=>{
+    res.sendFile(path.join(initialPath,"HR manager/AddUserAcc.html"));
+})
+
+router.get('/changePassword',(req,res)=>{
+    res.sendFile(path.join(initialPath,"ViewInfo/ChangePW.html"));
+})
+
+router.get('/getPIM',(req,res)=>{
+    res.sendFile(path.join(initialPath,"PIM/PIM.html"))
+})
+
+router.get('/getPIMHr',(req,res)=>{
+    res.sendFile(path.join(initialPath,"PIM/PIMHr.html"))
+})
+
+
 
 
 
