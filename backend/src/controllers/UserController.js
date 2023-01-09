@@ -1,9 +1,6 @@
 const e = require("express");
 const {User} = require("../models/UserModel");
-const { use } = require("../routes/employeeRoutes");
-// const { use } = require("../routes/thamindu");
 
-var users = new Map();
 var user = new User();
 
 class UserController{
