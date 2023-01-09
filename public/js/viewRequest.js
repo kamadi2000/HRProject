@@ -23,7 +23,7 @@ function viewRequestInfo(){
             let approveID = "a" + element.req_No;
             let rejectID = "r" + element.req_No;
             let clickedApprovedID = "clicked" + approveID;
-            let clickedrejectedID = "clicked" + approveID;
+            let clickedrejectedID = "clicked" + rejectID;
 
             const markup = `<div class="tableRow">
             <div class="cell" style="width:12%">${element.req_No}</div>
