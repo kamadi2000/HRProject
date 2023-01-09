@@ -107,7 +107,21 @@ class UserController{
     }
     
     async addEmployee(data){
-        await user.addEmployee(data)  // data is a Json object
+        if( data.id && data.firstName && data.middleName && data.lastName && data.dateOfBirth && data.gender && data.maritalStatus && data.road && data.city && data.country && 
+            data.jobTitle && data.paygrade && data.employeementStatus && data.workingTime && data.department && data.branchID && data.supervisor && data.type && 
+            data.emg_first_name && data.emg_last_name && data.relationship && data.emg_phone_number && 
+            data.superviseID && 
+            data.phoneNumber){
+                const status = await user.addEmployee(data)  // data is a Json object
+                if(status == "successfully added" | status == "employee ID is already exist"){
+                    return (status)
+                }else{
+                    await user.deleteMistakenData(data.id)
+                    return (status)
+                }
+        }else{
+            return("fields cannot be null please fill again")
+        }
     }
 
     async viewLeaveStatus(emp_ID){

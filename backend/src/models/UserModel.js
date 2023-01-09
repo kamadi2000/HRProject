@@ -7,6 +7,19 @@ const { use } = require("../routes/employeeRoutes");
 
 
 class User{
+    async deleteMistakenData(username){
+        try{
+            await executeSQL(`DELETE FROM employment_detail WHERE emp_ID = ?`,[username])
+            await executeSQL(`DELETE FROM employee_phone_number WHERE emp_ID = ?`,[username])
+            await executeSQL(`DELETE FROM emergency_detail WHERE emp_ID = ?`,[username])
+            await executeSQL(`DELETE FROM supervise WHERE emp_ID = ?`,[username])
+            await executeSQL(`DELETE FROM leave_count WHERE emp_ID = ?`,[username])
+            await executeSQL(`DELETE FROM employee WHERE ID = ?`,[username])
+        }catch(e){
+            console.log(e)
+        }
+    }
+
     async setLastActiveTime(emp_ID){
         try{
             await executeSQL(`
@@ -202,60 +215,71 @@ class User{
     
     async addEmployee(data){  // data is a JSON object
         try {
-            await executeSQL(
-                `
-                INSERT INTO employee (
-                    ID, 
-                    first_name, 
-                    middle_name, 
-                    last_name, 
-                    date_of_birth, 
-                    gender, 
-                    marital_status, 
-                    road, 
-                    city, 
-                    country)
-                VALUE (
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?)`,[data.id,data.firstName,data.middleName,data.lastName,data.dateOfBirth,data.gender,data.maritalStatus,data.road,data.city,data.country])
-            
-            await executeSQL(`
-                INSERT INTO employment_detail (
-                    emp_ID,
-                    job_title,
-                    pay_grade,
-                    employeement_status,
-                    working_time,
-                    department,
-                    branch_ID,
-                    supervisor,
-                    type
-                )
+            const Credential = await executeSQL(`SELECT * FROM employee WHERE ID = ?`,[data.id])
+            const isSupervisor = await executeSQL(`SELECT EXISTS(SELECT 1 FROM employment_detail WHERE supervisor = '1' AND emp_ID = ?) AS available`,[data.superviseID])
+            if(Credential){
+                return ("employee ID is already exist")
+            }else{
+                await executeSQL(
+                    `
+                    INSERT INTO employee (
+                        ID, 
+                        first_name, 
+                        middle_name, 
+                        last_name, 
+                        date_of_birth, 
+                        gender, 
+                        marital_status, 
+                        road, 
+                        city, 
+                        country)
+                    VALUE (
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?)`,[data.id,data.firstName,data.middleName,data.lastName,data.dateOfBirth,data.gender,data.maritalStatus,data.road,data.city,data.country])
+                
+                await executeSQL(`
+                    INSERT INTO employment_detail (
+                        emp_ID,
+                        job_title,
+                        pay_grade,
+                        employeement_status,
+                        working_time,
+                        department,
+                        branch_ID,
+                        supervisor,
+                        type
+                    )
+    
+                    VALUE (
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?
+                    )`
+                ,[data.id,data.jobTitle,data.paygrade,data.employeementStatus,data.workingTime,data.department,data.branchID,data.supervisor,data.type]);
+                await this.addPhoneNumber(data)
+                await executeSQL(`INSERT INTO emergency_detail VALUE (?,?,?,?,?)`,[data.id,data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
+                if(isSupervisor[0].available){
+                    await executeSQL(`INSERT INTO supervise VALUE (?,?)`,[data.id,data.superviseID])
+                    return ("successfully added")
+                }else{
+                    return ("Supervisor id is wrong")
+                }
 
-                VALUE (
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?,
-                    ?
-                )`
-            ,[data.id,data.jobTitle,data.paygrade,data.employeementStatus,data.workingTime,data.department,data.branchID,data.supervisor,data.type]);
-        await this.addPhoneNumber(data)
-
-        await executeSQL(`INSERT INTO emergency_detail VALUE (?,?,?,?,?)`,[data.id,data.emg_first_name,data.emg_last_name,data.relationship,data.emg_phone_number])
-        return ("successfully added")
+            }
 
         } catch (error) {
             console.log(error)
