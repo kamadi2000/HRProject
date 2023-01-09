@@ -27,7 +27,7 @@ router.get('/viewrequest',authenticate, accessAuthorization(["Supervisor","Admin
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send("No leave request")
+        res.send({message:"No leave request"})
     }
 })
 
@@ -106,7 +106,7 @@ router.post('/createuseraccount',authenticate,accessAuthorization(["HRManager"])
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send({message:"Cannot create check again"})
+        res.send({message:"Cannot create accpunt check again"})
     }
 })
 
@@ -211,7 +211,7 @@ router.post('/addEmployee', authenticate, accessAuthorization(["HRManager"]), as
 
 router.post('/addHr', authenticate, accessAuthorization(["Admin"]), async (req, res) => {
     const status = await controller.addEmployee(req.body)
-    res.send({status})
+    res.send({massege:status})
 })
 
 module.exports = router;
