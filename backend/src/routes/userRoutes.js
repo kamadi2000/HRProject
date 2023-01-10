@@ -55,9 +55,35 @@ router.post('/requestvalidation',authenticate,accessAuthorization(["Supervisor",
 
 router.post('/checkrecords',authenticate,accessAuthorization(["Supervisor","HRManager"]), async (req,res)=>{
     const status = await controller.checkRecord(req.body.emp_ID)
+    const date = new Date(status.data.date_of_birth).toLocaleDateString()
+    const data = {
+        "ID": status.data.ID,
+        "first_name": status.data.first_name,
+        "middle_name": status.data.middle_name,
+        "last_name": status.data.last_name,
+        "date_of_birth": date,
+        "gender": status.data.gender,
+        "marital_status": status.data.marital_status,
+        "road": status.data.road,
+        "city": status.data.city,
+        "country": status.data.country,
+        "job_title": status.data.job_title,
+        "pay_grade": status.data.pay_grade,
+        "employeement_status": status.data.employeement_status,
+        "working_time": status.data.working_time,
+        "department": status.data.department,
+        "branch_ID": status.data.branch_ID,
+        "supervisor": status.data.supervisor,
+        "type": status.data.type,
+        "phone_number": status.phone_numbers[0],
+        "emg_first_name": status.emergancy.first_name,
+        "emg_last_name": status.emergancy.last_name,
+        "emg_relationship": status.emergancy.relationship,
+        "emg_phone_number": status.emergancy.phone_number
+    }
     if(status){
         await controller.setLastActiveTime(req.user.username)
-        res.send(status)
+        res.send(data)
     }else{
         res.send({massege:"Invalid employee ID"})
     }
