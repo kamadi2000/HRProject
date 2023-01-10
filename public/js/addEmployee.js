@@ -16,6 +16,7 @@ const Marital_status = document.getElementById('Marital-status');
 const Employment_Status = document.getElementById('Employment-Status');
 const Type = document.getElementById('Type');
 const supervisor = document.getElementById('supervisor');
+const superviseID = document.getElementById('supervisor_ID');
 const Pay_Grade = document.getElementById('Pay-Grade');
 const Fulltime_Parttime = document.getElementById('Fulltime-Parttime');
 const gender = document.getElementById('gender');
@@ -50,7 +51,7 @@ submitbtn.addEventListener('click',()=>{
   
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/yasira/addEmployee',{
+    fetch('/user/addEmployee',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
@@ -64,6 +65,8 @@ submitbtn.addEventListener('click',()=>{
             road:road.value,
             city:city.value,
             country:country.value,
+            phoneNumber:phoneNumber.value,
+            supervisor:supervisor.value,
             jobTitle:job.value,
             paygrade:Pay_Grade.value,
             employeementStatus:Employment_Status.value,
@@ -71,6 +74,7 @@ submitbtn.addEventListener('click',()=>{
             department:department.value,
             branchID:branchID.value,
             supervisor:supervisor.value,
+            superviseID:superviseID.value,
             type:Type.value,
             emg_first_name:emg_first_name.value,
             emg_last_name:emg_last_name.value,
@@ -82,6 +86,8 @@ submitbtn.addEventListener('click',()=>{
     .then(res => res.json())
     .then(data=> {
         console.log(data);
+        alert(data.massege);
+        location.href='/HRmanager';
         
 
     })

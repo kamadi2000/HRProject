@@ -52,7 +52,7 @@ class UserController{
             const status = await user.applyLeave(emp_ID,reason,leave_type,date,leave_status)
             return status
         }
-        return("incomplete request")
+        return({message:"incomplete request"})
     }
 
     async viewRequest(username){
