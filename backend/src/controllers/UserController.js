@@ -115,6 +115,14 @@ class UserController{
         return (null)
     }
 
+    async editEmployment(field,value,emp_ID){
+        if(field && value){
+            const status = await user.edidEmployment(field,value,emp_ID)
+            return (status)
+        }
+        return (null)
+    }
+
     async editEmergancy(field,value,emp_ID){
         if(field && value){
             const status = await user.edidEmergancy(field,value,emp_ID)

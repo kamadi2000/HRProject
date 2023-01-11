@@ -142,24 +142,11 @@ router.post('/deletehraccount',authenticate, accessAuthorization(["Admin"]), asy
     }
 })
 
-router.post('/editemployeebyuser',authenticate,levelAuthorization([2,3]), async (req,res)=>{
-    const emp_ID = req.user.username
+router.post('/editemploymentbyhr',authenticate,accessAuthorization(["HRManager"]), async (req,res)=>{
+    const emp_ID = req.body.emp_ID
     const field = req.body.field
     const value = req.body.value
-    const status = await controller.editEmployee(field,value,emp_ID)
-    if(status){
-        await controller.setLastActiveTime(req.user.username)
-        res.send(status)
-    }else{
-        res.send({massege:"Invalid data"})
-    }
-})
-
-router.post('/editemergancybyuser',authenticate,levelAuthorization([2,3]), async (req,res)=>{
-    const emp_ID = req.user.username
-    const field = req.body.field
-    const value = req.body.value
-    const status = await controller.editEmergancy(field,value,emp_ID)
+    const status = await controller.editEmployment(field,value,emp_ID)
     if(status){
         await controller.setLastActiveTime(req.user.username)
         res.send(status)

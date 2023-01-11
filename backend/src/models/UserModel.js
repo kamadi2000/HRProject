@@ -394,6 +394,19 @@ class User{
         }
     }
 
+    async edidEmployment(field,value,emp_ID){
+        try{
+            await executeSQL(`
+                UPDATE employment_detail
+                SET ${field} = ?
+                WHERE emp_ID = ?`,[value,emp_ID])
+            return ("successfully updated")
+        }catch(e){
+            console.log(e)
+            return (null)
+        }
+    }
+
     async edidEmergancy (field,value,emp_ID){
         try{
             await executeSQL(`
