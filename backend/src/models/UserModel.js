@@ -387,7 +387,7 @@ class User{
                 UPDATE employee
                 SET ${field} = ?
                 WHERE ID = ?`,[value,emp_ID])
-            return ("successfully updated")
+            return ({messaage:"successfully updated"})
         }catch(e){
             console.log(e)
             return (null)
@@ -400,7 +400,7 @@ class User{
                 UPDATE employment_detail
                 SET ${field} = ?
                 WHERE emp_ID = ?`,[value,emp_ID])
-            return ("successfully updated")
+            return ({message:"successfully updated"})
         }catch(e){
             console.log(e)
             return (null)
@@ -413,7 +413,7 @@ class User{
                 UPDATE emergency_detail
                 SET ${field} = ?
                 WHERE emp_ID = ?`,[value,emp_ID])
-            return ("successfully updated")
+            return ({message:"successfully updated"})
         }catch(e){
             console.log(e)
             return (null)

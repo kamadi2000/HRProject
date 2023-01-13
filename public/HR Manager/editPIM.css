@@ -1,0 +1,87 @@
+.backgro{
+    background-color: #303030;
+  }
+   
+.card{
+   margin-right: 30px;
+   margin-bottom: 10px;
+   margin-top: 10px;
+   background-color: #FFF2F2;
+}
+
+.nav{
+   background-color: #8458b3;
+   height: 3rem;
+}
+
+.nav-text{
+   color: #eaeaea;
+}
+
+#navUl{
+   padding: 5px;
+   justify-content: center;
+}
+
+#profileAvatar{
+   align-content: center;
+}
+
+.tableContent{
+   width: 1000px;
+   
+   margin-left: auto;
+   margin-right: auto;
+   padding: 3px;
+   border-radius: 20px;
+   align-self: center;
+}
+
+.tableRow{
+   align-self: center;
+   margin: 3px;
+   padding-left: 30px;
+   background-color: white;
+   display: flex;
+   flex-direction: row;
+   height: 40px;
+   border-radius: 20px;
+}
+
+#tableHeader{
+   background-color: #C51383;
+   color: white;
+}
+
+.cell{
+   display: flex;
+   width: 28%;
+   justify-content: left;
+   align-items: center;
+   padding: 10px
+}
+
+.table-title{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: white;
+}
+
+.input{
+    background-color: #eaeaea;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.edit-btn{
+    width: 80px;
+    height: 30px;
+    margin: 5px;
+    padding: 2px;
+    color: white;
+    border-radius: 10px;
+    background-color: #D5212D;
+    border-style: none;
+ }
+

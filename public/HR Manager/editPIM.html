@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--boostrap 4.6 version-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!--CSS-->
+    <link rel="stylesheet" href="../HR Manager/editPIM.css">
+    <!--font awsome icon CDN-->
+    <script src="https://kit.fontawesome.com/9a7917375c.js" crossorigin="anonymous"></script>
+    <!--favicon icon-->
+    <link rel="shortcut icon" href="https://461850727-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-Lo2zgB0gRDW51PJoTqD%2F-LoWEFajW3nevjYnJyx0%2F-LoWEJU-QKcyziWQ2k7v%2Fjupiter.png?alt=media&token=b67070dc-9036-498c-bcfc-57f40b13ebf0.jpg">
+
+    <title>Document</title>
+</head>
+<body class="backgro">
+    <div class="navDiv">
+        <ul class="nav justify-content-end rounded-lg" id="navUl">
+            <li class="nav-item ">
+              <a class="nav-link active" href="#">
+                <h6 class="nav-text">Home</h6></a>
+            </li>
+            <li class="nav-item" id="profileAvatar">
+              <i class="fa fa-user-circle fa-2x" style="color:#eaeaea" aria-hidden="true"></i>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link active" href="#">
+                <h6 class="nav-text">Profile</h6></a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link active" href="../LoginPage/LoginScreen.html">
+                <h6 class="nav-text">Sign out</h6></a>
+            </li>
+        </ul>
+    </div>
+
+    
+
+    
+    <div class="tableContent" id="edit-PIM">
+      <div style="color: #eaeaea; margin-top: 20px; padding-left: 20px;">
+        <div class="title" >Enter the Employee ID to edit details</div>
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Employee ID</span>
+                <input style="border-radius: 20px; border: none; padding-left: 20px" type="text" placeholder="Employee ID" id="employee_ID" required>
+            </div>
+        </div>
+        <div class="button">     
+            <input style="border-radius: 5px; border: none; padding: 0 10px 0 10px; height: 30px;" type="button" id="Search-btn" value="submit">
+        </div>
+    </div>
+    <div class="table-title"><h2>Personal Information</h2></div>
+        <div class="tableRow" id="tableHeader">
+          <div class="cell">Field</div>
+          <div class="cell">Current data</div>
+          <div class="cell">New data</div>
+          <div class="cell" style="width: 16%;">Edit</div>
+        </div>
+    </div>
+
+    <div class="table-title"><h2>Employment details</h2></div>
+    <div class="tableContent" id="edit-employement-detail">
+        <div class="tableRow" id="tableHeader">
+          <div class="cell">Field</div>
+          <div class="cell">Current data</div>
+          <div class="cell">New data</div>
+          <div class="cell" style="width: 16%;">Edit</div>
+        </div>
+    </div>
+
+    <div class="table-title"><h2>Emergency details</h2></div>
+    <div class="tableContent" id="edit-emergency-details">
+        <div class="tableRow" id="tableHeader">
+          <div class="cell">Field</div>
+          <div class="cell">Current data</div>
+          <div class="cell">New data</div>
+          <div class="cell" style="width: 16%;">Edit</div>
+        </div>
+    </div>
+    
+    <script src="../js/editPIM.js"></script>
+</body>
+</html>
