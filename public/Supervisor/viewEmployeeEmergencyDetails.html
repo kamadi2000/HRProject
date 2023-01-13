@@ -35,16 +35,28 @@
         </ul>
     </div>
 
-    <div class="tableContent" style="align-self: center;">
-        <div class="tableRow" id="tableHeader">
-          <div class="cell" style="width:12%">Leave ID</div>
-          <div class="cell" id="personal-info">Personal Info</div>
-          <div class="cell" id="leave-info">Leave Info</div>
-          <div class="cell" id="remaining-leaves">Remaining Leaves</div>
-          <div class="cell">Approve/Reject</div>
+    <div style="color: #eaeaea; margin-top: 20px; padding-left: 20px;">
+        <div class="title" >Enter the Employee ID to view Emergency Details</div>
+        <div class="user-details">
+            <div class="input-box">
+                <span class="details">Employee ID</span>
+                <input style="border-radius: 20px; border: none; padding-left: 20px" type="text" placeholder="Employee ID" id="employee_ID" required>
+            </div>
+        </div>
+        <div class="button">     
+            <input style="border-radius: 5px; border: none; padding: 0 10px 0 10px;" type="button" id="Search-btn" value="submit">
         </div>
     </div>
+    </div>
     
-    <script src="../js/viewRequest.js"></script>
+
+    <div class="tableContent" id="emergency-details" style="align-self: center; width: 600px">
+        <div class="tableRow" id="tableHeader">
+          <div class="cell" style="width: 40%;">Field</div>
+          <div class="cell" style="width: 60%;">Data</div>
+        </div>
+      </div>
+    
+    <script src="../js/viewEmergency.js"></script>
 </body>
 </html>
