@@ -60,7 +60,7 @@ router.get('/changePassword',(req,res)=>{
 })
 
 router.get('/getPIM',(req,res)=>{
-    res.sendFile(path.join(initialPath,"PIM/PIM.html"))
+    res.sendFile(path.join(initialPath,"HR Manager/editPIM.html"))
 })
 
 router.get('/getPIMHr',(req,res)=>{
