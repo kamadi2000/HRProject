@@ -7,7 +7,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
@@ -18,7 +18,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
@@ -29,7 +29,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
@@ -40,7 +40,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
@@ -51,7 +51,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
@@ -64,7 +64,7 @@ class Report{
             if(result){  
                 return result;
             }
-            return (null)
+            return ({message:"No records"})
         }catch(e){
             console.log(e);
         }
