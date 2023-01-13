@@ -125,7 +125,7 @@ class UserController{
 
     async editEmergancy(field,value,emp_ID){
         if(field && value){
-            const status = await user.edidEmergancy(field,value,emp_ID)
+            const status = await user.edidEmergancy(field.slice(4),value,emp_ID)
             return (status)
         }
         return (null)
