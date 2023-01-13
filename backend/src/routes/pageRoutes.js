@@ -60,14 +60,36 @@ router.get('/changePassword',(req,res)=>{
 })
 
 router.get('/getPIM',(req,res)=>{
-    res.sendFile(path.join(initialPath,"HR Manager/editPIM.html"))
+    res.sendFile(path.join(initialPath,"HR Manager/editPIM.html"));
 })
 
 router.get('/getPIMHr',(req,res)=>{
-    res.sendFile(path.join(initialPath,"PIM/PIMHr.html"))
+    res.sendFile(path.join(initialPath,"PIM/PIMHr.html"));
 })
 
+router.get('/EmployeeReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/EmployeeReport.html"));
+})
 
+router.get('/leaveReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/leaveReport.html"));
+})
+
+router.get('/JobtitleReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/JobtitleReport.html"));
+})
+
+router.get('/departmentReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/DepartmentReport.html"));
+})
+
+router.get('/paygradeReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/PaygradeReport.html"));
+})
+
+router.get('/customAttReport' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Get Report/CustomAttReport.html"));
+})
 
 
 
