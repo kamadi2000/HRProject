@@ -4,8 +4,12 @@ class Report{
     async getEmployeeReport(department_name){
         try{
             const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = ?`,[department_name]);
-            if(result){  
-                return result;
+            if(result){ 
+                let updatedList = result.map(function(item) {
+                    item.date_of_birth = new Date(item.date_of_birth).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return ({message:"No records"})
         }catch(e){
@@ -27,7 +31,11 @@ class Report{
         try{
             const result = await  executeSQL(`SELECT * FROM employee_view WHERE job_title = ?`,[job_title]);
             if(result){  
-                return result;
+                let updatedList = result.map(function(item) {
+                    item.date_of_birth = new Date(item.date_of_birth).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return ({message:"No records"})
         }catch(e){
@@ -38,7 +46,11 @@ class Report{
         try{
             const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = ?`,[department_name]);
             if(result){  
-                return result;
+                let updatedList = result.map(function(item) {
+                    item.date_of_birth = new Date(item.date_of_birth).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return ({message:"No records"})
         }catch(e){
@@ -49,7 +61,11 @@ class Report{
         try{
             const result = await  executeSQL(`SELECT * FROM employee_view WHERE pay_grade = ?`,[paygrade]);
             if(result){  
-                return result;
+                let updatedList = result.map(function(item) {
+                    item.date_of_birth = new Date(item.date_of_birth).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return ({message:"No records"})
         }catch(e){
@@ -61,8 +77,12 @@ class Report{
             const result = await  executeSQL(`SELECT * FROM employee_view emp_view 
                                             RIGHT JOIN (SELECT * FROM custom WHERE custom_field = ? AND value = ?) cus 
                                             ON emp_view.emp_ID = cus.emp_ID`,[field,value]);
-            if(result){  
-                return result;
+            if(result){ 
+                let updatedList = result.map(function(item) {
+                    item.date_of_birth = new Date(item.date_of_birth).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return ({message:"No records"})
         }catch(e){
