@@ -216,6 +216,10 @@ class UserController{
             return ({message:"Fields connot be blank"})
         }
     }
+    async addCustomField(emp_ID,custom_field,value){  
+        const status = await user.addCustomField(emp_ID,custom_field,value)
+        return status
+    }
 }
 
 module.exports = {UserController}

@@ -441,6 +441,13 @@ class User{
             console.log(e)
         }
     }
+    async addCustomField(emp_ID,custom_field,value){  
+        try {
+            await executeSQL(`INSERT INTO custom (emp_ID,custom_field,value)VALUE (?,?,?)`,[emp_ID,custom_field,value])
+        }catch (error) {
+            console.log(error)
+        }
+    }
 
 }
 
