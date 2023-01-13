@@ -1,11 +1,9 @@
 const {executeSQL} = require("../database/database");
-const connection = require("../database/database")
-const bcrypt = require("bcryptjs");
 
 class Report{
     async getEmployeeReport(department_name){
         try{
-            const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = "${department_name}"`,[]);
+            const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = ?`,[department_name]);
             if(result){  
                 return result;
             }
@@ -16,7 +14,7 @@ class Report{
     }
     async getLeaveReport(periodBegin,periodEnd){
         try{
-            const result = await  executeSQL(`SELECT leave_view.department,COUNT(req_No) FROM leave_view WHERE leave_view.leave_date BETWEEN "${periodBegin}" AND "${periodEnd}"`,[]);
+            const result = await  executeSQL(`SELECT leave_view.department,COUNT(req_No) FROM leave_view WHERE leave_view.leave_date BETWEEN ? AND ?`,[periodBegin,periodEnd]);
             if(result){  
                 return result;
             }
@@ -27,7 +25,7 @@ class Report{
     }
     async getEmpReportJobtitle(job_title){
         try{
-            const result = await  executeSQL(`SELECT * FROM employee_view WHERE job_title = "${job_title}"`,[]);
+            const result = await  executeSQL(`SELECT * FROM employee_view WHERE job_title = ?`,[job_title]);
             if(result){  
                 return result;
             }
@@ -38,7 +36,7 @@ class Report{
     }
     async getEmpReportDepartment(department_name){
         try{
-            const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = "${department_name}"`,[]);
+            const result = await  executeSQL(`SELECT * FROM employee_view WHERE department = ?`,[department_name]);
             if(result){  
                 return result;
             }
@@ -49,7 +47,7 @@ class Report{
     }
     async getEmpReportPaygrade(paygrade){
         try{
-            const result = await  executeSQL(`SELECT * FROM employee_view WHERE pay_grade = "${paygrade}"`,[]);
+            const result = await  executeSQL(`SELECT * FROM employee_view WHERE pay_grade = ?`,[paygrade]);
             if(result){  
                 return result;
             }
@@ -61,8 +59,8 @@ class Report{
     async getEmpReportCustom(field,value){
         try{
             const result = await  executeSQL(`SELECT * FROM employee_view emp_view 
-                                            RIGHT JOIN (SELECT * FROM custom WHERE custom_field = "${field}" AND value = "${value}") cus 
-                                            ON emp_view.emp_ID = cus.emp_ID`,[]);
+                                            RIGHT JOIN (SELECT * FROM custom WHERE custom_field = ? AND value = ?) cus 
+                                            ON emp_view.emp_ID = cus.emp_ID`,[field,value]);
             if(result){  
                 return result;
             }

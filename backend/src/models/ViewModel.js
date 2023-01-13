@@ -1,6 +1,4 @@
 const {executeSQL} = require("../database/database");
-const connection = require("../database/database")
-const bcrypt = require("bcryptjs");
 
 class View{
     async createView(){   
