@@ -1,4 +1,3 @@
-//login form validation
 const username = document.getElementById('username')  || null;
 const submitbtn = document.getElementById('submit-btn');
 
@@ -15,10 +14,8 @@ submitbtn.addEventListener('click',()=>{
     })
     .then(res => res.json())
     .then(data=> {
-        if (data.message){
-            alert(data.message);
-            location.href = "/removeUser";
-        }
+        console.log(data.message);
+        alert(data.message);
         
         
     })
@@ -47,6 +44,8 @@ submitbtn.addEventListener('click',()=>{
             .then(res=> res.json())
             .then(data => {
                 console.log(data)
+                alert(data.message)
+
             })
         })
     })
