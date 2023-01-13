@@ -35,4 +35,9 @@ router.post('/reportemployee/paygrade',authenticate, async (req,res)=>{
     const result = await controller.getEmpReportPaygrade(req.body.paygrade)
     res.send(result)
 })
+router.post('/reportemployee/custom',authenticate, async (req,res)=>{
+    await controllerView.createView();
+    const result = await controller.getEmpReportCustom(req.body.field,req.body.value)
+    res.send(result)
+})
 module.exports = router;

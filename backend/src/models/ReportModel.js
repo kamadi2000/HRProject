@@ -58,6 +58,19 @@ class Report{
             console.log(e);
         }
     }
+    async getEmpReportCustom(field,value){
+        try{
+            const result = await  executeSQL(`SELECT * FROM employee_view emp_view 
+                                            RIGHT JOIN (SELECT * FROM custom WHERE custom_field = "${field}" AND value = "${value}") cus 
+                                            ON emp_view.emp_ID = cus.emp_ID`,[]);
+            if(result){  
+                return result;
+            }
+            return (null)
+        }catch(e){
+            console.log(e);
+        }
+    }
 }
 
 module.exports = {Report}
