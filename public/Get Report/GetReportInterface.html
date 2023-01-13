@@ -10,32 +10,25 @@
     <body>
         <div class="container">
             <div class="title">Enter Report information</div>
-            <form action="#">
-                <div class="user-details">
-                    <div class="input-box">
-                        <span class="details">Report Name</span>
-                        <input type="text" placeholder="Report Name" required>
-                    </div>
-                    <div class="input-box">
-                        <span class="details">Time Period</span>
-                        <input type="text" placeholder="Time Period" required>
-                    </div>
-                </div>
+            <form>
                 <div class="input-box">
                     <span class="details">Report Type</span>
-                    <select name="Marital-status" id="Marital-status" >
-                        <option type="text" value="Type 1">Type 1......</option>
-                        <option  type="text" value="Type 2">Type 2.....</option>
-                        <option  type="text" value="Type 3">Type 3.....</option>   
+                    <select name="Marital-status" id="report" >
+                        <option type="text" value="getEmployeeReport">getEmployeeReport</option>
+                        <option type="text" value="getLeaveReport">getLeaveReport</option>
+                        <option type="text" value="getEmpReportJobtitle">getEmpReportJobtitle</option>
+                        <option type="text" value="getEmpReportDepartment">getEmpReportDepartment</option>
+                        <option type="text" value="getEmpReportPaygrade">getEmpReportPaygrade</option>   
+                        <option type="text" value="getEmpReportCustom">getEmpReportCustom</option>
                     </select>
                 </div>
                 <div class="button">
-                    <input type="submit" value="submit">
+                    <input type="button" value="submit" id="submit-btn">
                 </div>
             </form>
         </div>
 
         
-
+    <script src="../Get Report/GetReport.js"></script>
     </body>
 </html>
