@@ -133,7 +133,11 @@ class User{
             const Credential = await executeSQL(
                 `SELECT * FROM leave_view JOIN supervise USING (emp_ID) WHERE sup_ID = ? AND status = 'pending'`,[username])
             if(Credential){
-                return Credential
+                let updatedList = Credential.map(function(item) {
+                    item.leave_date = new Date(item.leave_date).toLocaleDateString();
+                    return item;
+                });  
+                return updatedList;
             }
             return null
         }catch(e){
