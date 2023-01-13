@@ -20,7 +20,6 @@ submitbtn.addEventListener('click',()=>{
     .then(data=> {
         console.log(data);
         alert(data.message);
-        location.href = '/changePassword';
 
     })
     .catch ((err) => {
@@ -51,7 +50,6 @@ submitbtn.addEventListener('click',()=>{
             .then(data => {
                 console.log(data)
                 alert(data.message);
-                location.href = '/changePassword';
             })
         })
     })

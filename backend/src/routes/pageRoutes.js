@@ -91,6 +91,10 @@ router.get('/customAttReport' , (req,res) => {
     res.sendFile(path.join(initialPath,"Get Report/CustomAttReport.html"));
 })
 
+router.get('/viewEmergencyDetails' , (req,res) => {
+    res.sendFile(path.join(initialPath,"Supervisor/viewEmployeeEmergencyDetails.html"));
+})
+
 
 
 

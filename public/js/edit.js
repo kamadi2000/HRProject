@@ -1,19 +1,27 @@
-function EditInfo(){
-    const div = document.getElementById('container');
+const editEmpInfo = document.getElementsByClassName("employee");
+const editEmploymentInfo = document.getElementsByClassName("employment");
+const editEmergencyInfo = document.getElementsByClassName("emergency");
+const emp_ID = document.getElementById("emp_ID");
+
+
+editEmpInfo.addEventListener('click',()=>{
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-
-    fetch('/user/editpim',{
-        method: 'get',
-        headers:{
-            'Content-type':'application/json',
-            'authorization':`bearer ${accesstoken}`},
+    fetch('/user/editemployeebyhr',{
+        method:'post',
+        headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
+        body:JSON.stringify({
+            field:field.value,
+            value:value.value,
+            emp_ID:emp_ID.value
+        })
     })
-    .then(res=>  res.json())
-    .then(data => {
-        console.log({data})
+    .then(res => res.json())
+    .then(data=> {
+        if (data.message){
+            alert(data.message);
+        }     
     })
-
     .catch ((err) => {
         fetch('/auths/token',{
             method:'post',
@@ -26,17 +34,126 @@ function EditInfo(){
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/viewpim ',{
-                method:'get',
-                headers:{'Content-Type':'application/json',
-                        'authorization':`bearer ${accesstoken}`},
+            fetch('/user/editemployeebyhr',{
+                method:'post',
+                headers:new Headers({'Content-Type':'application/json',
+                        'authorization':`bearer ${accesstoken}`}),
+                body:JSON.stringify({
+                    field:field.value,
+                    value:value.value,
+                    emp_ID:emp_ID.value
+                        })
+                
                 
             })
             .then(res=> res.json())
             .then(data => {
-                div.textContent = data;
                 console.log(data)
             })
         })
     })
-}
+})
+
+editEmploymentInfo.addEventListener('click',()=>{
+    const accesstoken = localStorage.getItem('Accesstoken');
+    const refreshtoken = localStorage.getItem('Refreshtoken');
+    fetch('/user/editemploymentbyhr',{
+        method:'post',
+        headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
+        body:JSON.stringify({
+            field:field.value,
+            value:value.value,
+            emp_ID:emp_ID.value
+        })
+    })
+    .then(res => res.json())
+    .then(data=> {
+        if (data.message){
+            alert(data.message);
+        }     
+    })
+    .catch ((err) => {
+        fetch('/auths/token',{
+            method:'post',
+            headers:new Headers({'Content-Type':'application/json'}),
+            body:JSON.stringify({
+                refreshtoken:refreshtoken
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            localStorage.setItem('Accesstoken',data.accesstoken);
+            const accesstoken = localStorage.getItem('Accesstoken');
+            fetch('/user/editemploymentbyhr',{
+                method:'post',
+                headers:new Headers({'Content-Type':'application/json',
+                        'authorization':`bearer ${accesstoken}`}),
+                body:JSON.stringify({
+                    field:field.value,
+                    value:value.value,
+                    emp_ID:emp_ID.value
+                        })
+                
+                
+            })
+            .then(res=> res.json())
+            .then(data => {
+                console.log(data)
+            })
+        })
+    })
+})
+
+editEmpInfo.addEventListener('click',()=>{
+    const accesstoken = localStorage.getItem('Accesstoken');
+    const refreshtoken = localStorage.getItem('Refreshtoken');
+    fetch('/user/editemergancybyhr',{
+        method:'post',
+        headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
+        body:JSON.stringify({
+            field:field.value,
+            value:value.value,
+            emp_ID:emp_ID.value
+        })
+    })
+    .then(res => res.json())
+    .then(data=> {
+        if (data.message){
+            alert(data.message);
+        }     
+    })
+    .catch ((err) => {
+        fetch('/auths/token',{
+            method:'post',
+            headers:new Headers({'Content-Type':'application/json'}),
+            body:JSON.stringify({
+                refreshtoken:refreshtoken
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            localStorage.setItem('Accesstoken',data.accesstoken);
+            const accesstoken = localStorage.getItem('Accesstoken');
+            fetch('/user/editemergancybyhr',{
+                method:'post',
+                headers:new Headers({'Content-Type':'application/json',
+                        'authorization':`bearer ${accesstoken}`}),
+                body:JSON.stringify({
+                    field:field.value,
+                    value:value.value,
+                    emp_ID:emp_ID.value
+                        })
+                
+                
+            })
+            .then(res=> res.json())
+            .then(data => {
+                console.log(data)
+            })
+        })
+    })
+})
+
+
+
+

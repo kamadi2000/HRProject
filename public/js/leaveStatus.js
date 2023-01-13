@@ -13,10 +13,10 @@ function getLeaveinfo(){
         res.json()
     } )
     .then(data => {
-        console.log(data)
+        console.log({data})
         data.forEach(element => {
             const markup = `<div class="tableRow">
-            <div class="cell">${element.date}</div>
+            <div class="cell">${new Date(element.leave_date).toDateString()}</div>
             <div class="cell">${element.leave_type}</div>
             <div class="cell">${element.reason}</div>
             <div class="cell">${element.status}</div>
@@ -50,7 +50,7 @@ function getLeaveinfo(){
             .then(data => {
                 data.forEach(element => {
                     const markup = `<div class="tableRow">
-                    <div class="cell">${element.date}</div>
+                    <div class="cell">${new Date(element.leave_date).toDateString()}</div>
                     <div class="cell">${element.leave_type}</div>
                     <div class="cell">${element.reason}</div>
                     <div class="cell">${element.status}</div>
