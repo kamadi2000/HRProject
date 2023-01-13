@@ -73,7 +73,6 @@ submitbtn.addEventListener('click',()=>{
             workingTime:Fulltime_Parttime.value,
             department:department.value,
             branchID:branchID.value,
-            supervisor:supervisor.value,
             superviseID:superviseID.value,
             type:Type.value,
             emg_first_name:emg_first_name.value,
@@ -86,8 +85,8 @@ submitbtn.addEventListener('click',()=>{
     .then(res => res.json())
     .then(data=> {
         console.log(data);
-        alert(data.massege);
-        
+        alert(data);
+       
         
 
     })
