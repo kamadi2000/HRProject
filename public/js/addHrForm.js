@@ -51,7 +51,7 @@ submitbtn.addEventListener('click',()=>{
   
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/user/addEmployee',{
+    fetch('/user/addHr',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
@@ -85,7 +85,7 @@ submitbtn.addEventListener('click',()=>{
     .then(res => res.json())
     .then(data=> {
         console.log(data);
-        alert(data);
+        alert(data.massege);
        
         
 
@@ -102,7 +102,7 @@ submitbtn.addEventListener('click',()=>{
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/user/addEmployee',{
+            fetch('/user/addHr',{
                 method:'post',
                 headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
                 body:JSON.stringify({
@@ -138,7 +138,7 @@ submitbtn.addEventListener('click',()=>{
             .then(data=> {
                 console.log(data);
                 alert(data.massege);
-                location.href='/HRmanager';
+                
                 
         
             })

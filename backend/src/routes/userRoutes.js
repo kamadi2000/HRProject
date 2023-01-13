@@ -138,7 +138,7 @@ router.post('/deletehraccount',authenticate, accessAuthorization(["Admin"]), asy
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send("account is not deleted")
+        res.send({message:"account is not deleted"})
     }
 })
 

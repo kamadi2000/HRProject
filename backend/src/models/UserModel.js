@@ -368,12 +368,12 @@ class User{
             if("HRManager" == type[0].type){
                 if(Credential ){
                     await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
-                    return ("successfully deleted")
+                    return ({message:"Successfully deleted"})
                 }else{
-                    return("there is no account on that username")
+                    return({message:"There is no account on that username"})
                 }
             }else{
-                return("you have no permission to delete this account")
+                return({message:"You have no permission to delete this account"})
             }
         }catch(e){
             console.log(e)
