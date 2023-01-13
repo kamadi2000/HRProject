@@ -201,4 +201,8 @@ router.post('/addHr', authenticate, accessAuthorization(["Admin"]), async (req, 
     res.send({massege:status})
 })
 
+router.post('/addCustomField',authenticate, async (req,res)=>{
+    const result = await controller.addCustomField(req.body.emp_ID,req.body.custom_field,req.body.value)
+    res.send({massege : result})
+})
 module.exports = router;
