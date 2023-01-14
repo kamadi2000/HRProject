@@ -12,32 +12,38 @@ const controllerView = new viewController();
 
 router.post('/reportemployee',authenticate, async (req,res)=>{
     const result = await controller.getEmployeeReport(req.body.department_name)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 
 router.post('/reportleave',authenticate, async (req,res)=>{
     await controllerView.createView();
     const result = await controller.getLeaveReport(req.body.periodBegin,req.body.periodEnd)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 router.post('/reportemployee/jobtitle',authenticate, async (req,res)=>{
     await controllerView.createView();
     const result = await controller.getEmpReportJobtitle(req.body.job_title)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 router.post('/reportemployee/department',authenticate, async (req,res)=>{
     await controllerView.createView();
     const result = await controller.getEmpReportDepartment(req.body.department_name)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 router.post('/reportemployee/paygrade',authenticate, async (req,res)=>{
     await controllerView.createView();
     const result = await controller.getEmpReportPaygrade(req.body.paygrade)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 router.post('/reportemployee/custom',authenticate, async (req,res)=>{
     await controllerView.createView();
     const result = await controller.getEmpReportCustom(req.body.field,req.body.value)
+    await controller.setLastActiveTime(req.user.username)
     res.send(result)
 })
 module.exports = router;
