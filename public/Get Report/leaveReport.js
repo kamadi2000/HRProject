@@ -16,7 +16,22 @@ submitbtn.addEventListener('click',()=>{
     })
     .then(res => res.json())
     .then(data=> {
-        console.log(data);
+        let element = document.getElementById("block");
+        while (element) {
+            element.parentNode.removeChild(element);
+            element = document.getElementById("block");
+        }
+
+        data.forEach(element => {
+            const markup = `
+            <div id="block">
+            <div class="tableRow">
+            <div class="cell" style="width:50%;">${element.department}</div>
+            <div class="cell" style="width: 50%;">${element.count}</div>
+        </div>
+        </div>`
+        document.querySelector('.tableContent').insertAdjacentHTML('beforeend', markup);
+        });
 
     })
     .catch ((err) => {
