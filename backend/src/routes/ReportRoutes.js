@@ -1,5 +1,5 @@
 const express = require('express');
-const {authenticate} = require('../middleware/auth')
+const {authenticate , accessAuthorization} = require('../middleware/auth')
 require('dotenv').config();
 
 const { reportController } = require('../controllers/reportController');
