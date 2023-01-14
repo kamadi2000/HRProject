@@ -201,6 +201,8 @@ function createEmploymentTable(data){
                         <option value="Cutting">Cutting</option>  
                         <option value="Design">Design</option>
                         <option value="HR">HR</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Printing">Printing</option>
                         <option value="Sewing">Sewing</option>
                     </select>
                 </div>
