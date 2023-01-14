@@ -349,7 +349,7 @@ class User{
         try{
             const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
             const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
-            if(["Supervisor","General"].includes(type[0].type)){
+            if(type && ["Supervisor","General"].includes(type[0].type)){
                 if(Credential ){
                     await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
                     return ({message : "successfully deleted"})
