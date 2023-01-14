@@ -25,9 +25,9 @@ submitbtn.addEventListener('click',()=>{
         data.forEach(element => {
             const markup = `
             <div id="block">
-            <div class="tableRow">
+            <div class="tableRow" style="width: 600px;">
             <div class="cell" style="width:50%;">${element.department}</div>
-            <div class="cell" style="width: 50%;">${element.count}</div>
+            <div class="cell" style="width: 50%;">${element.COUNT}</div>
         </div>
         </div>`
         document.querySelector('.tableContent').insertAdjacentHTML('beforeend', markup);
