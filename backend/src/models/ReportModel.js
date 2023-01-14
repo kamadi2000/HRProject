@@ -18,7 +18,7 @@ class Report{
     }
     async getLeaveReport(periodBegin,periodEnd){
         try{
-            const result = await  executeSQL(`SELECT leave_view.department,COUNT(req_No) FROM leave_view WHERE status = 'approved' AND leave_view.leave_date BETWEEN ? AND ? GROUP BY department;`,[periodBegin,periodEnd]);
+            const result = await  executeSQL(`SELECT leave_view.department,COUNT(req_No) AS COUNT FROM leave_view WHERE status = 'approved' AND leave_view.leave_date BETWEEN ? AND ? GROUP BY department;`,[periodBegin,periodEnd]);
             if(result){  
                 return result;
             }
