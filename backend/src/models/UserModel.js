@@ -33,9 +33,9 @@ class User{
     }
     async login(username,password){
         try{
-            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = ?`,[username])
-            if(Credential){
-                const status = await bcrypt.compare(password,Credential[0].password)
+            var Credential = await executeSQL(`CALL inUSer(?);`,[username])
+            if(Credential[0][0]){
+                const status = await bcrypt.compare(password,Credential[0][0].password)
                 if (status) {
                     const userdata = await executeSQL(`SELECT employee_ID,access_level FROM user WHERE employee_ID = ?`,[username])
                     return userdata
@@ -215,9 +215,9 @@ class User{
     
     async addEmployee(data){  // data is a JSON object
         try {
-            const Credential = await executeSQL(`SELECT * FROM employee WHERE ID = ?`,[data.id])
+            const Credential = await executeSQL(`CALL inEmployee(?)`,[data.id])
             const isSupervisor = await executeSQL(`SELECT EXISTS(SELECT 1 FROM employment_detail WHERE supervisor = '1' AND emp_ID = ?) AS available`,[data.superviseID])
-            if(Credential){
+            if(Credential[0][0]){
                 return ("employee ID is already exist")
             }else{
                 await executeSQL(
@@ -324,18 +324,17 @@ class User{
 
     async createAccount(username,password,accessLevel){
         try{
-            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
-            if(Credential){
+            const Credential = await executeSQL('CALL inUser(?)',[username])
+            if(Credential[0][0]){
                 return ({message:"This username already exists"})
             }else{
                 const salt = await bcrypt.genSalt(10);
                 const userpassword = await bcrypt.hash(password, salt)
-                const canInsert = await executeSQL(`SELECT * FROM employee WHERE ID = ?`,[username])
-                if(canInsert){
+                const canInsert = await executeSQL(`CALL inEmployee(?)`,[username])
+                if(canInsert[0][0]){
                     await executeSQL(`INSERT INTO user values (?,?,?)`,[username,userpassword,accessLevel])
                     return ({message:"Successfully created"})
                 }else{
-                    console.log('hiii')
                     return ({message:"invalid username"})
                 }
             }
@@ -347,10 +346,10 @@ class User{
 
     async deleteAccount(username){
         try{
-            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
-            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
-            if(type && ["Supervisor","General"].includes(type[0].type)){
-                if(Credential ){
+            const Credential = await executeSQL(`CALL inUser(?)`,[username])
+            const type = await executeSQL(`CALL inEmployment(?)`,[username])
+            if(type && ["Supervisor","General"].includes(type[0][0].type)){
+                if(Credential[0][0]){
                     await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
                     return ({message : "successfully deleted"})
                 }else{
@@ -367,10 +366,10 @@ class User{
 
     async deletehrAccount(username){
         try{
-            const Credential = await executeSQL('SELECT * FROM user WHERE employee_ID = ?',[username])
-            const type = await executeSQL('SELECT type FROM employment_detail WHERE emp_ID = ?',[username])
-            if(type && "HRManager" == type[0].type){
-                if(Credential ){
+            const Credential = await executeSQL(`CALL inUser(?)`,[username])
+            const type = await executeSQL(`CALL inEmployment(?)`,[username])
+            if("HRManager" == type[0][0].type){
+                if(Credential[0][0]){
                     await executeSQL(`DELETE FROM user WHERE employee_ID = ?`,[username])
                     return ({message:"Successfully deleted"})
                 }else{
@@ -426,9 +425,9 @@ class User{
 
     async changePassword(username,oldPassword,newPassword){
         try{
-            var Credential = await executeSQL(`SELECT * FROM user WHERE employee_ID = ?`,[username])
-            if(Credential){
-                const status = await bcrypt.compare(oldPassword,Credential[0].password)
+            var Credential = await executeSQL(`CALL inUser(?)`,[username])
+            if(Credential[0][0]){
+                const status = await bcrypt.compare(oldPassword,Credential[0][0].password)
                 if(status){
                     const salt = await bcrypt.genSalt(10);
                     const userpassword = await bcrypt.hash(newPassword, salt)
