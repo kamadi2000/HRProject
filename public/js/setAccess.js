@@ -10,7 +10,7 @@ submitbtn.addEventListener('click',()=>{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
-            username : username.value,
+            emp_ID : username.value,
             level : accessLevel.value,
 
         })
