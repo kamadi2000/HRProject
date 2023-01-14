@@ -77,7 +77,7 @@ router.post('/givepermission',authenticate,accessAuthorization(["Admin","HRManag
     const emp_ID = req.body.emp_ID
     const level = req.body.level
     if(level>3){
-        res.send({massege:"Invalid access level"})
+        res.send({message:"Invalid access level"})
     }
 
     const status = await controller.setAccessLevel(emp_ID,level)
@@ -85,7 +85,7 @@ router.post('/givepermission',authenticate,accessAuthorization(["Admin","HRManag
         await controller.setLastActiveTime(req.user.username)
         res.send(status)
     }else{
-        res.send({massege:"Invalid employee ID"})
+        res.send({message:"Invalid employee ID"})
     }   
 })
 
