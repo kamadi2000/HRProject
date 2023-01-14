@@ -151,7 +151,7 @@ function createPersonalTable(data){
                 <div class="cell">Gender</div>
                 <div class="cell">${data.gender}</div>
                 <div class="cell">
-                    <select name="Marital-status" id="igender" style="border-radius:10px; padding: 0 10px 0 10px;">
+                    <select name="Gender" id="igender" style="border-radius:10px; padding: 0 10px 0 10px;">
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>  
                     </select></div>
@@ -196,31 +196,63 @@ function createEmploymentTable(data){
             <div class="tableRow">
                 <div class="cell">Department</div>
                 <div class="cell">${data.department}</div>
-                <div class="cell"><input class="input" id="idepartment" type="text" placeholder="Department" ></input></div>
+                <div class="cell">
+                    <select name="Department" id="idepartment" style="border-radius:10px; padding: 0 10px 0 10px;">
+                        <option value="Cutting">Cutting</option>  
+                        <option value="Design">Design</option>
+                        <option value="HR">HR</option>
+                        <option value="Sewing">Sewing</option>
+                    </select>
+                </div>
                 <div class="cell" style="width: 16%;"><button id="department" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
             </div>
             <div class="tableRow">
-                <div class="cell">Employeement Status</div>
+                <div class="cell">Employment Status</div>
                 <div class="cell">${data.employeement_status}</div>
-                <div class="cell"><input class="input" id="iemployeement_status" type="text" placeholder="Employeement Status" ></input></div>
+                <div class="cell">
+                    <select name="Employment-status" id="iemployeement_status" style="border-radius:10px; padding: 0 10px 0 10px;">
+                        <option value="Contract">Contract</option>
+                        <option value="Freelance">Freelance</option> 
+                        <option value="Intern">Intern</option>
+                        <option value="Permanent">Permanent</option> 
+                    </select>
+                </div>
                 <div class="cell" style="width: 16%;"><button id="employeement_status" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
             </div>            
             <div class="tableRow">
                 <div class="cell">Working Time</div>
                 <div class="cell">${data.working_time}</div>
-                <div class="cell"><input class="input" id="iworking_time" type="text" placeholder="Working Time" ></input></div>
+                <div class="cell">
+                    <select name="Working-time" id="iworking_time" style="border-radius:10px; padding: 0 10px 0 10px;">
+                        <option value="Fulltime">Fulltime</option>
+                        <option value="Parttime">Parttime</option>  
+                    </select>
+                </div>
                 <div class="cell" style="width: 16%;"><button id="working_time" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
             </div>
             <div class="tableRow">
                 <div class="cell">Paygrade</div>
                 <div class="cell">${data.pay_grade}</div>
-                <div class="cell"><input class="input" id="ipay_grade" type="text" placeholder="Paygrade" ></input></div>
+                <div class="cell">
+                    <select name="Paygrade" id="ipay_grade" style="border-radius:10px; padding: 0 10px 0 10px;">
+                        <option value="Level1">Level1</option>
+                        <option value="Level2">Level2</option>  
+                        <option value="Level3">Level3</option> 
+                        <option value="Level4">Level4</option> 
+                    </select>
+                </div>
                 <div class="cell" style="width: 16%;"><button id="pay_grade" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
             </div>
             <div class="tableRow">
                 <div class="cell">Employee Type</div>
                 <div class="cell">${data.type}</div>
-                <div class="cell"><input class="input" id="itype" type="text" placeholder="Employee Type" ></input></div>
+                <div class="cell">
+                <select name="Employee-type" id="itype" style="border-radius:10px; padding: 0 10px 0 10px;">
+                        <option value="General">General</option>  
+                        <option value="HRManager">HRManager</option> 
+                        <option value="Supervisor">Supervisor</option> 
+                    </select>
+                </div>
                 <div class="cell" style="width: 16%;"><button id="type" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
             </div>
             <div class="tableRow">
