@@ -17,7 +17,7 @@ router.post('/login', async (req,res)=>{
     if(status){
         const type = await controller.getType(status[0].employee_ID)
         const user = {type:type,access_level:status[0].access_level, username: status[0].employee_ID}
-        const accesstoken = jwt.sign(user,config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
+        const accesstoken = jwt.sign(user,config.ACCESS_TOKEN_KEY,{expiresIn: '15m'});
         const refreshtoken = jwt.sign(user,config.REFRESH_TOKEN_KEY,{expiresIn: '24h'});
         await controller.storeToken(refreshtoken,status[0].employee_ID);
         if(type){
@@ -42,8 +42,8 @@ router.post('/token', async (req,res)=>{
                 const last_time = await controller.getLastTime(user.username)
                 const oldTime = new Date(last_time).getTime()
                 const newTime = new Date().getTime()
-                if( newTime - oldTime < 25000){
-                    const accesstoken = jwt.sign({type:user.type,access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '60s'});
+                if( newTime - oldTime < 2500000){
+                    const accesstoken = jwt.sign({type:user.type,access_level:user.access_level, username: user.username},config.ACCESS_TOKEN_KEY,{expiresIn: '15m'});
                     res.status(ResponseHandler(status)).send({accesstoken});
                 }else{
                     res.sendStatus(401)
