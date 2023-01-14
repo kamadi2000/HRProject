@@ -5,7 +5,7 @@ const submitbtn = document.getElementById('submit-btn');
 submitbtn.addEventListener('click',()=>{
     const accesstoken = localStorage.getItem('Accesstoken');
     const refreshtoken = localStorage.getItem('Refreshtoken');
-    fetch('/reportemployee/custom',{
+    fetch('/reports/reportemployee/custom',{
         method:'post',
         headers:new Headers({'Content-Type':'application/json','authorization':`bearer ${accesstoken}`}),
         body:JSON.stringify({
@@ -31,7 +31,7 @@ submitbtn.addEventListener('click',()=>{
         .then(data => {
             localStorage.setItem('Accesstoken',data.accesstoken);
             const accesstoken = localStorage.getItem('Accesstoken');
-            fetch('/reportemployee/custom',{
+            fetch('/reports/reportemployee/custom',{
                 method:'post',
                 headers:new Headers({'Content-Type':'application/json',
                         'authorization':`bearer ${accesstoken}`}),
