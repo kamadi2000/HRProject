@@ -241,6 +241,7 @@ function createEmploymentTable(data){
                         <option value="Level2">Level2</option>  
                         <option value="Level3">Level3</option> 
                         <option value="Level4">Level4</option> 
+                        <option value="Level5">Level4</option> 
                     </select>
                 </div>
                 <div class="cell" style="width: 16%;"><button id="pay_grade" class="edit-btn" onclick="send_data(this, ${data.ID}, '${editEmploymentRoute}')">Edit</button></div>
