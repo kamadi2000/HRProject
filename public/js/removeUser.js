@@ -17,7 +17,6 @@ submitbtn.addEventListener('click',()=>{
     .then(data=> {
         if (data.message){
             alert(data.message);
-            location.href = "/removeUser";
         }
         
         

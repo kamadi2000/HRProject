@@ -206,7 +206,7 @@ class User{
                 SET access_level = ?
                 WHERE employee_ID = ?`,[level,emp_ID])
 
-            return("successfully updated")
+            return({message:"successfully updated"})
         }catch(e){
             console.log(e)
             return (null)
